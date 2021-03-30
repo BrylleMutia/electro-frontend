@@ -1,3 +1,29 @@
+@import "../../../styles/variables";
+
 .search {
-    flex: 1 0 100%;
+  display: flex;
+  flex: 1;
+
+  &_input {
+    padding: 1.01em 1em;
+    border: 2px solid $primary;
+    flex: 1;
+    outline: none;
+    font-size: 1rem;
+  }
+
+  fieldset {
+    border-radius: 0;
+  }
+
+  button {
+    background: $primary;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+
+    &:hover,
+    &:focus {
+      background: rgba($primary-hover, 1.1);
+    }
+  }
 }

@@ -1,13 +1,21 @@
 import React from "react";
 import styles from "./Search.module.scss";
 
-import { StylesProvider, TextField } from "@material-ui/core";
+import { TextField, IconButton } from "@material-ui/core";
+import SearchIcon from '@material-ui/icons/Search';
 
-function Search(): JSX.Element {
+interface Props {
+  style?: Object
+}
+
+const Search: React.FC<Props> = ({ style }) => {
   return (
-    <>
-      <TextField className={styles.search} id="outlined-basic" placeholder="Search" variant="outlined" />
-    </>
+    <div className={styles.search} style={style}>
+      <input className={styles.search_input} type="text" placeholder="Search for products"/>
+      <IconButton>
+        <SearchIcon />
+      </IconButton>
+    </div>
   );
 }
 
