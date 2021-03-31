@@ -1,4 +1,5 @@
 @import "styles/variables";
+@import "styles/breakpoints";
 
 // $primary: red;
 
@@ -23,4 +24,8 @@ body {
   max-width: 990px;
   margin: 0 auto;
   padding: 2em 1em;
+
+  @media (max-width: $sm) {
+    padding: 1em 0;
+  }
 }
