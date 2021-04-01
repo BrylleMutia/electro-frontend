@@ -1,6 +1,8 @@
 @import "styles/variables";
 @import "styles/breakpoints";
 
+@import '~antd/dist/antd.css';
+
 // $primary: red;
 
 *,
@@ -17,7 +19,7 @@ img {
 }
 
 body {
-  font-family: Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  font-family: 'Open Sans', sans-serif;
 }
 
 .app {
