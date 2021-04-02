@@ -24,7 +24,7 @@ function Showcase() {
   ];
 
   return (
-    <Carousel className={styles.carousel}>
+    <Carousel className={styles.carousel} autoplay>
       {items.map((item) => (
         <div className={styles.carousel_item}>
           <img src={item.image} alt={item.product} />
