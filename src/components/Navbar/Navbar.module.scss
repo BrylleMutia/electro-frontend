@@ -16,6 +16,7 @@
 .logo {
   font-family: "Staatliches", Roboto, sans-serif;
   font-size: 1.5rem;
+  margin-bottom: 0;
 
   span {
     color: $primary;
@@ -23,7 +24,7 @@
 }
 
 .menu {
-  margin-top: 3em;
+  margin-top: 4em;
 }
 
 .search_wrapper {

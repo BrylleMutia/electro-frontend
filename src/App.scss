@@ -3,7 +3,11 @@
 
 @import '~antd/dist/antd.css';
 
-// $primary: red;
+// override antd carousel active button style
+.ant-carousel .slick-dots li.slick-active button {
+  background: $primary;
+}
+
 
 *,
 *::before,

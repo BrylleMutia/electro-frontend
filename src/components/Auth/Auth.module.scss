@@ -1,0 +1,9 @@
+.auth {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  & > img {
+    padding: 1em 3em;
+  }
+}

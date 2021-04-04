@@ -3,17 +3,24 @@ import "./App.scss";
 
 import Navbar from "./components/Navbar";
 import Showcase from "./components/Showcase";
+import Auth from "./components/Auth";
 
-import { Button } from 'antd';
+
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 function App(): JSX.Element {
   return (
-    <div>
-      <div className="app">
-        <Navbar />
-      </div>
-      <Showcase />
-    </div>
+    <Router>
+      <Switch>
+        <Route exact path="/">
+          <div className="app">
+            <Navbar />
+          </div>
+          <Showcase />
+        </Route>
+        <Route exact path="/auth" component={Auth} />
+      </Switch>
+    </Router>
   );
 }
 

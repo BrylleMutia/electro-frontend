@@ -1,6 +1,9 @@
 import React, { useState } from "react";
 import styles from "./Navbar.module.scss";
 
+import { Link } from "react-router-dom";
+import routes from "../../routes";
+
 import Search from "./Search";
 
 import { useTheme } from "@material-ui/core/styles";
@@ -52,9 +55,11 @@ function Navbar(): JSX.Element {
         keepMounted
         open={Boolean(anchorEl)}
         onClose={closeMenu}>
-        <MenuItem onClick={closeMenu}>Profile</MenuItem>
-        <MenuItem onClick={closeMenu}>My account</MenuItem>
-        <MenuItem onClick={closeMenu}>Logout</MenuItem>
+        {routes.map((route, index) => (
+          <MenuItem onClick={closeMenu} key={index}>
+            <Link to={route.path}>{route.title}</Link>
+          </MenuItem>
+        ))}
       </Menu>
 
       <div className={styles.search_wrapper}>

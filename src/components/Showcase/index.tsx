@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React from "react";
 import styles from "./Showcase.module.scss";
 
-import { Carousel } from 'antd';
+import { Carousel } from "antd";
 
 import Img1 from "./assets/1.png";
 import Img2 from "./assets/2.png";
@@ -11,27 +11,27 @@ function Showcase() {
   const items = [
     {
       product: "Samsung Galaxy Note 20",
-      image: Img1
+      image: Img1,
     },
     {
       product: "MacBook Air",
-      image: Img2
+      image: Img2,
     },
     {
       product: "Google Pixel 5",
-      image: Img3
+      image: Img3,
     },
   ];
 
   return (
-    <Carousel className={styles.carousel} autoplay>
-      {items.map((item) => (
-        <div className={styles.carousel_item}>
+    <Carousel className={styles.carousel}>
+      {items.map((item, index) => (
+        <div className={styles.carousel_item} key={index}>
           <img src={item.image} alt={item.product} />
         </div>
       ))}
     </Carousel>
   );
-};
+}
 
 export default Showcase;
