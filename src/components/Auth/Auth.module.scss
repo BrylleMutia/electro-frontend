@@ -1,9 +1,40 @@
+@import "../../styles/breakpoints";
+
 .auth {
   display: flex;
   flex-direction: column;
   justify-content: center;
+  align-items: center;
 
   & > img {
     padding: 1em 3em;
+    max-width: 50em;
   }
+
+  &_form {
+    max-width: 450px;
+  }
+
+  @media (min-width: $lg) {
+    flex-direction: row;
+    height: 100vh;
+  }
+}
+
+.radio_group {
+  flex-direction: row !important;
+  justify-content: center;
+  margin-top: 1em;
+}
+
+.button_wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 1em 0 !important;
+}
+
+.button {
+  float: right;
+  margin: 1em 0 !important;
 }
