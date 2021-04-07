@@ -1,6 +1,5 @@
 import React from "react";
 import styles from "./Search.module.scss";
-
 import { TextField, IconButton } from "@material-ui/core";
 import SearchIcon from '@material-ui/icons/Search';
 

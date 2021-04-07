@@ -1,11 +1,8 @@
 import React, { useState } from "react";
 import styles from "./Navbar.module.scss";
-
 import { Link } from "react-router-dom";
 import routes from "../../routes";
-
 import Search from "./Search";
-
 import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import { IconButton, Button, Menu, MenuItem } from "@material-ui/core";
@@ -43,10 +40,6 @@ function Navbar(): JSX.Element {
         id="simple-menu"
         variant="selectedMenu"
         elevation={0}
-        anchorOrigin={{
-          vertical: "bottom",
-          horizontal: "left",
-        }}
         transformOrigin={{
           vertical: "bottom",
           horizontal: "right",

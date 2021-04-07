@@ -1,6 +1,5 @@
 import React from "react";
 import "./App.scss";
-
 import Navbar from "./components/Navbar";
 import Showcase from "./components/Showcase";
 import Auth from "./components/Auth";
