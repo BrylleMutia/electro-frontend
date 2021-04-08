@@ -1,10 +1,12 @@
 @import "../../styles/breakpoints";
+@import "../../styles/variables";
 
 .auth {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  background: $primary-bg;
   
   & > img {
     padding: 1em 3em;

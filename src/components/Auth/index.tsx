@@ -5,8 +5,8 @@ import BuyerImg from "./assets/buyer.png";
 import SellerImg from "./assets/seller.png";
 import { TextField, Tabs, Tab, Checkbox, FormControlLabel, Radio, RadioGroup, Button, Typography } from "@material-ui/core";
 import axios from "axios";
-import { useAppSelector, useAppDispatch } from "../../redux/hooks";
-import { increment, decrement } from "../../redux/counter/counterSlice";
+// import { useAppSelector, useAppDispatch } from "../../redux/hooks";
+// import { increment, decrement } from "../../redux/user/userSlice";
 
 interface RegisterInfo {
   name: string;
@@ -38,8 +38,6 @@ function Auth() {
   const [tabView, setTabView] = useState<number>(0);
   const [rememberUser, setRememberUser] = useState<boolean>(false);
 
-  const value = useAppSelector((state) => state.counter.value);
-  const dispatch = useAppDispatch();
 
   const handleUserTypeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setUserType((e.target as HTMLInputElement).value);
@@ -151,9 +149,6 @@ function Auth() {
           </div>
         </TabPanel>
       </form>
-      <h2>{value}</h2>
-      <button onClick={() => dispatch(increment())}>++</button>
-      <button onClick={() => dispatch(decrement())}>--</button>
     </div>
   );
 }
