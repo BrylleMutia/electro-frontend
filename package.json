@@ -1,6 +1,7 @@
 {
   "name": "electro",
   "version": "0.1.0",
+  "description": "An E-commerce platform dedicated for buying and selling Electronic devices. Made with React/Laravel.",
   "private": true,
   "dependencies": {
     "@material-ui/core": "^4.11.3",

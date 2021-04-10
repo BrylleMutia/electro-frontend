@@ -5,10 +5,11 @@ import BuyerImg from "./assets/buyer.png";
 import SellerImg from "./assets/seller.png";
 import { TextField, Tabs, Tab, Checkbox, FormControlLabel, Radio, RadioGroup, Button, Typography } from "@material-ui/core";
 import axios from "axios";
-// import { useAppSelector, useAppDispatch } from "../../redux/hooks";
-// import { increment, decrement } from "../../redux/user/userSlice";
+import { useAppSelector, useAppDispatch } from "../../redux/hooks";
+import { registerUser, loginUser, registerSeller, loginSeller } from "../../redux/auth/authSlice";
 
-interface RegisterInfo {
+
+export interface RegisterInfo {
   name: string;
   email: string;
   password: string;
@@ -16,7 +17,7 @@ interface RegisterInfo {
   location: String;
 }
 
-interface LoginInfo {
+export interface LoginInfo {
   email: string;
   password: string;
 }
@@ -37,6 +38,8 @@ function Auth() {
   const [userType, setUserType] = useState<string | null>("buyer");
   const [tabView, setTabView] = useState<number>(0);
   const [rememberUser, setRememberUser] = useState<boolean>(false);
+
+  const dispatch = useAppDispatch();
 
 
   const handleUserTypeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -66,40 +69,20 @@ function Auth() {
       case "buyer":
         if (tabView === 0) {
           // register
-          axios
-            .post("/user/register/", regInfo)
-            .then((response) => {
-              console.log(response.data);
-            })
-            .catch((err) => console.error(err.response.data));
+          dispatch(registerUser(regInfo));
         } else if (tabView === 1) {
           // login
-          axios
-            .post("/user/login", loginInfo)
-            .then((response) => {
-              console.log(response.data);
-            })
-            .catch((err) => console.error(err.response.data));
+          dispatch(loginUser(loginInfo));
         }
         break;
 
       case "seller":
         if (tabView === 0) {
           // register
-          axios
-            .post("/seller/register", regInfo)
-            .then((response) => {
-              console.log(response.data);
-            })
-            .catch((err) => console.error(err.response.data));
+          dispatch(registerSeller(regInfo));
         } else if (tabView === 1) {
           // login
-          axios
-            .post("/seller/login", loginInfo)
-            .then((response) => {
-              console.log(response.data);
-            })
-            .catch((err) => console.error(err.response.data));
+          dispatch(loginSeller(loginInfo));
         }
         break;
 
