@@ -1,9 +1,9 @@
 import React from "react";
 import "./App.scss";
+import Auth from "./components/Auth";
 import Navbar from "./components/Navbar";
 import Showcase from "./components/Showcase";
-import Auth from "./components/Auth";
-
+import Featured from "./components/Featured";
 
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
@@ -16,6 +16,9 @@ function App(): JSX.Element {
             <Navbar />
           </div>
           <Showcase />
+          <div className="app">
+            <Featured />
+          </div>
         </Route>
         <Route exact path="/auth" component={Auth} />
       </Switch>
