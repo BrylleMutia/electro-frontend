@@ -28,3 +28,7 @@ export interface AuthState {
   userDetails: UserDetails | null;
   error: ErrorResponse;
 }
+
+export interface LogoutResponse {
+  message: string
+}

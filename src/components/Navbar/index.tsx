@@ -8,9 +8,11 @@ import useMediaQuery from "@material-ui/core/useMediaQuery";
 import { IconButton, Button, Menu, MenuItem } from "@material-ui/core";
 import MenuIcon from "@material-ui/icons/Menu";
 import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
+import { useAppSelector } from "../../redux/hooks";
 
 function Navbar(): JSX.Element {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const { isAuthenticated } = useAppSelector((state) => state.auth);
 
   const openMenu = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
@@ -48,11 +50,16 @@ function Navbar(): JSX.Element {
         keepMounted
         open={Boolean(anchorEl)}
         onClose={closeMenu}>
-        {routes.map((route, index) => (
-          <MenuItem onClick={closeMenu} key={index}>
-            <Link to={route.path}>{route.title}</Link>
-          </MenuItem>
-        ))}
+        {routes.map((route, index) => {
+          // only render auth routes if user is not authenticated
+          if (route.path === "/auth" && isAuthenticated) return;
+
+          return (
+            <MenuItem onClick={closeMenu} key={index}>
+              <Link onClick={fdsf} to={route.path}>{route.title}</Link>
+            </MenuItem>
+          );
+        })}
       </Menu>
 
       <div className={styles.search_wrapper}>

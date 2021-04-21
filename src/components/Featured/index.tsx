@@ -1,18 +1,23 @@
 import React from "react";
 import styles from "./Featured.module.scss";
-import { Grid, GridListTile, GridList } from "@material-ui/core";
+import Product1 from "./images/1/3.jpg";
+import Product2 from "./images/2/2.jpg";
+import Product3 from "./images/1/2.jpg";
+import Product4 from "./images/2/1.png";
+import Product5 from "./images/1/1.jpg";
+import Product6 from "./images/2/3.webp";
 
 export default function Featured() {
   return (
     <aside>
       <div className={styles.featured}>
-        <div className={styles.first}>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Porro cum a sapiente ullam quisquam voluptatum facere nemo ipsam qui. Ipsam cumque provident est ducimus numquam illo voluptatibus tenetur laboriosam aspernatur.</div>
-        <div>Lorem ipsum dolor sit amet consectetur adipisicing elit. Aut, omnis.</div>
-        <div>Lorem ipsum dolor sit amet consectetur adipisicing elit. Aut, omnis.</div>
-        <div>Lorem ipsum dolor sit amet consectetur adipisicing elit. Aut, omnis.</div>
-        <div>Lorem ipsum dolor sit amet consectetur adipisicing elit. Aut, omnis.</div>
-        <div>Lorem ipsum dolor sit amet consectetur adipisicing elit. Aut, omnis.</div>
-        <div>Lorem ipsum dolor sit amet consectetur adipisicing elit. Aut, omnis.</div>
+        <div className={styles.first}><img src={Product4} alt="offer-1"/></div>
+        <div><img src={Product1} alt="offer-1"/></div>
+        <div><img src={Product3} alt="offer-1"/></div>
+        <div><img src={Product5} alt="offer-1"/></div>
+        <div><img src={Product6} alt="offer-1"/></div>
+        <div><img src={Product2} alt="offer-1"/></div>
+        <div><img src={Product2} alt="offer-1"/></div>
       </div>
     </aside>
   );

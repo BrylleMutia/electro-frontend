@@ -1,7 +1,9 @@
+import {  }
+
 const routes = [
   {
     title: "Profile",
-    path: "/profile"
+    path: "/profile",
   },
   {
     title: "Register",

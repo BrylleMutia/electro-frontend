@@ -1,10 +1,8 @@
 import { createSlice, PayloadAction, createAsyncThunk, isAnyOf } from "@reduxjs/toolkit";
 import axios from "axios";
 import type { RootState } from "../store";
-import { RegisterInfo, LoginInfo } from "../../components/Auth"
-import { AuthState, AuthResponse, ErrorResponse } from "./types"
-
-
+import { RegisterInfo, LoginInfo } from "../../components/Auth";
+import { AuthState, AuthResponse, ErrorResponse, LogoutResponse } from "./types";
 
 // Define the initial state using that type
 const initialState: AuthState = {
@@ -16,18 +14,18 @@ const initialState: AuthState = {
   error: { message: "" },
 };
 
-
 // BUYER / USER AUTH
 
 // createAsyncThunk<return type, parameter type, {dispatch?, state?, extra?, rejectValue?}>
-// `extra` is useful when we need to pass 
+// `extra` is useful when we need to pass
 // some static data to the request function,
 // like jwt-token or HTTP-headers.
 //
-// `rejectValue` is useful when we need to type 
+// `rejectValue` is useful when we need to type
 // possible errors.
 export const registerUser = createAsyncThunk<AuthResponse, RegisterInfo, { rejectValue: ErrorResponse }>("auth/registerUser", async (regInfo, thunkAPI) => {
-  return axios.post("/user/register", regInfo)
+  return axios
+    .post("/user/register", regInfo)
     .then((response) => {
       return response.data;
     })
@@ -36,9 +34,9 @@ export const registerUser = createAsyncThunk<AuthResponse, RegisterInfo, { rejec
       // that contains all those fields
       // and the `rejectWithValue` function:
 
-      return thunkAPI.rejectWithValue({ 
-        message: err.response.data 
-      })
+      return thunkAPI.rejectWithValue({
+        message: err.response.data,
+      });
     });
 });
 
@@ -49,22 +47,23 @@ export const loginUser = createAsyncThunk<AuthResponse, LoginInfo, { rejectValue
       return response.data;
     })
     .catch((err) => {
-      return thunkAPI.rejectWithValue({ 
-        message: err.response.data 
-      })
+      return thunkAPI.rejectWithValue({
+        message: err.response.data,
+      });
     });
 });
 
 // SELLER AUTH
 export const registerSeller = createAsyncThunk<AuthResponse, RegisterInfo, { rejectValue: ErrorResponse }>("auth/registerSeller", async (regInfo, thunkAPI) => {
-  return axios.post("/seller/register", regInfo)
+  return axios
+    .post("/seller/register", regInfo)
     .then((response) => {
       return response.data;
     })
     .catch((err) => {
-      return thunkAPI.rejectWithValue({ 
-        message: err.response.data 
-      })
+      return thunkAPI.rejectWithValue({
+        message: err.response.data,
+      });
     });
 });
 
@@ -75,11 +74,15 @@ export const loginSeller = createAsyncThunk<AuthResponse, LoginInfo, { rejectVal
       return response.data;
     })
     .catch((err) => {
-      return thunkAPI.rejectWithValue({ 
-        message: err.response.data 
-      })
+      return thunkAPI.rejectWithValue({
+        message: err.response.data,
+      });
     });
 });
+
+export const logoutSeller = createAsyncThunk<{ rejectValue: ErrorResponse }>("auth/logoutSeller", async (thunkAPI) => {
+  return axios.post('/seller/logout' )
+})
 
 export const authSlice = createSlice({
   name: "auth",
@@ -89,19 +92,23 @@ export const authSlice = createSlice({
   // extraReducers field is used for listening to other actions dispatched by other slices or async actions
   // builder is used for adding cases, matchers (multiple actions, same mutation), default cases.
   extraReducers: (builder) => {
-    builder.addMatcher(isAnyOf(registerUser.pending, registerSeller.pending), (state) => {
-      state.error = { message: ""};
+    builder.addMatcher(isAnyOf(registerUser.pending, registerSeller.pending, loginSeller.pending, loginUser.pending), (state) => {
+      state.error = { message: "" };
       state.isLoading = true;
     });
 
-    builder.addMatcher(isAnyOf(registerUser.fulfilled, registerSeller.fulfilled), (state, action: PayloadAction<AuthResponse>) => {
+    builder.addMatcher(isAnyOf(registerUser.fulfilled, registerSeller.fulfilled, loginSeller.fulfilled, loginUser.fulfilled), (state, action: PayloadAction<AuthResponse>) => {
       state.isLoading = false;
       state.isAuthenticated = true;
       state.userDetails = action.payload.user;
       state.token = action.payload.token;
+
+      //store bearer token in localStorage
+      localStorage.setItem("token", action.payload.token);
+
     });
 
-    builder.addMatcher(isAnyOf(registerUser.rejected, registerSeller.rejected), (state, action: PayloadAction<ErrorResponse>) => {
+    builder.addMatcher(isAnyOf(registerUser.rejected, registerSeller.rejected, loginSeller.rejected, loginUser.rejected), (state, action: PayloadAction<ErrorResponse>) => {
       state.isLoading = false;
       state.error = action.payload;
     });
@@ -109,7 +116,6 @@ export const authSlice = createSlice({
 });
 
 // export const { loginUser, logout, loadUser } = authSlice.actions
-
 
 // can access this specific slice using useSelector(authSelector)
 // other code such as selectors can use the imported `RootState` type
