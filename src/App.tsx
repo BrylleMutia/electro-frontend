@@ -1,13 +1,13 @@
 import React, { useEffect } from "react";
 import "./App.scss";
-import Auth from "./components/Auth";
-import Navbar from "./components/Navbar";
-import Showcase from "./components/Showcase";
-import Featured from "./components/Featured";
+import AuthForm from "./components/AuthForm";
+
+import Home from "./pages/Home";
+import NotFound from "./pages/NotFound";
 
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import ProtectedRoute from "./utils/ProtectedRoute";
 import { useAppSelector } from "./redux/hooks";
-
 
 function App(): JSX.Element {
   const { isAuthenticated } = useAppSelector((state) => state.auth);
@@ -15,16 +15,10 @@ function App(): JSX.Element {
   return (
     <Router>
       <Switch>
-        <Route exact path="/">
-          <div className="app">
-            <Navbar />
-          </div>
-          <Showcase />
-          <div className="app">
-            <Featured />
-          </div>
-        </Route>
-        <Route exact path="/auth" component={Auth} />
+        {/* <ProtectedRoute isAuthenticated={isAuthenticated} exact path="/" component={Home} /> */}
+        <Route exact path="/" component={Home} />
+        <Route exact path="/auth" component={AuthForm} />
+        <Route path="*" component={NotFound} />
       </Switch>
     </Router>
   );

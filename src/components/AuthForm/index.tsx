@@ -22,7 +22,7 @@ export interface LoginInfo {
   password: string;
 }
 
-function Auth() {
+function AuthForm() {
   const [regInfo, setRegInfo] = useState<RegisterInfo>({
     name: "",
     email: "",
@@ -138,4 +138,4 @@ function Auth() {
   } else return <Redirect to="/" />;
 }
 
-export default Auth;
+export default AuthForm;

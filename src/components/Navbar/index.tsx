@@ -56,7 +56,7 @@ function Navbar(): JSX.Element {
 
           return (
             <MenuItem onClick={closeMenu} key={index}>
-              <Link onClick={fdsf} to={route.path}>{route.title}</Link>
+              <Link to={route.path}>{route.title}</Link>
             </MenuItem>
           );
         })}

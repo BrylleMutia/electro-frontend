@@ -1,5 +1,3 @@
-import {  }
-
 const routes = [
   {
     title: "Profile",
@@ -7,12 +5,12 @@ const routes = [
   },
   {
     title: "Register",
-    path: "/auth"
+    path: "/auth",
   },
   {
     title: "Login",
-    path: "/auth"
+    path: "/auth",
   },
-]
+];
 
 export default routes;

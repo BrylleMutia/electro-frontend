@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction, createAsyncThunk, isAnyOf } from "@reduxjs/toolkit";
 import axios from "axios";
 import type { RootState } from "../store";
-import { RegisterInfo, LoginInfo } from "../../components/Auth";
+import { RegisterInfo, LoginInfo } from "../../components/AuthForm";
 import { AuthState, AuthResponse, ErrorResponse, LogoutResponse } from "./types";
 
 // Define the initial state using that type
@@ -81,7 +81,7 @@ export const loginSeller = createAsyncThunk<AuthResponse, LoginInfo, { rejectVal
 });
 
 export const logoutSeller = createAsyncThunk<{ rejectValue: ErrorResponse }>("auth/logoutSeller", async (thunkAPI) => {
-  return axios.post('/seller/logout' )
+  return axios.post('/seller/logout')
 })
 
 export const authSlice = createSlice({
