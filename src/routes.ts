@@ -1,14 +1,14 @@
 const routes = [
   {
-    title: "Profile",
+    name: "Profile",
     path: "/profile",
   },
   {
-    title: "Register",
+    name: "Register",
     path: "/auth",
   },
   {
-    title: "Login",
+    name: "Login",
     path: "/auth",
   },
 ];

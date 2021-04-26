@@ -1,8 +1,8 @@
 import { createSlice, PayloadAction, createAsyncThunk, isAnyOf } from "@reduxjs/toolkit";
 import axios from "axios";
 import type { RootState } from "../store";
-import { RegisterInfo, LoginInfo } from "../../components/AuthForm";
-import { AuthState, AuthResponse, ErrorResponse, LogoutResponse } from "./types";
+import type { RegisterInfo, LoginInfo } from "../../components/AuthForm";
+import type { AuthState, AuthResponse, ErrorResponse, LogoutResponse } from "../types";
 
 // Define the initial state using that type
 const initialState: AuthState = {
@@ -11,7 +11,7 @@ const initialState: AuthState = {
   isLoading: false,
   userType: null,
   userDetails: null,
-  error: { message: "" },
+  error: { message: "", errors: {} },
 };
 
 // BUYER / USER AUTH
@@ -35,7 +35,8 @@ export const registerUser = createAsyncThunk<AuthResponse, RegisterInfo, { rejec
       // and the `rejectWithValue` function:
 
       return thunkAPI.rejectWithValue({
-        message: err.response.data,
+        message: err.response.data.message,
+        errors: err.response.data?.errors,
       });
     });
 });
@@ -48,7 +49,8 @@ export const loginUser = createAsyncThunk<AuthResponse, LoginInfo, { rejectValue
     })
     .catch((err) => {
       return thunkAPI.rejectWithValue({
-        message: err.response.data,
+        message: err.response.data.message,
+        errors: err.response.data?.errors,
       });
     });
 });
@@ -62,7 +64,8 @@ export const registerSeller = createAsyncThunk<AuthResponse, RegisterInfo, { rej
     })
     .catch((err) => {
       return thunkAPI.rejectWithValue({
-        message: err.response.data,
+        message: err.response.data.message,
+        errors: err.response.data?.errors,
       });
     });
 });
@@ -75,25 +78,30 @@ export const loginSeller = createAsyncThunk<AuthResponse, LoginInfo, { rejectVal
     })
     .catch((err) => {
       return thunkAPI.rejectWithValue({
-        message: err.response.data,
+        message: err.response.data.message,
+        errors: err.response.data?.errors,
       });
     });
 });
 
 export const logoutSeller = createAsyncThunk<{ rejectValue: ErrorResponse }>("auth/logoutSeller", async (thunkAPI) => {
-  return axios.post('/seller/logout')
-})
+  return axios.post("/seller/logout");
+});
 
 export const authSlice = createSlice({
   name: "auth",
   // `createSlice` will infer the state type from the `initialState` argument
   initialState,
-  reducers: {},
+  reducers: {
+    clearErrors(state) {
+      state.error = { message: "", errors: {} };
+    },
+  },
   // extraReducers field is used for listening to other actions dispatched by other slices or async actions
   // builder is used for adding cases, matchers (multiple actions, same mutation), default cases.
   extraReducers: (builder) => {
     builder.addMatcher(isAnyOf(registerUser.pending, registerSeller.pending, loginSeller.pending, loginUser.pending), (state) => {
-      state.error = { message: "" };
+      state.error = { message: "", errors: {} };
       state.isLoading = true;
     });
 
@@ -105,7 +113,6 @@ export const authSlice = createSlice({
 
       //store bearer token in localStorage
       localStorage.setItem("token", action.payload.token);
-
     });
 
     builder.addMatcher(isAnyOf(registerUser.rejected, registerSeller.rejected, loginSeller.rejected, loginUser.rejected), (state, action: PayloadAction<ErrorResponse>) => {
@@ -115,7 +122,7 @@ export const authSlice = createSlice({
   },
 });
 
-// export const { loginUser, logout, loadUser } = authSlice.actions
+export const { clearErrors } = authSlice.actions
 
 // can access this specific slice using useSelector(authSelector)
 // other code such as selectors can use the imported `RootState` type
