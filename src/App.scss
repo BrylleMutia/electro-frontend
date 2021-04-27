@@ -9,6 +9,7 @@
 }
 
 
+
 *,
 *::before,
 *::after {
@@ -17,13 +18,18 @@
   box-sizing: border-box;
 }
 
-img {
-  width: 100%;
-  display: block;
-}
 
 body {
   font-family: 'Open Sans', sans-serif;
+}
+
+#root {
+  height: 100%;
+}
+
+img {
+  width: 100%;
+  display: block;
 }
 
 .app {
