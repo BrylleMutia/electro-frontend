@@ -8,30 +8,46 @@ const initialState: ShopState = {
   products: [],
   offers: [],
   categories: [],
-  error: "",
+  isLoading: false,
+  error: {
+    message: "",
+    errors: {}
+  },
 };
 
-// export const getAllProducts = createAsyncThunk<ProductInterface[], { rejectValue: ErrorResponse }>("shop/getAllProducts", async (thunkAPI) => {
-//   return axios
-//     .get("/products")
-//     .then((response) => {
-//       return response.data;
-//     })
-//     .catch((err) => {
-//       return thunkAPI.rejectWithValue({
-//         message: err.response.data.message,
-//         errors: err.response.data?.errors,
-//       });
-//     });
-// });
+export const getAllProducts = createAsyncThunk<ProductInterface[], number, { rejectValue: ErrorResponse, }>("shop/getAllProducts", async (limit, thunkAPI) => {
+  return axios
+    .get(`/products?limit=${limit}`)
+    .then((response) => {
+      return response.data;
+    })
+    .catch((err) => {
+      return thunkAPI.rejectWithValue({
+        message: err.response.data.message,
+        errors: err.response.data?.errors,
+      });
+    });
+});
 
-// export const shopSlice = createSlice({
-//   name: "shop",
-//   initialState,
-//   reducers: {},
-//   extraReducers: (builder) => {
-//     builder.addCase(getAllProducts.fulfilled, (state, action: PayloadAction<ProductInterface[]>) => {
-//       state.products = action.payload;
-//     });
-//   },
-// });
+export const shopSlice = createSlice({
+  name: "shop",
+  initialState,
+  reducers: {},
+  extraReducers: (builder) => {
+    builder.addCase(getAllProducts.pending, (state) => {
+      state.isLoading = true;
+    });
+
+    builder.addCase(getAllProducts.fulfilled, (state, action: PayloadAction<ProductInterface[]>) => {
+      state.products = action.payload;
+    });
+
+    builder.addMatcher(isAnyOf(getAllProducts.rejected), (state, action: PayloadAction<ErrorResponse>) => {
+      state.error = action.payload;
+    })
+  },
+});
+
+export const shopSelector = (state: RootState) => state.shop;
+
+export default shopSlice.reducer;

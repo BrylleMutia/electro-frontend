@@ -45,7 +45,8 @@ export interface ShopState {
   products: ProductInterface[],
   offers: string[],
   categories: string[],
-  error: string
+  isLoading: boolean,
+  error: ErrorResponse
 }
 
 export interface ProductInterface {
