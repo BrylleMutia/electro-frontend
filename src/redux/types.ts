@@ -43,8 +43,8 @@ export interface LogoutResponse {
 // ------------ SHOP TYPES
 export interface ShopState {
   products: ProductInterface[],
-  offers: object,
-  categories: object,
+  offers: GroupedProductsInterface,
+  categories: GroupedProductsInterface,
   isLoading: boolean,
   error: ErrorResponse
 }
@@ -56,13 +56,17 @@ export interface ProductInterface {
   product_name: string;
   slug: string;
   price: string | number;
-  product_image: string[];
+  product_image: string;
   description: string;
   categories: CategoryInterface[];
   seller_id: number;
   seller: UserDetails;
   offer_id: number;
   offer: OfferInterface
+}
+
+export interface GroupedProductsInterface {
+  [index: string]: ProductInterface[];
 }
 
 export interface OfferInterface {

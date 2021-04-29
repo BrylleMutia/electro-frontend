@@ -164,4 +164,5 @@ function AuthForm() {
   } else return <Redirect to="/" />;
 }
 
+export { TabPanel };
 export default AuthForm;

@@ -1,13 +1,13 @@
 import { createSlice, PayloadAction, createAsyncThunk, isAnyOf } from "@reduxjs/toolkit";
 import axios from "axios";
 import type { RootState } from "../store";
-import type { ShopState, ProductInterface, ErrorResponse } from "../types";
+import type { ShopState, ProductInterface, ErrorResponse, GroupedProductsInterface } from "../types";
 import { useHeaders } from "../hooks";
 
 const initialState: ShopState = {
   products: [],
-  offers: [],
-  categories: [],
+  offers: {},
+  categories: {},
   isLoading: false,
   error: {
     message: "",
@@ -50,10 +50,6 @@ export const shopSlice = createSlice({
     });
   },
 });
-
-interface GroupedProductsInterface {
-  [index: string]: ProductInterface[];
-}
 
 const groupProductsByOffer = (products: ProductInterface[]) => {
   // group products by similar offer
