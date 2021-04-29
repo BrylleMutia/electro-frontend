@@ -11,11 +11,11 @@ const initialState: ShopState = {
   isLoading: false,
   error: {
     message: "",
-    errors: {}
+    errors: {},
   },
 };
 
-export const getAllProducts = createAsyncThunk<ProductInterface[], number, { rejectValue: ErrorResponse, }>("shop/getAllProducts", async (limit, thunkAPI) => {
+export const getAllProducts = createAsyncThunk<ProductInterface[], number, { rejectValue: ErrorResponse }>("shop/getAllProducts", async (limit, thunkAPI) => {
   return axios
     .get(`/products?limit=${limit}`)
     .then((response) => {
@@ -40,14 +40,54 @@ export const shopSlice = createSlice({
 
     builder.addCase(getAllProducts.fulfilled, (state, action: PayloadAction<ProductInterface[]>) => {
       state.products = action.payload;
+
+      state.offers = groupProductsByOffer(action.payload);
+      state.categories = groupProductsByCategory(action.payload);
     });
 
     builder.addMatcher(isAnyOf(getAllProducts.rejected), (state, action: PayloadAction<ErrorResponse>) => {
       state.error = action.payload;
-    })
+    });
   },
 });
 
-export const shopSelector = (state: RootState) => state.shop;
+interface GroupedProductsInterface {
+  [index: string]: ProductInterface[];
+}
 
+const groupProductsByOffer = (products: ProductInterface[]) => {
+  // group products by similar offer
+  let newProducts: GroupedProductsInterface = {};
+
+  products.map((product) => {
+    const { offer } = product;
+  
+    if (newProducts.hasOwnProperty(offer.offer_title)) {
+      newProducts[offer.offer_title].push(product);
+    } else newProducts[offer.offer_title] = [product];
+  });
+
+  return newProducts;
+};
+
+const groupProductsByCategory = (products: ProductInterface[]) => {
+  // group products by similar category
+  let newProducts: GroupedProductsInterface = {};
+
+  products.map((product) => {
+    const { categories } = product;
+    
+    // one product may have multiple categories
+    categories.forEach(category => {
+      if (newProducts.hasOwnProperty(category.name)) {
+        newProducts[category.name].push(product);
+      } else newProducts[category.name] = [product];
+    })
+  });
+
+  return newProducts;
+};
+
+
+export const shopSelector = (state: RootState) => state.shop;
 export default shopSlice.reducer;

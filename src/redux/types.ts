@@ -43,8 +43,8 @@ export interface LogoutResponse {
 // ------------ SHOP TYPES
 export interface ShopState {
   products: ProductInterface[],
-  offers: string[],
-  categories: string[],
+  offers: object,
+  categories: object,
   isLoading: boolean,
   error: ErrorResponse
 }
