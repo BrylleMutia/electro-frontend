@@ -15,10 +15,17 @@ const OfferGroup: React.FC<Props> = ({ offerProducts }) => {
     <div className={styles.offer_grid}>
       {offerProducts.map((offerProduct, index) => (
         <div className={index == 0 ? styles.first : ""}>
-          <Typography className={styles.product_name} variant="body1" color="secondary">
-            {offerProduct.product_name}
-          </Typography>
-          <img key={index} src={offerProduct.product_image} alt="offer-1" />
+          <a href="#">
+            <Typography className={styles.product_name} variant="body1" color="secondary">
+              {offerProduct.product_name}
+            </Typography>
+            <div className={styles.overlay_container}>
+              <img key={index} src={offerProduct.product_image} alt="offer-1" />
+              <div className={styles.overlay}>
+                <div className={styles.overlay_text}>See Details</div>
+              </div>
+            </div>
+          </a>
           <div className={styles.product}>
             <Typography variant="body2" style={{ opacity: 0.6 }}>
               P {offerProduct.price.toLocaleString().replace(",", ", ")}
