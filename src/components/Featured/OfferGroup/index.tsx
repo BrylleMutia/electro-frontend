@@ -1,7 +1,7 @@
 import React from "react";
 import styles from "./OfferGroup.module.scss";
 import type { ProductInterface } from "../../../redux/types";
-import { IconButton, Button } from "@material-ui/core";
+import { IconButton, Button, Typography, useMediaQuery } from "@material-ui/core";
 import { AddShoppingCart } from "@material-ui/icons";
 
 interface Props {
@@ -9,18 +9,26 @@ interface Props {
 }
 
 const OfferGroup: React.FC<Props> = ({ offerProducts }) => {
+  const matches = useMediaQuery("(max-width: 768px)");
+
   return (
     <div className={styles.offer_grid}>
       {offerProducts.map((offerProduct, index) => (
         <div className={index == 0 ? styles.first : ""}>
-          <h4>{offerProduct.product_name}</h4>
+          <Typography className={styles.product_name} variant="body1" color="secondary">
+            {offerProduct.product_name}
+          </Typography>
           <img key={index} src={offerProduct.product_image} alt="offer-1" />
           <div className={styles.product}>
-            <h4>P {offerProduct.price.toLocaleString()}</h4>
+            <Typography variant="body2" style={{ opacity: 0.6 }}>
+              P {offerProduct.price.toLocaleString().replace(",", ", ")}
+            </Typography>
             {index == 0 ? (
-              <Button color="primary" variant="contained" disableElevation size="small">Add to Cart</Button>
+              <Button color="primary" variant="contained" disableElevation size="small">
+                Add to Cart
+              </Button>
             ) : (
-              <IconButton style={{ background: "var(--primary)", padding: "0.4em" }} size="small">
+              <IconButton style={{ background: "var(--primary)", padding: "0.4em" }} hidden={matches} size="small">
                 <AddShoppingCart fontSize="small" />
               </IconButton>
             )}

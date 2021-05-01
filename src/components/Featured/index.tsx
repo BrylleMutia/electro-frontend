@@ -21,7 +21,7 @@ export default function Featured() {
 
   return (
     <div>
-      <Tabs textColor="secondary" variant="fullWidth" indicatorColor="secondary" centered value={tabView} onChange={handleTabChange} aria-label="simple tabs example">
+      <Tabs className={styles.tabs} textColor="secondary" variant="fullWidth" indicatorColor="secondary" centered value={tabView} onChange={handleTabChange} aria-label="simple tabs example">
         {Object.keys(offers).map((offerTitle, index) => (
           <Tab label={offerTitle} />
         ))}

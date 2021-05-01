@@ -149,7 +149,7 @@ function AuthForm() {
               <FormControlLabel label="Remember Me" control={<Checkbox checked={rememberUser} onChange={handleRememberUserToggle} inputProps={{ "aria-label": "primary checkbox" }} />} />
 
               <div className={styles.button_wrapper}>
-                <Typography component="a" href="#">
+                <Typography component="a" href="#" color="secondary">
                   Forgot password?
                 </Typography>
                 <Button type="submit" variant="contained" color="secondary">

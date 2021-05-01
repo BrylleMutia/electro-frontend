@@ -4,6 +4,8 @@ import type { RootState } from "../store";
 import type { ShopState, ProductInterface, ErrorResponse, GroupedProductsInterface } from "../types";
 import { useHeaders } from "../hooks";
 
+const MAX_PRODUCTS_PER_OFFER = 7;
+
 const initialState: ShopState = {
   products: [],
   offers: {},
@@ -57,9 +59,11 @@ const groupProductsByOffer = (products: ProductInterface[]) => {
 
   products.map((product) => {
     const { offer } = product;
-  
+
     if (newProducts.hasOwnProperty(offer.offer_title)) {
-      newProducts[offer.offer_title].push(product);
+      if (newProducts[offer.offer_title].length < MAX_PRODUCTS_PER_OFFER) {
+        newProducts[offer.offer_title].push(product);
+      }
     } else newProducts[offer.offer_title] = [product];
   });
 
@@ -72,18 +76,17 @@ const groupProductsByCategory = (products: ProductInterface[]) => {
 
   products.map((product) => {
     const { categories } = product;
-    
+
     // one product may have multiple categories
-    categories.forEach(category => {
+    categories.forEach((category) => {
       if (newProducts.hasOwnProperty(category.name)) {
         newProducts[category.name].push(product);
       } else newProducts[category.name] = [product];
-    })
+    });
   });
 
   return newProducts;
 };
-
 
 export const shopSelector = (state: RootState) => state.shop;
 export default shopSlice.reducer;

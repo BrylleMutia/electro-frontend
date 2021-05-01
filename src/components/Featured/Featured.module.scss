@@ -1,0 +1,12 @@
+@import "../../styles/breakpoints";
+
+.tabs {
+  button {
+    @media (max-width: $sm) {
+      font-size: 0.75rem;
+    }
+    @media (max-width: $xs) {
+      font-size: 0.65rem;
+    }
+  }
+}
