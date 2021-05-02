@@ -1,0 +1,30 @@
+@import "../../../../styles/breakpoints";
+@import "../../../../styles/components";
+
+.product {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 100%;
+
+
+  .name_wrapper {
+    display: flex;
+    flex: 1 1 100%;
+    align-items: flex-end;
+
+    .product_name {
+      flex: 1 1 100%;
+      justify-content: flex-end;
+
+      @media (max-width: $md) {
+        font-size: 0.8rem;
+      }
+    }
+  }
+}
+
+.details {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
