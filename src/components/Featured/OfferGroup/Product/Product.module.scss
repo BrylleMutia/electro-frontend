@@ -6,7 +6,6 @@
   flex-direction: column;
   flex: 1 1 100%;
 
-
   .name_wrapper {
     display: flex;
     flex: 1 1 100%;
@@ -22,13 +21,18 @@
     }
   }
 
-  // &_image {
-  //   height: 200px;
+  &_image {
+    display: flex;
+    min-height: 7em;
 
-  //   img {
-  //     object-fit: contain;
-  //   }
-  // }
+    img {
+      object-fit: contain;
+    }
+
+    @media (min-width: $sm) {
+      min-height: 15em;
+    }
+  }
 }
 
 .details {

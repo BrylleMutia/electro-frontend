@@ -15,7 +15,7 @@ const Categories = () => {
 
   return (
     <div>
-      <Tabs className={styles.tabs} textColor="secondary" variant="fullWidth" indicatorColor="secondary" centered value={tabView} onChange={handleTabChange} aria-label="simple tabs example">
+      <Tabs scrollButtons="auto" className={styles.tabs} textColor="secondary" variant="scrollable" indicatorColor="secondary" centered value={tabView} onChange={handleTabChange} aria-label="simple tabs example">
         {Object.keys(categories).map((categoryTitle, index) => (
           <Tab label={categoryTitle} />
         ))}
