@@ -1,0 +1,17 @@
+.category_grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+
+  .grid_item {
+    display: flex;
+    flex-direction: column;
+    padding: 1em;
+
+    a {
+      display: flex;
+      flex-direction: column;
+      flex: 1 1 100%;
+    }
+  }
+}

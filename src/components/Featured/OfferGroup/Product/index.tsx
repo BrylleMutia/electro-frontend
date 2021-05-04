@@ -1,17 +1,17 @@
 import React from "react";
 import styles from "./Product.module.scss";
-import { IconButton, Button, Typography, useMediaQuery } from "@material-ui/core";
+import { IconButton, Button, Typography, useMediaQuery, Tooltip } from "@material-ui/core";
 import { AddShoppingCart } from "@material-ui/icons";
 import type { ProductInterface } from "../../../../redux/types";
-
-
+import cx from "classnames";
 
 interface Props {
-  productDetails: ProductInterface,
-  index: number
+  productDetails: ProductInterface;
+  index: number;
+  showcaseFirstItem?: boolean;
 }
 
-const Product: React.FC<Props> = ({ productDetails, index }) => {
+const Product: React.FC<Props> = ({ productDetails, index, showcaseFirstItem = false }) => {
   const { product_name, product_image, price } = productDetails;
 
   const matches = useMediaQuery("(max-width: 768px)");
@@ -35,19 +35,20 @@ const Product: React.FC<Props> = ({ productDetails, index }) => {
         <Typography variant="body2" style={{ opacity: 0.6 }}>
           P {price.toLocaleString().replace(",", ", ")}
         </Typography>
-        {index == 0 ? (
+        {index == 0 && showcaseFirstItem ? (
           <Button color="primary" variant="contained" disableElevation size="small">
             Add to Cart
           </Button>
         ) : (
-          <IconButton style={{ background: "var(--primary)", padding: "0.4em" }} hidden={matches} size="small">
-            <AddShoppingCart fontSize="small" />
-          </IconButton>
+          <Tooltip title="Add to cart">
+            <IconButton hidden={matches} size="small">
+              <AddShoppingCart fontSize="small" />
+            </IconButton>
+          </Tooltip>
         )}
       </div>
     </div>
   );
-}
-
+};
 
 export default Product;
