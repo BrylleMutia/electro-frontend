@@ -1,4 +1,5 @@
 @import "./breakpoints";
+@import "./variables";
 
 .overlay_container {
   position: relative;
@@ -39,8 +40,9 @@
   }
 }
 
-
 .tabs {
+  border-bottom: 2px solid $border-color;
+
   button {
     @media (max-width: $sm) {
       font-size: 0.75rem;

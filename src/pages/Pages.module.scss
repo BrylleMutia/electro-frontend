@@ -1,0 +1,30 @@
+@import "../styles/breakpoints";
+@import "../styles/variables";
+
+.app {
+  max-width: 990px;
+  margin: 0 auto;
+  padding: 1em 0;
+}
+
+.showcase {
+  margin-top: 1em;
+}
+
+.featured {
+  margin: 3em 0;
+}
+
+.category {
+  background: $background-color;
+}
+
+@media (min-width: $sm) {
+  .app {
+    padding: 2em 1em;
+  }
+
+  .featured {
+    margin-bottom: 4em;
+  }
+}

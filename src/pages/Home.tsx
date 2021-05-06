@@ -5,23 +5,33 @@ import Featured from "../components/Featured";
 import Categories from "../components/Categories";
 import { useAppDispatch } from "../redux/hooks";
 import { getAllProducts } from "../redux/shop/shopSlice";
+import styles from "./Pages.module.scss";
+import cx from "classnames";
 
 export default function Home() {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
     dispatch(getAllProducts(0));
-  }, [])
+  }, []);
 
   return (
     <>
-      <div className="app">
+      <div className={styles.app}>
         <Navbar />
       </div>
-      <Showcase />
-      <div className="app">
-        <Featured />
-        <Categories />
+      <div className={styles.showcase}>
+        <Showcase />
+      </div>
+      <div className={styles.app}>
+        <div className={styles.featured}>
+          <Featured />
+        </div>
+      </div>
+      <div className={styles.category}>
+        <div className={styles.app}>
+          <Categories />
+        </div>
       </div>
     </>
   );

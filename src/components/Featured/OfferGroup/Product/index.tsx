@@ -25,7 +25,7 @@ const Product: React.FC<Props> = ({ productDetails, index, showcaseFirstItem = f
           </Typography>
         </div>
         <div className={cx(styles.overlay_container, styles.product_image)}>
-          <img key={index} src={product_image} alt="offer-1" />
+          <img key={index} src={product_image} alt="product" />
           <div className={styles.overlay}>
             <div className={styles.overlay_text}>See Details</div>
           </div>
