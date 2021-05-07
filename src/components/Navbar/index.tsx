@@ -5,16 +5,34 @@ import routes from "../../routes";
 import Search from "./Search";
 import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
-import { IconButton, Button, List, ListItemIcon, Drawer, ListItemText, Icon } from "@material-ui/core";
+import { IconButton, Button, List, ListItemIcon, Drawer, ListItemText, Icon, ListItem } from "@material-ui/core";
 import MenuIcon from "@material-ui/icons/Menu";
 import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
 import { useAppSelector } from "../../redux/hooks";
+
+import AccountCircleIcon from "@material-ui/icons/AccountCircle";
+import InputIcon from "@material-ui/icons/Input";
+import HelpIcon from "@material-ui/icons/Help";
 
 function Navbar(): JSX.Element {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const { isAuthenticated } = useAppSelector((state) => state.auth);
 
   const toggleDrawer = () => setIsDrawerOpen((prev) => !prev);
+
+  const getNavIcons = (name: string) => {
+    switch (name.toLowerCase()) {
+      case "profile":
+        return <AccountCircleIcon />;
+        break;
+      case "register":
+      case "login":
+        return <InputIcon />;
+        break;
+      default:
+        return <HelpIcon />;
+    }
+  };
 
   const theme = useTheme();
   const matches = useMediaQuery(theme.breakpoints.down("sm"));
@@ -31,18 +49,16 @@ function Navbar(): JSX.Element {
         </IconButton>
 
         <Drawer anchor="left" open={isDrawerOpen} onClose={toggleDrawer}>
-          {/* <div onClick={toggleDrawer}> */}
-          <List>
-            {routes.map((route, index) => (
-              <div key={index}>
-                {/* <ListItemIcon>
-                  <Icon>{route.icon}</Icon>
-                </ListItemIcon> */}
-                <ListItemText primary={route.name} />
-              </div>
-            ))}
-          </List>
-          {/* </div> */}
+          <div className={styles.drawer} onClick={toggleDrawer}>
+            <List>
+              {routes.map((route, index) => (
+                <ListItem key={index}>
+                  <ListItemIcon>{getNavIcons(route.name)}</ListItemIcon>
+                  <ListItemText primary={route.name} />
+                </ListItem>
+              ))}
+            </List>
+          </div>
         </Drawer>
       </div>
 
