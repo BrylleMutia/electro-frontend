@@ -11,7 +11,7 @@ const Category: React.FC<Props> = ({ categoryProducts }) => {
   return (
     <div className={styles.category_grid}>
       {categoryProducts.map((product, index) => (
-        <div className={styles.grid_item}>
+        <div className={styles.grid_item} key={index}>
           <Product productDetails={product} index={index} />
         </div>
       ))}

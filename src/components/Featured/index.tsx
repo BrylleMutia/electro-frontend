@@ -24,12 +24,12 @@ function Featured() {
     <div>
       <Tabs className={styles.tabs} textColor="secondary" variant="fullWidth" indicatorColor="secondary" centered value={tabView} onChange={handleTabChange} aria-label="simple tabs example">
         {Object.keys(offers).map((offerTitle, index) => (
-          <Tab label={offerTitle} />
+          <Tab key={index} label={offerTitle} />
         ))}
       </Tabs>
 
       {Object.keys(offers).map((offerTitle, index) => (
-        <TabPanel value={tabView} index={index}>
+        <TabPanel value={tabView} index={index} key={index}>
           <OfferGroup key={index} offerProducts={offers[offerTitle]} />
         </TabPanel>
       ))}
