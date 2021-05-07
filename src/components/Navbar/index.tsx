@@ -51,12 +51,29 @@ function Navbar(): JSX.Element {
         <Drawer anchor="left" open={isDrawerOpen} onClose={toggleDrawer}>
           <div className={styles.drawer} onClick={toggleDrawer}>
             <List>
-              {routes.map((route, index) => (
-                <ListItem key={index}>
-                  <ListItemIcon>{getNavIcons(route.name)}</ListItemIcon>
-                  <ListItemText primary={route.name} />
-                </ListItem>
-              ))}
+              {routes.map((route, index) => {
+                if (route.path === "/auth" && isAuthenticated) return;
+
+                return (
+                  <Link to={route.path}>
+                    <ListItem key={index}>
+                      <ListItemIcon>{getNavIcons(route.name)}</ListItemIcon>
+                      <ListItemText primary={route.name} />
+                    </ListItem>
+                  </Link>
+                );
+              })}
+
+              {isAuthenticated && (
+                <Link to="#">
+                  <ListItem>
+                    <ListItemIcon>
+                      <InputIcon />
+                    </ListItemIcon>
+                    <ListItemText primary="Logout" />
+                  </ListItem>
+                </Link>
+              )}
             </List>
           </div>
         </Drawer>

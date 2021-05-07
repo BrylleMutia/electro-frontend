@@ -14,12 +14,14 @@ export interface UserDetails {
   updated_at: string;
   name: string;
   email: string;
+  image: string;
   email_verified_at: string | null;
   address: string | null;
   barangay: string;
   city: string;
   province: string;
   zip_code: string;
+  role_id: number;
 }
 
 export type UserType = "buyer" | "seller";
@@ -45,6 +47,7 @@ export interface ShopState {
   products: ProductInterface[],
   offers: GroupedProductsInterface,
   categories: GroupedProductsInterface,
+  sellers: UserDetails[] | null,
   isLoading: boolean,
   error: ErrorResponse
 }
