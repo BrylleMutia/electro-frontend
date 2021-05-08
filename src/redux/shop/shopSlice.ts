@@ -98,8 +98,13 @@ const getAllSellers = (products: ProductInterface[]) => {
     sellers.push(seller);
   });
 
-  // remove duplicating sellers
-  const uniqueSellers = Array.from(new Set(products.map((product) => product.seller_id)), (uniqueSellerId) => sellers.find((seller) => seller.id === uniqueSellerId));
+  // 1. store unique ids using SET to remove duplicates
+  // 2. find the index of that unique id from original sellers array
+  // 3. use those index to get unique seller details
+  // NOTE: You can provide the MAP function as 2nd param to FROM method.
+  const uniqueSellers = Array.from(new Set(products.map((product) => product.seller_id)))
+    .map((uniqueSellerId) => sellers.findIndex((seller) => seller.id === uniqueSellerId))
+    .map((uniqueSellerIndex) => sellers[uniqueSellerIndex]);
 
   return uniqueSellers;
 };
