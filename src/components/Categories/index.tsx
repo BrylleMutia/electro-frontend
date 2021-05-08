@@ -14,7 +14,7 @@ const Categories = () => {
   };
 
   return (
-    <div>
+    <section>
       <Tabs scrollButtons="auto" className={styles.tabs} textColor="secondary" variant="scrollable" indicatorColor="secondary" value={tabView} onChange={handleTabChange} aria-label="simple tabs example">
         {Object.keys(categories).map((categoryTitle, index) => (
           <Tab key={index} label={categoryTitle} />
@@ -26,7 +26,7 @@ const Categories = () => {
             <Category categoryProducts={categories[categoryTitle]} />
           </TabPanel>
         ))}
-    </div>
+    </section>
   );
 };
 

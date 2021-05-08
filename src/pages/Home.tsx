@@ -3,6 +3,7 @@ import Navbar from "../components/Navbar";
 import Showcase from "../components/Showcase";
 import Featured from "../components/Featured";
 import Categories from "../components/Categories";
+import Sellers from "../components/Sellers";
 import { useAppDispatch } from "../redux/hooks";
 import { getAllProducts } from "../redux/shop/shopSlice";
 import styles from "./Pages.module.scss";
@@ -20,9 +21,9 @@ export default function Home() {
       <div className={styles.app}>
         <Navbar />
       </div>
-      <div className={styles.showcase}>
+      <section className={styles.showcase}>
         <Showcase />
-      </div>
+      </section>
       <div className={styles.app}>
         <div className={styles.featured}>
           <Featured />
@@ -32,6 +33,9 @@ export default function Home() {
         <div className={styles.app}>
           <Categories />
         </div>
+      </div>
+      <div className={styles.app}>
+        <Sellers />
       </div>
     </>
   );

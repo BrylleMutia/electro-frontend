@@ -1,0 +1,14 @@
+@import "../../styles/variables";
+@import "../../styles/breakpoints";
+
+.sellers {
+  &_header {
+    margin-left: 1em;
+
+    @media (max-width: $sm) {
+      & > p {
+        font-size: 0.9em;
+      }
+    }
+  }
+}
