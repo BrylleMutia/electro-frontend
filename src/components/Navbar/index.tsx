@@ -55,7 +55,7 @@ function Navbar(): JSX.Element {
                 if (route.path === "/auth" && isAuthenticated) return;
 
                 return (
-                  <Link to={route.path}>
+                  <Link to={route.path} key={index}>
                     <ListItem key={index}>
                       <ListItemIcon>{getNavIcons(route.name)}</ListItemIcon>
                       <ListItemText primary={route.name} />

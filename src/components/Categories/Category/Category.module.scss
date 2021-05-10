@@ -1,10 +1,12 @@
 @import "../../../styles/breakpoints";
+@import "../../../styles/layouts";
 
 .category_grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   grid-template-rows: repeat(2, 1fr);
   gap: 1em;
+  margin-bottom: 2em;
 
   .grid_item {
     display: flex;
