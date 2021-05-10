@@ -44,7 +44,7 @@ const Category: React.FC<Props> = ({ categoryProducts }) => {
           </div>
         ))}
       </div>
-      <Pagination color="primary" count={paginatedProducts.length} page={currentPage} onChange={handlePageChange} />
+      <Pagination style={{ display: paginatedProducts.length > 1 ? "" : "none" }} color="primary" count={paginatedProducts.length} page={currentPage} onChange={handlePageChange} />
     </div>
   );
 };

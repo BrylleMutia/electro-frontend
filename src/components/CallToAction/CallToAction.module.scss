@@ -1,0 +1,71 @@
+@import "../../styles/variables";
+@import "../../styles/layouts";
+@import "../../styles/breakpoints";
+
+.cta_background {
+  background: $primary;
+}
+
+.cta_container {
+  @extend .container, .flex_between;
+  padding-top: 1em;
+  padding-bottom: 1em;
+  align-items: center;
+
+  & > * {
+    margin: 0;
+  }
+
+  .header {
+    @extend .flex_row;
+
+    & > h4 {
+      margin: 0;
+      margin-left: 0.5em;
+    }
+  }
+}
+
+.cta_form {
+  font-size: 0.9rem;
+
+  & > * {
+    padding: 0.3em 1em;
+  }
+
+  input {
+    border-radius: 0;
+    border: none;
+    outline: none;
+    border-top-left-radius: 15px;
+    border-bottom-left-radius: 15px;
+    padding-left: 2em;
+  }
+
+  button {
+    border-radius: 0;
+    border: none;
+    outline: none;
+    border-top-right-radius: 15px;
+    border-bottom-right-radius: 15px;
+    background-color: $accent;
+    color: #fff;
+  }
+}
+
+@media (max-width: $lg) {
+  .cta_container {
+    flex-direction: column;
+    padding: 1.5em 0;
+
+    & > p {
+      margin-bottom: 1.5em;
+    }
+  }
+}
+
+@media (max-width: $sm) {
+  .cta_form, .cta_container {
+    font-size: 0.8rem;
+  }
+}

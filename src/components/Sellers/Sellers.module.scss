@@ -3,6 +3,7 @@
 
 .sellers {
   &_header {
+    margin: 1em 0;
     margin-left: 1em;
 
     @media (max-width: $sm) {

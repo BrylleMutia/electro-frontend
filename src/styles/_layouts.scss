@@ -1,3 +1,16 @@
+@import "./breakpoints";
+
+.container {
+  max-width: 990px;
+  margin: 0 auto;
+  padding: 1em 0;
+
+  @media (min-width: $sm) {
+      padding: 2em 1em;
+  }
+}
+
+// --------------- FLEX
 .flex_row {
   display: flex;
   justify-content: center;
@@ -9,6 +22,12 @@
   align-items: center;
 }
 
+.flex_between {
+  display: flex;
+  justify-content: space-between;
+}
+
+// --------------- MARGINS
 .mb_sm {
   margin-bottom: 1em;
 }

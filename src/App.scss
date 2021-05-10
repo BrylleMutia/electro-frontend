@@ -1,14 +1,12 @@
+@import "~antd/dist/antd.css";
+
 @import "styles/variables";
 @import "styles/breakpoints";
-
-@import '~antd/dist/antd.css';
 
 // override antd carousel active button style
 .ant-carousel .slick-dots li.slick-active button {
   background: $primary;
 }
-
-
 
 *,
 *::before,
@@ -18,9 +16,8 @@
   box-sizing: border-box;
 }
 
-
 body {
-  font-family: 'Open Sans', sans-serif;
+  font-family: "Open Sans", sans-serif;
 }
 
 #root {
@@ -32,6 +29,7 @@ img {
   display: block;
 }
 
-h3, h4 {
+h3,
+h4 {
   font-weight: 550;
 }

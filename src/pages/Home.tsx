@@ -1,13 +1,15 @@
 import React, { useEffect } from "react";
+import { useAppDispatch } from "../redux/hooks";
+import { getAllProducts } from "../redux/shop/shopSlice";
+import styles from "./Pages.module.scss";
+import cx from "classnames";
+
 import Navbar from "../components/Navbar";
 import Showcase from "../components/Showcase";
 import Featured from "../components/Featured";
 import Categories from "../components/Categories";
 import Sellers from "../components/Sellers";
-import { useAppDispatch } from "../redux/hooks";
-import { getAllProducts } from "../redux/shop/shopSlice";
-import styles from "./Pages.module.scss";
-import cx from "classnames";
+import CallToAction from "../components/CallToAction";
 
 export default function Home() {
   const dispatch = useAppDispatch();
@@ -18,25 +20,28 @@ export default function Home() {
 
   return (
     <>
-      <div className={styles.app}>
+      <div className={styles.container}>
         <Navbar />
       </div>
       <section className={styles.showcase}>
         <Showcase />
       </section>
-      <div className={styles.app}>
+      <div className={styles.container}>
         <div className={styles.featured}>
           <Featured />
         </div>
       </div>
       <div className={styles.category}>
-        <div className={styles.app}>
+        <div className={styles.container}>
           <Categories />
         </div>
       </div>
-      <div className={styles.app}>
-        <Sellers />
+      <div className={styles.container}>
+        <div className={styles.sellers}>
+          <Sellers />
+        </div>
       </div>
+      <CallToAction />
     </>
   );
 }
