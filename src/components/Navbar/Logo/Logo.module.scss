@@ -1,0 +1,17 @@
+@import "../../../styles/variables";
+@import "../../../styles/breakpoints";
+
+.logo {
+  font-family: "Staatliches", Roboto, sans-serif;
+  font-size: 1.5rem;
+  margin-bottom: 0;
+
+  span {
+    font-size: 2rem;
+    color: $primary;
+  }
+
+  @media (max-width: $sm) {
+    display: none;
+  }
+}

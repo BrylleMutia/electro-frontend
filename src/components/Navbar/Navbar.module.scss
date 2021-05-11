@@ -13,16 +13,6 @@
   }
 }
 
-.logo {
-  font-family: "Staatliches", Roboto, sans-serif;
-  font-size: 1.5rem;
-  margin-bottom: 0;
-
-  span {
-    color: $primary;
-  }
-}
-
 .drawer {
   padding-right: 5em;
 }
@@ -39,9 +29,6 @@
 }
 
 @media (max-width: $sm) {
-  .logo {
-    display: none;
-  }
   .search_wrapper {
     margin: 0 0.5em;
   }

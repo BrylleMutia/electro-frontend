@@ -10,6 +10,7 @@ import Featured from "../components/Featured";
 import Categories from "../components/Categories";
 import Sellers from "../components/Sellers";
 import CallToAction from "../components/CallToAction";
+import Footer from "../components/Footer";
 
 export default function Home() {
   const dispatch = useAppDispatch();
@@ -42,6 +43,9 @@ export default function Home() {
         </div>
       </div>
       <CallToAction />
+      <div className={styles.container}>
+        <Footer />
+      </div>
     </>
   );
 }

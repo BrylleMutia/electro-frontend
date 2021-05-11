@@ -1,0 +1,25 @@
+@import "../../styles/layouts";
+
+.footer {
+  &_grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+
+    h4,
+    p {
+      margin: 0;
+    }
+  }
+}
+
+.flex_row {
+  justify-content: flex-start;
+  align-items: center;
+  margin-bottom: 1em;
+}
+
+.links {
+  display: flex;
+  max-height: 5em;
+  flex-wrap: wrap;
+}

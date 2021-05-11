@@ -2,13 +2,15 @@ import React, { useState } from "react";
 import styles from "./Navbar.module.scss";
 import { Link } from "react-router-dom";
 import routes from "../../routes";
-import Search from "./Search";
 import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import { IconButton, Button, List, ListItemIcon, Drawer, ListItemText, Icon, ListItem } from "@material-ui/core";
 import MenuIcon from "@material-ui/icons/Menu";
 import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
 import { useAppSelector } from "../../redux/hooks";
+
+import Search from "./Search";
+import Logo from "./Logo";
 
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 import InputIcon from "@material-ui/icons/Input";
@@ -24,11 +26,9 @@ function Navbar(): JSX.Element {
     switch (name.toLowerCase()) {
       case "profile":
         return <AccountCircleIcon />;
-        break;
       case "register":
       case "login":
         return <InputIcon />;
-        break;
       default:
         return <HelpIcon />;
     }
@@ -40,9 +40,7 @@ function Navbar(): JSX.Element {
   return (
     <nav className={styles.nav}>
       <div>
-        <h3 className={styles.logo}>
-          Electro<span>.</span>
-        </h3>
+        <Logo />
 
         <IconButton aria-controls="simple-menu" aria-haspopup="true" onClick={toggleDrawer}>
           <MenuIcon />
