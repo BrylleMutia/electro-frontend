@@ -11,14 +11,14 @@ import { FaFacebook, FaTwitter, FaYoutube, FaGooglePlusG, FaLinkedin } from "rea
 function Footer() {
   return (
     <IconContext.Provider value={{ color: "grey", size: "2em", style: { marginRight: "1em" } }}>
-      <div className={styles.footer_grid}>
-        <div>
+      <div className={styles.footer_container}>
+        <div className={styles.info}>
           <Logo />
           <div className={styles.flex_row}>
             <HeadsetMicIcon color="primary" fontSize="large" style={{ marginRight: "0.5em" }} />
             <div>
               <p>Got questions? Call us.</p>
-              <p>(800) 8001-8588</p>
+              <p>(800) 8001-8588 / (0600) 764-755</p>
             </div>
           </div>
           <div className={styles.mb_sm}>
@@ -26,24 +26,38 @@ function Footer() {
             <p>15 Real St, Borongan City, PH</p>
           </div>
           <div>
-            <FaFacebook />
-            <FaTwitter />
-            <FaYoutube />
-            <FaGooglePlusG />
-            <FaLinkedin />
+            <a href="/test">
+              <FaFacebook />
+            </a>
+            <a href="/test">
+              <FaTwitter />
+            </a>
+            <a href="/test">
+              <FaYoutube />
+            </a>
+            <a href="/test">
+              <FaGooglePlusG />
+            </a>
+            <a href="/test">
+              <FaLinkedin />
+            </a>
           </div>
         </div>
 
-        {routes.map((nav, index) => (
-          <div key={index} className={styles.links}>
-            <h4>{nav.header}</h4>
-            {nav.links.map((link, index) => (
-              <a href="/test" key={index}>
-                <p>{link}</p>
-              </a>
-            ))}
-          </div>
-        ))}
+        <div className={styles.nav_container}>
+          {routes.map((nav, index) => (
+            <div key={index} className={index === 0 ? styles.products_nav_grid : styles.customer_care}>
+              <h4 style={{ marginBottom: "1em" }}>{nav.header}</h4>
+              <div className={styles.products_nav}>
+                {nav.links.map((link, index) => (
+                  <a href="/test" key={index}>
+                    <p>{link}</p>
+                  </a>
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
     </IconContext.Provider>
   );

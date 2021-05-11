@@ -4,6 +4,7 @@ import "./App.scss";
 import Auth from "./pages/Auth";
 import Home from "./pages/Home";
 import NotFound from "./pages/NotFound";
+import UnderConstruction from "./pages/UnderConstruction";
 
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
@@ -15,7 +16,8 @@ function App(): JSX.Element {
         {/* {location.pathname !== "/auth" && <Navbar />} */}
         <Route exact path="/" component={Home} />
         <Route exact path="/auth" component={Auth} />
-        <Route path="*" component={NotFound} /> 
+        <Route exact path="/test" component={UnderConstruction} />
+        <Route path="*" component={NotFound} />
       </Switch>
     </Router>
   );

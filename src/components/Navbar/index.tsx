@@ -40,7 +40,10 @@ function Navbar(): JSX.Element {
   return (
     <nav className={styles.nav}>
       <div>
+        <div className={styles.logo_container}>
+
         <Logo />
+        </div>
 
         <IconButton aria-controls="simple-menu" aria-haspopup="true" onClick={toggleDrawer}>
           <MenuIcon />
