@@ -4,6 +4,7 @@ import { IconButton, Button, Typography, useMediaQuery, Tooltip } from "@materia
 import { AddShoppingCart } from "@material-ui/icons";
 import type { ProductInterface } from "../../../../redux/types";
 import cx from "classnames";
+import { Link } from "react-router-dom";
 
 interface Props {
   productDetails: ProductInterface;
@@ -12,13 +13,13 @@ interface Props {
 }
 
 const Product: React.FC<Props> = ({ productDetails, index, showcaseFirstItem = false }) => {
-  const { product_name, product_image, price } = productDetails;
+  const { id, product_name, product_image, price } = productDetails;
 
   const matches = useMediaQuery("(max-width: 768px)");
 
   return (
     <div className={styles.product}>
-      <a href="#">
+      <Link to={`/product/${id}`}>
         <div className={styles.name_wrapper}>
           <Typography className={styles.product_name} variant="body1" color="secondary">
             {product_name}
@@ -30,7 +31,7 @@ const Product: React.FC<Props> = ({ productDetails, index, showcaseFirstItem = f
             <div className={styles.overlay_text}>See Details</div>
           </div>
         </div>
-      </a>
+      </Link>
       <div className={styles.details}>
         <Typography variant="body2" style={{ opacity: 0.6 }}>
           P {price.toLocaleString().replace(",", ", ")}

@@ -14,6 +14,7 @@ const initialState: AuthState = {
   error: { message: "", errors: {} },
 };
 
+// --------------- ACTIONS
 // BUYER / USER AUTH
 
 // createAsyncThunk<return type, parameter type, {dispatch?, state?, extra?, rejectValue?}>
@@ -84,6 +85,8 @@ export const loginSeller = createAsyncThunk<AuthResponse, LoginInfo, { rejectVal
     });
 });
 
+
+// ----------------- SLICE
 export const logoutSeller = createAsyncThunk<{ rejectValue: ErrorResponse }>("auth/logoutSeller", async (thunkAPI) => {
   return axios.post("/seller/logout");
 });

@@ -11,6 +11,7 @@ const initialState: ShopState = {
   offers: {},
   categories: {},
   sellers: null,
+  currentProduct: null,
   isLoading: false,
   error: {
     message: "",
@@ -18,6 +19,7 @@ const initialState: ShopState = {
   },
 };
 
+// -------------- ACTIONS
 export const getAllProducts = createAsyncThunk<ProductInterface[], number, { rejectValue: ErrorResponse }>("shop/getAllProducts", async (limit, thunkAPI) => {
   return axios
     .get(`/products?limit=${limit}`)
@@ -32,29 +34,60 @@ export const getAllProducts = createAsyncThunk<ProductInterface[], number, { rej
     });
 });
 
+export const getProductDetails = createAsyncThunk<ProductInterface, string, { rejectValue: ErrorResponse }>("shop/getProductDetails", async (id, thunkAPI) => {
+  return axios
+    .get(`/products/${id}`)
+    .then((response) => {
+      return response.data;
+    })
+    .catch((err) => {
+      return thunkAPI.rejectWithValue({
+        message: err.response.data.message,
+        errors: err.response.data?.errors,
+      });
+    });
+});
+
+
+// --------------- SLICE
 export const shopSlice = createSlice({
   name: "shop",
   initialState,
   reducers: {},
   extraReducers: (builder) => {
-    builder.addCase(getAllProducts.pending, (state) => {
-      state.isLoading = true;
-    });
-
     builder.addCase(getAllProducts.fulfilled, (state, action: PayloadAction<ProductInterface[]>) => {
       state.products = action.payload;
-
       state.offers = groupProductsByOffer(action.payload);
       state.categories = groupProductsByCategory(action.payload);
       state.sellers = getAllSellers(action.payload);
+      state.isLoading = false;
+      state.error = {
+        message: "",
+        errors: {}
+      }
     });
 
-    builder.addMatcher(isAnyOf(getAllProducts.rejected), (state, action: PayloadAction<ErrorResponse>) => {
+    builder.addCase(getProductDetails.fulfilled, (state, action: PayloadAction<ProductInterface>) => {
+      state.currentProduct = action.payload;
+      state.isLoading = false;
+      state.error = {
+        message: "",
+        errors: {}
+      }
+    });
+
+    builder.addMatcher(isAnyOf(getAllProducts.pending, getProductDetails.pending), (state) => {
+      state.isLoading = true;
+    });
+
+    builder.addMatcher(isAnyOf(getAllProducts.rejected, getAllProducts.rejected), (state, action: PayloadAction<ErrorResponse>) => {
       state.error = action.payload;
     });
   },
 });
 
+
+// --------------- HELPER FUNCTIONS
 const groupProductsByOffer = (products: ProductInterface[]) => {
   // group products by similar offer
   let newProducts: GroupedProductsInterface = {};
@@ -108,6 +141,8 @@ const getAllSellers = (products: ProductInterface[]) => {
 
   return uniqueSellers;
 };
+
+
 
 export const shopSelector = (state: RootState) => state.shop;
 export default shopSlice.reducer;

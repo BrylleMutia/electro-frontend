@@ -48,6 +48,7 @@ export interface ShopState {
   offers: GroupedProductsInterface,
   categories: GroupedProductsInterface,
   sellers: UserDetails[] | null,
+  currentProduct: ProductInterface | null,
   isLoading: boolean,
   error: ErrorResponse
 }

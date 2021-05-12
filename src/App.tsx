@@ -3,6 +3,7 @@ import "./App.scss";
 
 import Auth from "./pages/Auth";
 import Home from "./pages/Home";
+import Product from "./pages/Product";
 import NotFound from "./pages/NotFound";
 import UnderConstruction from "./pages/UnderConstruction";
 
@@ -17,6 +18,7 @@ function App(): JSX.Element {
         <Route exact path="/" component={Home} />
         <Route exact path="/auth" component={Auth} />
         <Route exact path="/test" component={UnderConstruction} />
+        <Route path="/product/:id" component={Product} />
         <Route path="*" component={NotFound} />
       </Switch>
     </Router>
