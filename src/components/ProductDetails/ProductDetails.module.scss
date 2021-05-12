@@ -1,0 +1,51 @@
+@import "../../styles/layouts";
+@import "../../styles/breakpoints";
+
+.product {
+  &_image {
+    width: 40%;
+  }
+
+  &_container {
+    @extend .flex_row;
+    justify-content: flex-start;
+    gap: 2em;
+  }
+}
+
+.categories {
+  display: flex;
+  gap: 0.5em;
+}
+
+.details {
+  & > p.description {
+    width: 40ch;
+  }
+
+  & > h2 {
+    margin-bottom: 0;
+  }
+
+  & > h4 {
+    margin-bottom: 1em;
+  }
+}
+
+.cart_form {
+  flex-basis: 30%;
+}
+
+@media (max-width: $sm) {
+  .product {
+    &_image {
+      width: 70%;
+      align-self: center;
+    }
+
+    &_container {
+      flex-direction: column;
+      padding: 1em;
+    }
+  }
+}

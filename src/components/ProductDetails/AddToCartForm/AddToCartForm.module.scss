@@ -1,0 +1,24 @@
+@import "../../../styles/variables";
+@import "../../../styles/breakpoints";
+
+.cart_form {
+  margin: 1em;
+
+  .availability {
+    padding-bottom: 0.5em;
+    border-bottom: 1px solid $border-color;
+
+    span {
+      color: $secondary;
+    }
+  }
+
+  .price {
+    margin: 0.8em 0;
+  }
+
+  .quantity {
+    margin-bottom: 1em;
+    width: 100%;
+  }
+}

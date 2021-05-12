@@ -32,7 +32,7 @@ export default function Home() {
           <Featured />
         </div>
       </div>
-      <div className={styles.category}>
+      <div id="categories" className={styles.category}>
         <div className={styles.container}>
           <Categories />
         </div>
