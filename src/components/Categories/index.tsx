@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 import styles from "./Categories.module.scss";
 import { useAppSelector } from "../../redux/hooks";
-import Category from "./Category";
-import { Tab, Tabs } from "@material-ui/core";
+
+import { StyledTabs } from "../StyledComponents";
+import Tab from "@material-ui/core/Tab";
 import { TabPanel } from "../AuthForm";
+import Category from "./Category";
 
 const Categories = () => {
   const { categories } = useAppSelector((state) => state.shop);
@@ -15,11 +17,11 @@ const Categories = () => {
 
   return (
     <section>
-      <Tabs scrollButtons="auto" className={styles.tabs} textColor="secondary" variant="scrollable" indicatorColor="secondary" value={tabView} onChange={handleTabChange} aria-label="simple tabs example">
+      <StyledTabs scrollButtons="auto" className={styles.tabs} textColor="secondary" variant="scrollable" indicatorColor="secondary" value={tabView} onChange={handleTabChange} aria-label="category tabs">
         {Object.keys(categories).map((categoryTitle, index) => (
           <Tab key={index} label={categoryTitle} />
         ))}
-      </Tabs>
+      </StyledTabs>
 
         {Object.keys(categories).map((categoryTitle, index) => (
           <TabPanel value={tabView} index={index} key={index}>

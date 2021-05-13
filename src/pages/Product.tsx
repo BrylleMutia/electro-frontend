@@ -8,6 +8,7 @@ import CircularProgress from "@material-ui/core/CircularProgress";
 import Navbar from "../components/Navbar";
 import ProductNav from "../components/ProductNav";
 import ProductDetails from "../components/ProductDetails";
+import ProductTabs from "../components/ProductTabs";
 
 interface RouteParams {
   id: string;
@@ -28,13 +29,22 @@ function Product() {
     return <CircularProgress />;
   } else {
     return (
-      <div className={styles.container}>
-        <Navbar />
-        <div className={styles.product_nav}>
-          <ProductNav />
+      <main>
+        <div className={styles.container}>
+          <Navbar />
+          <div className={styles.product_nav}>
+            <ProductNav />
+          </div>
+          <div className={styles.mb_md}>
+            <ProductDetails />
+          </div>
         </div>
-        <ProductDetails />
-      </div>
+        <div className={styles.product_tabs}>
+          <div className={styles.container}>
+            <ProductTabs />
+          </div>
+        </div>
+      </main>
     );
   }
 }

@@ -2,7 +2,6 @@
 @import "../styles/variables";
 @import "../styles/layouts";
 
-
 .showcase {
   margin-top: 1em;
 }
@@ -25,16 +24,22 @@
   align-items: center;
 }
 
-.product_nav {
-  margin: 2em 1em 1em 1em;
+.product {
+  &_nav {
+    margin: 2em 1em 1em 1em;
+  }
+
+  &_tabs {
+    background: $background-color;
+  }
 }
 
 @media (min-width: $sm) {
   .featured {
     margin-bottom: 4em;
   }
-  
+
   .product_nav {
-    margin-bottom: 4em;
+    margin: 2em 1em 4em 1em;
   }
 }

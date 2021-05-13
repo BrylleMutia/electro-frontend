@@ -1,12 +1,12 @@
-import { createMuiTheme } from '@material-ui/core/styles';
+import { createMuiTheme } from "@material-ui/core/styles";
 
 const theme = createMuiTheme({
   palette: {
     primary: {
-      main: '#F9D709',
+      main: "#F9D709",
     },
     secondary: {
-      main: '#0D55B4',
+      main: "#0D55B4",
     },
   },
   breakpoints: {
