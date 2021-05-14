@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction, createAsyncThunk, isAnyOf } from "@reduxjs/toolkit";
 import axios from "axios";
 import type { RootState } from "../store";
-import type { ShopState, ProductInterface, ErrorResponse, GroupedProductsInterface, UserDetails } from "../types";
+import type { ShopState, ProductInterface, ErrorResponse, GroupedProductsInterface, UserDetails, ProductDetailsInterface } from "../types";
 import { useHeaders } from "../hooks";
 
 const MAX_PRODUCTS_PER_OFFER = 7;
@@ -11,7 +11,50 @@ const initialState: ShopState = {
   offers: {},
   categories: {},
   sellers: null,
-  currentProduct: null,
+  currentProduct: {
+    id: 1,
+    created_at: "",
+    updated_at: "",
+    product_name: "",
+    slug: "",
+    price: 0,
+    product_image: "",
+    description: "",
+    categories: [
+      {
+        id: 1,
+        name: "",
+        pivot: {
+          product_id: 1,
+          category_id: 1,
+        },
+      },
+    ],
+    seller_id: 1,
+    seller: {
+      id: 1,
+      created_at: "",
+      updated_at: "",
+      name: "",
+      email: "",
+      image: "",
+      email_verified_at: null,
+      address: null,
+      barangay: "",
+      city: "",
+      province: "",
+      zip_code: "",
+      role_id: 1,
+    },
+    offer_id: 1,
+    offer: {
+      id: 1,
+      created_at: "",
+      updated_at: "",
+      offer_title: "",
+    },
+    reviews: [],
+  },
   isLoading: false,
   error: {
     message: "",
@@ -34,7 +77,7 @@ export const getAllProducts = createAsyncThunk<ProductInterface[], number, { rej
     });
 });
 
-export const getProductDetails = createAsyncThunk<ProductInterface, string, { rejectValue: ErrorResponse }>("shop/getProductDetails", async (id, thunkAPI) => {
+export const getProductDetails = createAsyncThunk<ProductDetailsInterface, string, { rejectValue: ErrorResponse }>("shop/getProductDetails", async (id, thunkAPI) => {
   return axios
     .get(`/products/${id}`)
     .then((response) => {
@@ -47,7 +90,6 @@ export const getProductDetails = createAsyncThunk<ProductInterface, string, { re
       });
     });
 });
-
 
 // --------------- SLICE
 export const shopSlice = createSlice({
@@ -63,17 +105,17 @@ export const shopSlice = createSlice({
       state.isLoading = false;
       state.error = {
         message: "",
-        errors: {}
-      }
+        errors: {},
+      };
     });
 
-    builder.addCase(getProductDetails.fulfilled, (state, action: PayloadAction<ProductInterface>) => {
+    builder.addCase(getProductDetails.fulfilled, (state, action: PayloadAction<ProductDetailsInterface>) => {
       state.currentProduct = action.payload;
       state.isLoading = false;
       state.error = {
         message: "",
-        errors: {}
-      }
+        errors: {},
+      };
     });
 
     builder.addMatcher(isAnyOf(getAllProducts.pending, getProductDetails.pending), (state) => {
@@ -85,7 +127,6 @@ export const shopSlice = createSlice({
     });
   },
 });
-
 
 // --------------- HELPER FUNCTIONS
 const groupProductsByOffer = (products: ProductInterface[]) => {
@@ -141,8 +182,6 @@ const getAllSellers = (products: ProductInterface[]) => {
 
   return uniqueSellers;
 };
-
-
 
 export const shopSelector = (state: RootState) => state.shop;
 export default shopSlice.reducer;

@@ -44,17 +44,17 @@ export interface LogoutResponse {
 
 // ------------ SHOP TYPES
 export interface ShopState {
-  products: ProductInterface[],
-  offers: GroupedProductsInterface,
-  categories: GroupedProductsInterface,
-  sellers: UserDetails[] | null,
-  currentProduct: ProductInterface | null,
-  isLoading: boolean,
-  error: ErrorResponse
+  products: ProductInterface[];
+  offers: GroupedProductsInterface;
+  categories: GroupedProductsInterface;
+  sellers: UserDetails[] | null;
+  currentProduct: ProductDetailsInterface;
+  isLoading: boolean;
+  error: ErrorResponse;
 }
 
 export interface ProductInterface {
-  id: string;
+  id: number;
   created_at: string;
   updated_at: string;
   product_name: string;
@@ -66,7 +66,11 @@ export interface ProductInterface {
   seller_id: number;
   seller: UserDetails;
   offer_id: number;
-  offer: OfferInterface
+  offer: OfferInterface;
+}
+
+export interface ProductDetailsInterface extends ProductInterface {
+  reviews: ReviewInterface[] | null;
 }
 
 export interface GroupedProductsInterface {
@@ -87,4 +91,15 @@ export interface CategoryInterface {
     product_id: number;
     category_id: number;
   };
+}
+
+export interface ReviewInterface {
+  id: number;
+  created_at: string;
+  updated_at: string;
+  product_id: number;
+  rating: number;
+  feedback: string;
+  user_id: number;
+  user: UserDetails;
 }
