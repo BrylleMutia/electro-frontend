@@ -4,6 +4,7 @@ import { useAppSelector } from "../../../redux/hooks";
 
 import Review from "./Review";
 import RatingBar from "./RatingBar";
+import ReviewForm from "./ReviewForm";
 
 function ReviewsTab() {
   const { reviews } = useAppSelector((state) => state.shop.currentProduct);
@@ -49,7 +50,6 @@ function ReviewsTab() {
     getRatingStats();
   }, []);
 
-
   if (!reviews?.length) return <h4>No reviews</h4>;
 
   return (
@@ -61,9 +61,15 @@ function ReviewsTab() {
         <div className={styles.overall}>Overall</div>
       </div>
 
-      {getRatingStats().map((rating, index) => (
-        <RatingBar rating={5 - index} key={index} occurence={rating.occurence} percentage={rating.percentage} />
-      ))}
+      <div className={styles.flex_between}>
+        <div>
+          {getRatingStats().map((rating, index) => (
+            <RatingBar rating={5 - index} key={index} occurence={rating.occurence} percentage={rating.percentage} />
+          ))}
+        </div>
+
+        <ReviewForm />
+      </div>
 
       {reviews?.map((review, index) => (
         <Review reviewDetails={review} key={index} />
