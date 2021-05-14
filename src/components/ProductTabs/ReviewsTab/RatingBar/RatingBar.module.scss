@@ -1,0 +1,12 @@
+@import "../../../../styles/layouts";
+
+.rating_bar {
+  display: flex;
+  align-items: center;
+  margin-bottom: 0.8em;
+
+  .occurence {
+    font-size: 0.8rem;  
+    margin-left: 1em;
+  }
+}

@@ -29,6 +29,7 @@ export const RatingProgress = withStyles((theme) => ({
   root: {
     height: 10,
     borderRadius: 5,
+    width: "15em"
   },
   colorPrimary: {
     backgroundColor: theme.palette.grey[theme.palette.type === "light" ? 200 : 700],

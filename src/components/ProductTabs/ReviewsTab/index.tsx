@@ -3,7 +3,7 @@ import styles from "./ReviewsTab.module.scss";
 import { useAppSelector } from "../../../redux/hooks";
 
 import Review from "./Review";
-import RatingBar from "./Review/RatingBar";
+import RatingBar from "./RatingBar";
 
 function ReviewsTab() {
   const { reviews } = useAppSelector((state) => state.shop.currentProduct);
@@ -15,19 +15,21 @@ function ReviewsTab() {
     }
   };
 
-  const getRatingPercentages = () => {
-    // get occurence percentage of each rating on all reviews
+  const getRatingStats = () => {
+    // get occurence and percentage of each rating on all reviews
     // data needed for rating bar
 
     let ratingPercentages = [];
 
     for (let i = 1; i <= 5; i++) {
-      let totalOccurrence = 0;
+      let ratingStats = { occurence: 0, percentage: 0 };
 
       reviews?.forEach((review) => {
-        if (review.rating == i) totalOccurrence++;
+        if (review.rating == i) ratingStats.occurence++;
       });
-      ratingPercentages.push(getPercentage(totalOccurrence));
+
+      ratingStats.percentage = getPercentage(ratingStats.occurence);
+      ratingPercentages.push(ratingStats);
     }
 
     // reverse the array bc ratings must render in descending order
@@ -44,7 +46,7 @@ function ReviewsTab() {
   };
 
   useEffect(() => {
-    getRatingPercentages();
+    getRatingStats();
   }, []);
 
 
@@ -59,8 +61,8 @@ function ReviewsTab() {
         <div className={styles.overall}>Overall</div>
       </div>
 
-      {getRatingPercentages().map((ratingPercentage, index) => (
-        <RatingBar rating={5 - index} key={index} percentage={ratingPercentage} />
+      {getRatingStats().map((rating, index) => (
+        <RatingBar rating={5 - index} key={index} occurence={rating.occurence} percentage={rating.percentage} />
       ))}
 
       {reviews?.map((review, index) => (
