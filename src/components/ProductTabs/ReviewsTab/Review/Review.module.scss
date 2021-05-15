@@ -1,0 +1,23 @@
+@import "../../../../styles/variables";
+
+.review {
+  & > p {
+    color: $text-color;
+    margin-bottom: 0.5em;
+  }
+
+  .user_details {
+    display: flex;
+    align-items: center;
+
+    & > * {
+      margin-right: 0.5em;
+      margin-bottom: 0;
+    }
+
+    .avatar {
+      width: 1.5em;
+      height: 1.5em;
+    }
+  }
+}
