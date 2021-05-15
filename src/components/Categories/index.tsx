@@ -23,11 +23,13 @@ const Categories = () => {
         ))}
       </StyledTabs>
 
-        {Object.keys(categories).map((categoryTitle, index) => (
-          <TabPanel value={tabView} index={index} key={index}>
+      {Object.keys(categories).map((categoryTitle, index) => (
+        <TabPanel value={tabView} index={index} key={index} padding={0}>
+          <div style={{ marginTop: "1.5em" }}>
             <Category categoryProducts={categories[categoryTitle]} />
-          </TabPanel>
-        ))}
+          </div>
+        </TabPanel>
+      ))}
     </section>
   );
 };

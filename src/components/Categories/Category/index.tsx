@@ -36,7 +36,7 @@ const Category: React.FC<Props> = ({ categoryProducts }) => {
   }, []);
 
   return (
-    <div className={styles.flex_column}>
+    <div className={styles.category_container}>
       <div className={styles.category_grid}>
         {paginatedProducts[currentPage - 1].map((product, index) => (
           <div className={styles.grid_item} key={index}>
