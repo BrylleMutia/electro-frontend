@@ -1,13 +1,26 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import styles from "./ReviewsTab.module.scss";
 import { useAppSelector } from "../../../redux/hooks";
+import paginate from "../../../utils/pagination";
+import { ReviewInterface } from "../../../redux/types";
+import Pagination from "@material-ui/lab/Pagination";
 
 import Review from "./Review";
 import RatingBar from "./RatingBar";
 import ReviewForm from "./ReviewForm";
 
+
+
+type ReviewPageInterface = ReviewInterface[];
+
 function ReviewsTab() {
   const { reviews } = useAppSelector((state) => state.shop.currentProduct);
+  const [paginatedReviews, setPaginatedReviews] = useState<ReviewPageInterface[]>([[]]);
+  const [currentPage, setCurrentPage] = useState(1);
+
+  const handlePageChange = (event: React.ChangeEvent<unknown>, page: number) => {
+    setCurrentPage(page);
+  };
 
   const getAverageRating = () => {
     if (reviews) {
@@ -50,6 +63,25 @@ function ReviewsTab() {
     getRatingStats();
   }, []);
 
+  useEffect(() => {
+    if (reviews?.length) {
+      // group products into pages
+      // 5 products per page
+      const REVIEW_PER_PAGE = 5;
+
+      let groupedReviews: ReviewPageInterface[] = [];
+      let groupsNum = Math.floor(reviews.length / REVIEW_PER_PAGE) + 1;
+
+      for (let pageNum = 1; pageNum <= groupsNum; pageNum++) {
+        groupedReviews.push(paginate(reviews, pageNum, REVIEW_PER_PAGE));
+      }
+
+      setPaginatedReviews(groupedReviews);
+    }
+  }, []);
+
+
+
   if (!reviews?.length) return <h4>No reviews</h4>;
 
   return (
@@ -71,12 +103,14 @@ function ReviewsTab() {
         <ReviewForm />
       </div>
 
-      <div>
-        {reviews?.map((review, index) => (
+      <div className={styles.reviews}>
+        {paginatedReviews[currentPage - 1].map((review, index) => (
           <div className={styles.mb_md}>
             <Review reviewDetails={review} key={index} />
           </div>
         ))}
+
+        <Pagination className={styles.pagination} style={{ display: paginatedReviews.length > 1 ? "" : "none" }} color="primary" count={paginatedReviews.length} page={currentPage} onChange={handlePageChange} />
       </div>
     </div>
   );

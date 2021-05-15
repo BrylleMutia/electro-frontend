@@ -28,8 +28,8 @@ const Category: React.FC<Props> = ({ categoryProducts }) => {
     let newProducts: CategoryPage[] = [];
     let groupsNum = Math.floor(categoryProducts.length / PRODUCT_PER_PAGE) + 1;
 
-    for (let i = 1; i <= groupsNum; i++) {
-      newProducts.push(paginate(categoryProducts, i, PRODUCT_PER_PAGE));
+    for (let pageNum = 1; pageNum <= groupsNum; pageNum++) {
+      newProducts.push(paginate(categoryProducts, pageNum, PRODUCT_PER_PAGE));
     }
 
     setPaginatedProducts(newProducts);

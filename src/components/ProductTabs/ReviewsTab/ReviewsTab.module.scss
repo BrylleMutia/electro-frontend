@@ -20,6 +20,15 @@
       margin-bottom: 2em;
     }
   }
+
+  .reviews {
+    display: flex;
+    flex-direction: column;
+
+    .pagination {
+      align-self: center;
+    }
+  }
 }
 
 
