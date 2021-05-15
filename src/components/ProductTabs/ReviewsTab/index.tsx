@@ -53,29 +53,31 @@ function ReviewsTab() {
   if (!reviews?.length) return <h4>No reviews</h4>;
 
   return (
-    <div className={styles.rating_tab}>
-      <h5>Based on {reviews?.length} reviews</h5>
+    <div className={styles.rating_container}>
+      <div className={styles.rating_bar_container}>
+        <div className={styles.rating_bar}>
+          <h5>Based on {reviews?.length} reviews</h5>
 
-      <div className={styles.rating_container}>
-        <div className={styles.rating}>{getAverageRating()}</div>
-        <div className={styles.overall}>Overall</div>
-      </div>
+          <div className={styles.rating}>{getAverageRating()}</div>
+          <div className={styles.overall}>Overall</div>
 
-      <div className={styles.rating_bar}>
-        <div>
-          {getRatingStats().map((rating, index) => (
-            <RatingBar rating={5 - index} key={index} occurence={rating.occurence} percentage={rating.percentage} />
-          ))}
+          <div>
+            {getRatingStats().map((rating, index) => (
+              <RatingBar rating={5 - index} key={index} occurence={rating.occurence} percentage={rating.percentage} />
+            ))}
+          </div>
         </div>
 
         <ReviewForm />
       </div>
 
-      {reviews?.map((review, index) => (
-        <div className={styles.mb_md}>
-          <Review reviewDetails={review} key={index} />
-        </div>
-      ))}
+      <div>
+        {reviews?.map((review, index) => (
+          <div className={styles.mb_md}>
+            <Review reviewDetails={review} key={index} />
+          </div>
+        ))}
+      </div>
     </div>
   );
 }
