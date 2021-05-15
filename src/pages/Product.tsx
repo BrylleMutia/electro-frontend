@@ -9,6 +9,8 @@ import Navbar from "../components/Navbar";
 import ProductNav from "../components/ProductNav";
 import ProductDetails from "../components/ProductDetails";
 import ProductTabs from "../components/ProductTabs";
+import CallToAction from "../components/CallToAction";
+import Footer from "../components/Footer";
 
 interface RouteParams {
   id: string;
@@ -43,6 +45,10 @@ function Product() {
           <div className={styles.container}>
             <ProductTabs />
           </div>
+        </div>
+        <CallToAction />
+        <div className={styles.container}>
+          <Footer />
         </div>
       </main>
     );
