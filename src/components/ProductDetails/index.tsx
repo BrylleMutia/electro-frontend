@@ -25,7 +25,6 @@ function ProductDetails() {
         <h2>{currentProduct?.product_name}</h2>
         <h4>{currentProduct?.seller.name}</h4>
         <div className={styles.mb_sm}>
-          <h5>Rating</h5>
           <Rating name="disabled" value={3} readOnly />
         </div>
         <p className={styles.description}>{currentProduct?.description}</p>

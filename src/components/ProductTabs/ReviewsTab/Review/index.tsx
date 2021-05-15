@@ -19,7 +19,7 @@ const Review: React.FC<Props> = ({ reviewDetails }) => {
       <div className={styles.user_details}>
         <Avatar className={styles.avatar} src={user.image} alt={user.name} sizes="10px" />
         <h4>{user.name}</h4>
-        <h5>{updated_at.slice(0, 10)}</h5>
+        <h5 className={styles.date}>{updated_at.slice(0, 10)}</h5>
       </div>
     </div>
   );

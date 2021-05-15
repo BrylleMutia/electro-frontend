@@ -53,7 +53,7 @@ function ReviewsTab() {
   if (!reviews?.length) return <h4>No reviews</h4>;
 
   return (
-    <div>
+    <div className={styles.rating_tab}>
       <h5>Based on {reviews?.length} reviews</h5>
 
       <div className={styles.rating_container}>
@@ -61,7 +61,7 @@ function ReviewsTab() {
         <div className={styles.overall}>Overall</div>
       </div>
 
-      <div className={styles.flex_between}>
+      <div className={styles.rating_bar}>
         <div>
           {getRatingStats().map((rating, index) => (
             <RatingBar rating={5 - index} key={index} occurence={rating.occurence} percentage={rating.percentage} />
@@ -72,7 +72,9 @@ function ReviewsTab() {
       </div>
 
       {reviews?.map((review, index) => (
-        <Review reviewDetails={review} key={index} />
+        <div className={styles.mb_md}>
+          <Review reviewDetails={review} key={index} />
+        </div>
       ))}
     </div>
   );

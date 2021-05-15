@@ -1,5 +1,6 @@
 @import "../../styles/layouts";
 @import "../../styles/breakpoints";
+@import "../../styles/variables";
 
 .product {
   &_image {
@@ -21,6 +22,7 @@
 .details {
   & > p.description {
     width: 40ch;
+    color: $text-color;
   }
 
   & > h2 {

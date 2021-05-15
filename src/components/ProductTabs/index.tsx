@@ -20,7 +20,7 @@ function ProductTabs() {
   };
 
   return (
-    <div>
+    <div className={styles.tabs_container}>
       <StyledTabs className={styles.tabs} textColor="secondary" indicatorColor="secondary" value={tabView} onChange={handleTabChange} aria-label="product tabs">
         {PRODUCT_TABS.map((productTab, index) => (
           <Tab key={index} label={productTab} />
