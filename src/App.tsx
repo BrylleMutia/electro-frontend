@@ -8,6 +8,7 @@ import NotFound from "./pages/NotFound";
 import UnderConstruction from "./pages/UnderConstruction";
 
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import Cart from "./components/Cart";
 
 function App(): JSX.Element {
   return (
@@ -21,6 +22,8 @@ function App(): JSX.Element {
         <Route path="/product/:id" component={Product} />
         <Route path="*" component={NotFound} />
       </Switch>
+
+      <Cart />
     </Router>
   );
 }
