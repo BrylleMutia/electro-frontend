@@ -7,7 +7,8 @@ import useMediaQuery from "@material-ui/core/useMediaQuery";
 import { IconButton, Button, List, ListItemIcon, Drawer, ListItemText, Icon, ListItem } from "@material-ui/core";
 import MenuIcon from "@material-ui/icons/Menu";
 import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
-import { useAppSelector } from "../../redux/hooks";
+import { useAppSelector, useAppDispatch } from "../../redux/hooks";
+import { toggleCartDrawer } from "../../redux/cart/cartSlice";
 
 import Search from "./Search";
 import Logo from "./Logo";
@@ -20,7 +21,12 @@ function Navbar(): JSX.Element {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const { isAuthenticated } = useAppSelector((state) => state.auth);
 
-  const toggleDrawer = () => setIsDrawerOpen((prev) => !prev);
+  const dispatch = useAppDispatch();
+
+
+  const toggleMenuDrawer = () => setIsDrawerOpen((prev) => !prev);
+
+  const handleCartDrawerToggle = () => dispatch(toggleCartDrawer());
 
   const getNavIcons = (name: string) => {
     switch (name.toLowerCase()) {
@@ -45,12 +51,12 @@ function Navbar(): JSX.Element {
         <Logo />
         </div>
 
-        <IconButton aria-controls="simple-menu" aria-haspopup="true" onClick={toggleDrawer}>
+        <IconButton aria-controls="simple-menu" aria-haspopup="true" onClick={toggleMenuDrawer}>
           <MenuIcon />
         </IconButton>
 
-        <Drawer anchor="left" open={isDrawerOpen} onClose={toggleDrawer}>
-          <div className={styles.drawer} onClick={toggleDrawer}>
+        <Drawer anchor="left" open={isDrawerOpen} onClose={toggleMenuDrawer}>
+          <div className={styles.drawer} onClick={toggleMenuDrawer}>
             <List>
               {routes.map((route, index) => {
                 if (route.path === "/auth" && isAuthenticated) return;
@@ -89,7 +95,7 @@ function Navbar(): JSX.Element {
           <ShoppingCartIcon />
         </IconButton>
       ) : (
-        <Button startIcon={<ShoppingCartIcon />} variant="contained" color="primary" disableElevation={true}>
+        <Button startIcon={<ShoppingCartIcon />} variant="contained" color="primary" disableElevation={true} onClick={handleCartDrawerToggle}>
           {"P 1,300.00"}
         </Button>
       )}
