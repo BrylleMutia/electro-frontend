@@ -1,6 +1,6 @@
 import React from "react";
 import styles from "./Review.module.scss"
-import { ReviewInterface } from "../../../../redux/types";
+import { ReviewInterface } from "../../../../redux/shop/types";
 
 import Rating from "@material-ui/lab/Rating";
 import Avatar from "@material-ui/core/Avatar";

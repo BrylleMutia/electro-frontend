@@ -2,7 +2,7 @@ import React from "react";
 import styles from "./Product.module.scss";
 import { IconButton, Button, Typography, useMediaQuery, Tooltip } from "@material-ui/core";
 import { AddShoppingCart } from "@material-ui/icons";
-import type { ProductInterface } from "../../../../redux/types";
+import type { ProductInterface } from "../../../../redux/shop/types";
 import cx from "classnames";
 import { Link } from "react-router-dom";
 

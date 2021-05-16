@@ -1,7 +1,8 @@
 import { createSlice, PayloadAction, createAsyncThunk, isAnyOf } from "@reduxjs/toolkit";
 import axios from "axios";
 import type { RootState } from "../store";
-import type { ShopState, ProductInterface, ErrorResponse, GroupedProductsInterface, UserDetails, ProductDetailsInterface } from "../types";
+import type { ShopState, ProductInterface, GroupedProductsInterface, ProductDetailsInterface } from "./types";
+import type { ErrorResponse, UserDetails } from "../auth/types";
 import { useHeaders } from "../hooks";
 
 const MAX_PRODUCTS_PER_OFFER = 7;

@@ -2,7 +2,7 @@ import { createSlice, PayloadAction, createAsyncThunk, isAnyOf } from "@reduxjs/
 import axios from "axios";
 import type { RootState } from "../store";
 import type { RegisterInfo, LoginInfo } from "../../components/AuthForm";
-import type { AuthState, AuthResponse, ErrorResponse, LogoutResponse } from "../types";
+import type { AuthState, AuthResponse, ErrorResponse, LogoutResponse } from "./types";
 
 // Define the initial state using that type
 const initialState: AuthState = {

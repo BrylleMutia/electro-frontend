@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import styles from "./ReviewsTab.module.scss";
 import { useAppSelector } from "../../../redux/hooks";
 import paginate from "../../../utils/pagination";
-import { ReviewInterface } from "../../../redux/types";
+import { ReviewInterface } from "../../../redux/shop/types";
 import Pagination from "@material-ui/lab/Pagination";
 
 import Review from "./Review";

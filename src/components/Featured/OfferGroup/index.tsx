@@ -1,6 +1,6 @@
 import React from "react";
 import styles from "./OfferGroup.module.scss";
-import type { ProductInterface } from "../../../redux/types";
+import type { ProductInterface } from "../../../redux/shop/types";
 import Product from "./Product";
 import cx from "classnames";
 

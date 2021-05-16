@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import styles from "./Category.module.scss";
-import type { ProductInterface } from "../../../redux/types";
+import type { ProductInterface } from "../../../redux/shop/types";
 import { Product } from "../../Featured";
 import Pagination from "@material-ui/lab/Pagination";
 import paginate from "../../../utils/pagination";
