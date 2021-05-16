@@ -31,7 +31,7 @@ function ProductDetails() {
       </div>
 
       <div className={styles.cart_form}>
-        <AddToCartForm price={currentProduct?.price} />
+        <AddToCartForm product={currentProduct} />
       </div>
     </div>
   );
