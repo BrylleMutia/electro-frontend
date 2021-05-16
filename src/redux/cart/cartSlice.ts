@@ -30,10 +30,14 @@ export const cartSlice = createSlice({
         state.cartItems.unshift(action.payload);
       }
     },
+    removeCartItem(state, action: PayloadAction<{ id: number }>) {
+      const { id } = action.payload;
+      state.cartItems = state.cartItems.filter(item => item.product.id !== id);
+    }
   },
 });
 
-export const { toggleCartDrawer, addItemToCart } = cartSlice.actions;
+export const { toggleCartDrawer, addItemToCart, removeCartItem } = cartSlice.actions;
 
 // can access this specific slice using useSelector(authSelector)
 // other code such as selectors can use the imported `RootState` type

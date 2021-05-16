@@ -28,7 +28,7 @@ function Cart() {
 
   return (
     <Drawer anchor="right" open={isCartOpen} onClose={handleToggleDrawer} elevation={5}>
-      <div className={styles.drawer} onClick={handleToggleDrawer}>
+      <div className={styles.drawer}>
         <h4>My Cart</h4>
         
         {getCartContent()}

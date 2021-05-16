@@ -1,6 +1,8 @@
 import React from "react";
 import styles from "./CartItem.module.scss";
 import { numWithCommas } from "../../../utils/filters";
+import { removeCartItem } from "../../../redux/cart/cartSlice";
+import { useAppDispatch } from "../../../redux/hooks";
 
 import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
@@ -16,11 +18,17 @@ interface Props {
 }
 
 const CartItem: React.FC<Props> = ({ quantity, product }) => {
-  const { product_name, product_image, price } = product;
+  const { product_name, product_image, price, id } = product;
+
+  const dispatch = useAppDispatch();
+
+  const handleRemoveItem = () => {
+    dispatch(removeCartItem({ id }));
+  }
 
   return (
     <ListItem disableGutters className={styles.cart_item}>
-      <IconButton>
+      <IconButton onClick={handleRemoveItem}>
         <DeleteIcon />
       </IconButton>
       <img src={product_image} alt="cart-item" />
