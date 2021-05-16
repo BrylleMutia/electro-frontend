@@ -5,6 +5,7 @@ import { AddShoppingCart } from "@material-ui/icons";
 import type { ProductInterface } from "../../../../redux/shop/types";
 import cx from "classnames";
 import { Link } from "react-router-dom";
+import { numWithCommas } from "../../../../utils/filters"
 
 interface Props {
   productDetails: ProductInterface;
@@ -34,7 +35,7 @@ const Product: React.FC<Props> = ({ productDetails, index, showcaseFirstItem = f
       </Link>
       <div className={styles.details}>
         <Typography variant="body2" style={{ opacity: 0.6 }}>
-          P {price.toLocaleString().replace(",", ", ")}
+          P {numWithCommas(price)}
         </Typography>
         {index == 0 && showcaseFirstItem ? (
           <Button color="primary" variant="contained" disableElevation size="small">
