@@ -1,11 +1,18 @@
 import React from "react";
 import styles from "./Product.module.scss";
-import { IconButton, Button, Typography, useMediaQuery, Tooltip } from "@material-ui/core";
 import { AddShoppingCart } from "@material-ui/icons";
 import type { ProductInterface } from "../../../../redux/shop/types";
 import cx from "classnames";
 import { Link } from "react-router-dom";
-import { numWithCommas } from "../../../../utils/filters"
+import { numWithCommas } from "../../../../utils/filters";
+import { useAppDispatch } from "../../../../redux/hooks";
+import { addItemToCart } from "../../../../redux/cart/cartSlice";
+
+import IconButton from "@material-ui/core/IconButton";
+import Button from "@material-ui/core/Button";
+import Typography from "@material-ui/core/Typography";
+import Tooltip from "@material-ui/core/Tooltip";
+import useMediaQuery from "@material-ui/core/useMediaQuery";
 
 interface Props {
   productDetails: ProductInterface;
@@ -15,6 +22,16 @@ interface Props {
 
 const Product: React.FC<Props> = ({ productDetails, index, showcaseFirstItem = false }) => {
   const { id, product_name, product_image, price } = productDetails;
+  const dispatch = useAppDispatch();
+
+  const handleAddItemToCart = () => {
+    let newItemDetails = {
+      product: productDetails,
+      quantity: 1,
+    };
+
+    dispatch(addItemToCart(newItemDetails));
+  };
 
   const matches = useMediaQuery("(max-width: 768px)");
 
@@ -38,12 +55,12 @@ const Product: React.FC<Props> = ({ productDetails, index, showcaseFirstItem = f
           P {numWithCommas(price)}
         </Typography>
         {index == 0 && showcaseFirstItem ? (
-          <Button color="primary" variant="contained" disableElevation size="small">
+          <Button onClick={handleAddItemToCart} color="primary" variant="contained" disableElevation size="small">
             Add to Cart
           </Button>
         ) : (
           <Tooltip title="Add to cart">
-            <IconButton hidden={matches} size="small">
+            <IconButton onClick={handleAddItemToCart} hidden={matches} size="small">
               <AddShoppingCart fontSize="small" />
             </IconButton>
           </Tooltip>
