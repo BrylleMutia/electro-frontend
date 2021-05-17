@@ -2,6 +2,7 @@ import { emphasize, withStyles } from "@material-ui/core/styles";
 import Tabs from "@material-ui/core/Tabs";
 import Chip from "@material-ui/core/Chip";
 import LinearProgress from "@material-ui/core/LinearProgress";
+import Button from "@material-ui/core/Button";
 
 export const StyledTabs = withStyles((theme) => ({
   root: {
@@ -39,3 +40,9 @@ export const RatingProgress = withStyles((theme) => ({
     backgroundColor: "#1a90ff",
   },
 }))(LinearProgress);
+
+export const RemoveButton = withStyles((theme) => ({
+  root: {
+    color: theme.palette.error.main
+  }
+}))(Button);
