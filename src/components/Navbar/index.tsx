@@ -5,21 +5,23 @@ import routes from "../../routes";
 import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import { IconButton, Button, List, ListItemIcon, Drawer, ListItemText, Icon, ListItem } from "@material-ui/core";
-import MenuIcon from "@material-ui/icons/Menu";
-import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
 import { useAppSelector, useAppDispatch } from "../../redux/hooks";
 import { toggleCartDrawer } from "../../redux/cart/cartSlice";
+import { numWithCommas } from "../../utils/filters"
 
 import Search from "./Search";
 import Logo from "./Logo";
-
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 import InputIcon from "@material-ui/icons/Input";
+import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
+import MenuIcon from "@material-ui/icons/Menu";
 import HelpIcon from "@material-ui/icons/Help";
+import { CartButton } from "../../components/StyledComponents";
 
 function Navbar(): JSX.Element {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const { isAuthenticated } = useAppSelector((state) => state.auth);
+  const { total } = useAppSelector((state) => state.cart);
 
   const dispatch = useAppDispatch();
 
@@ -91,13 +93,13 @@ function Navbar(): JSX.Element {
       </div>
 
       {matches ? (
-        <IconButton>
+        <IconButton onClick={handleCartDrawerToggle}>
           <ShoppingCartIcon />
         </IconButton>
       ) : (
-        <Button startIcon={<ShoppingCartIcon />} variant="contained" color="primary" disableElevation={true} onClick={handleCartDrawerToggle}>
-          {"P 1,300.00"}
-        </Button>
+        <CartButton startIcon={<ShoppingCartIcon />} variant="contained" color="primary" disableElevation={true} onClick={handleCartDrawerToggle}>
+          {total ? `P ${numWithCommas(total)}` : "My Cart"}
+        </CartButton>
       )}
     </nav>
   );

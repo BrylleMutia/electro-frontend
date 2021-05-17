@@ -30,7 +30,7 @@ export const RatingProgress = withStyles((theme) => ({
   root: {
     height: 10,
     borderRadius: 5,
-    width: "15em"
+    width: "15em",
   },
   colorPrimary: {
     backgroundColor: theme.palette.grey[theme.palette.type === "light" ? 200 : 700],
@@ -43,6 +43,13 @@ export const RatingProgress = withStyles((theme) => ({
 
 export const RemoveButton = withStyles((theme) => ({
   root: {
-    color: theme.palette.error.main
-  }
+    color: theme.palette.error.main,
+  },
+}))(Button);
+
+export const CartButton = withStyles((theme) => ({
+  root: {
+    borderRadius: "20px",
+    textTransform: "none",
+  },
 }))(Button);

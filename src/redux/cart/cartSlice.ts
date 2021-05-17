@@ -8,6 +8,7 @@ import type { CartState } from "./types";
 const initialState: CartState = {
   isCartOpen: false,
   cartItems: [],
+  total: 0
 };
 
 // -------------- SLICE
@@ -29,13 +30,29 @@ export const cartSlice = createSlice({
       } else {
         state.cartItems.unshift(action.payload);
       }
+
+      // update cart total
+      state.total = calculateCartTotal(state.cartItems);
     },
     removeCartItem(state, action: PayloadAction<{ id: number }>) {
       const { id } = action.payload;
       state.cartItems = state.cartItems.filter(item => item.product.id !== id);
-    }
+
+      // update cart total
+      state.total = calculateCartTotal(state.cartItems);
+    },
   },
 });
+
+const calculateCartTotal = (cartItems: CartItemInterface[]) => {
+  let totalPrice = cartItems.reduce((totalValue, currentItem) => {
+    const { product, quantity } = currentItem;
+    let currentItemTotal = Number(product.price) * quantity;
+    return totalValue = totalValue + currentItemTotal;
+  }, 0)
+
+  return totalPrice;
+}
 
 export const { toggleCartDrawer, addItemToCart, removeCartItem } = cartSlice.actions;
 
