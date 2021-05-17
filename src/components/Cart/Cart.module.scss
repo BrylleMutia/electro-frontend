@@ -1,9 +1,27 @@
+@import "../../styles/breakpoints";
+
 .drawer {
   width: 30em;
   max-width: 30em;
   padding: 1em;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
 
   h4 {
     margin: 1em 0;
+  }
+
+  .items {
+    flex-basis: 90%;
+    overflow-y: auto;
+  }
+
+  .cart_actions {
+    padding-top: 1em;
+  }
+
+  @media (max-width: $md) {
+    width: 100%;
   }
 }
