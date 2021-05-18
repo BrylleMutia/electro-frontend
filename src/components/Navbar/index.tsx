@@ -7,8 +7,9 @@ import useMediaQuery from "@material-ui/core/useMediaQuery";
 import { IconButton, Button, List, ListItemIcon, Drawer, ListItemText, Icon, ListItem } from "@material-ui/core";
 import { useAppSelector, useAppDispatch } from "../../redux/hooks";
 import { toggleCartDrawer } from "../../redux/cart/cartSlice";
-import { numWithCommas } from "../../utils/filters"
+import { numWithCommas } from "../../utils/filters";
 
+import CountUp from "react-countup";
 import Search from "./Search";
 import Logo from "./Logo";
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
@@ -24,7 +25,6 @@ function Navbar(): JSX.Element {
   const { total } = useAppSelector((state) => state.cart);
 
   const dispatch = useAppDispatch();
-
 
   const toggleMenuDrawer = () => setIsDrawerOpen((prev) => !prev);
 
@@ -46,61 +46,62 @@ function Navbar(): JSX.Element {
   const matches = useMediaQuery(theme.breakpoints.down("sm"));
 
   return (
-    <nav className={styles.nav}>
-      <div>
-        <div className={styles.logo_container}>
+    <nav className={styles.nav_container}>
+      <div className={styles.nav}>
+        <div>
+          <div className={styles.logo_container}>
+            <Logo />
+          </div>
 
-        <Logo />
-        </div>
+          <IconButton aria-controls="simple-menu" aria-haspopup="true" onClick={toggleMenuDrawer}>
+            <MenuIcon />
+          </IconButton>
 
-        <IconButton aria-controls="simple-menu" aria-haspopup="true" onClick={toggleMenuDrawer}>
-          <MenuIcon />
-        </IconButton>
+          <Drawer anchor="left" open={isDrawerOpen} onClose={toggleMenuDrawer}>
+            <div className={styles.drawer} onClick={toggleMenuDrawer}>
+              <List>
+                {routes.map((route, index) => {
+                  if (route.path === "/auth" && isAuthenticated) return;
 
-        <Drawer anchor="left" open={isDrawerOpen} onClose={toggleMenuDrawer}>
-          <div className={styles.drawer} onClick={toggleMenuDrawer}>
-            <List>
-              {routes.map((route, index) => {
-                if (route.path === "/auth" && isAuthenticated) return;
+                  return (
+                    <Link to={route.path} key={index}>
+                      <ListItem key={index}>
+                        <ListItemIcon>{getNavIcons(route.name)}</ListItemIcon>
+                        <ListItemText primary={route.name} />
+                      </ListItem>
+                    </Link>
+                  );
+                })}
 
-                return (
-                  <Link to={route.path} key={index}>
-                    <ListItem key={index}>
-                      <ListItemIcon>{getNavIcons(route.name)}</ListItemIcon>
-                      <ListItemText primary={route.name} />
+                {isAuthenticated && (
+                  <Link to="#">
+                    <ListItem>
+                      <ListItemIcon>
+                        <InputIcon />
+                      </ListItemIcon>
+                      <ListItemText primary="Logout" />
                     </ListItem>
                   </Link>
-                );
-              })}
+                )}
+              </List>
+            </div>
+          </Drawer>
+        </div>
 
-              {isAuthenticated && (
-                <Link to="#">
-                  <ListItem>
-                    <ListItemIcon>
-                      <InputIcon />
-                    </ListItemIcon>
-                    <ListItemText primary="Logout" />
-                  </ListItem>
-                </Link>
-              )}
-            </List>
-          </div>
-        </Drawer>
+        <div className={styles.search_wrapper}>
+          <Search />
+        </div>
+
+        {matches ? (
+          <IconButton onClick={handleCartDrawerToggle}>
+            <ShoppingCartIcon />
+          </IconButton>
+        ) : (
+          <CartButton startIcon={<ShoppingCartIcon />} variant="contained" color="primary" disableElevation={true} onClick={handleCartDrawerToggle}>
+            {!total ? "My Cart" : <CountUp start={total - total / 4} end={total} duration={0.5} formattingFn={(value) => `P ${numWithCommas(value)}`} />}
+          </CartButton>
+        )}
       </div>
-
-      <div className={styles.search_wrapper}>
-        <Search />
-      </div>
-
-      {matches ? (
-        <IconButton onClick={handleCartDrawerToggle}>
-          <ShoppingCartIcon />
-        </IconButton>
-      ) : (
-        <CartButton startIcon={<ShoppingCartIcon />} variant="contained" color="primary" disableElevation={true} onClick={handleCartDrawerToggle}>
-          {total ? `P ${numWithCommas(total)}` : "My Cart"}
-        </CartButton>
-      )}
     </nav>
   );
 }
