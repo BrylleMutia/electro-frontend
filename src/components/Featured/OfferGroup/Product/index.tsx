@@ -13,6 +13,7 @@ import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import Tooltip from "@material-ui/core/Tooltip";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
+import Overlay from "../../../Overlay";
 
 interface Props {
   productDetails: ProductInterface;
@@ -43,13 +44,14 @@ const Product: React.FC<Props> = ({ productDetails, index, showcaseFirstItem = f
             {product_name}
           </Typography>
         </div>
-        <div className={cx(styles.overlay_container, styles.product_image)}>
-          <img key={index} src={product_image} alt="product" />
-          <div className={styles.overlay}>
-            <div className={styles.overlay_text}>See Details</div>
+
+        <Overlay label="See details">
+          <div className={styles.product_image}>
+            <img key={index} src={product_image} alt="product" />
           </div>
-        </div>
+        </Overlay>
       </Link>
+
       <div className={styles.details}>
         <Typography variant="body2" style={{ opacity: 0.6 }}>
           P {numWithCommas(price)}

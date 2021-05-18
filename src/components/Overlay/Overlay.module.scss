@@ -1,0 +1,30 @@
+.overlay_container {
+  position: relative;
+
+  &:hover .overlay {
+    opacity: 1;
+  }
+}
+
+.overlay {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 100%;
+  width: 100%;
+  opacity: 0;
+  transition: 500ms ease;
+  background-color: rgba(0, 0, 0, 0.2);
+  // border-radius: 50%;
+}
+
+.overlay_text {
+  color: #fff;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+}
