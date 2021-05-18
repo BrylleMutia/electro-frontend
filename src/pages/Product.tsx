@@ -32,8 +32,8 @@ function Product() {
   } else {
     return (
       <main>
+        <Navbar />
         <div className={styles.container}>
-          <Navbar />
           <div className={styles.product_nav}>
             <ProductNav />
           </div>

@@ -3,7 +3,7 @@
 @import "../styles/layouts";
 
 .showcase {
-  margin-top: 1em;
+  margin-top: 7em;
 }
 
 .featured {
@@ -26,7 +26,7 @@
 
 .product {
   &_nav {
-    margin: 2em 1em 1em 1em;
+    margin: 4em 1em 1em 1em;
   }
 
   &_tabs {
@@ -40,6 +40,6 @@
   }
 
   .product_nav {
-    margin: 2em 1em 4em 1em;
+    margin: 4em 1em 4em 1em;
   }
 }

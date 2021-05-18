@@ -21,9 +21,7 @@ export default function Home() {
 
   return (
     <>
-      <div className={styles.container}>
-        <Navbar />
-      </div>
+      <Navbar />
       <section className={styles.showcase}>
         <Showcase />
       </section>
