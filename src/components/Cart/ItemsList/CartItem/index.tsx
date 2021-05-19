@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import styles from "./CartItem.module.scss";
-import { numWithCommas } from "../../../utils/filters";
-import { removeCartItem } from "../../../redux/cart/cartSlice";
-import { useAppDispatch } from "../../../redux/hooks";
-import { ProductInterface } from "../../../redux/shop/types";
+import { numWithCommas } from "../../../../utils/filters";
+import { removeCartItem } from "../../../../redux/cart/cartSlice";
+import { useAppDispatch } from "../../../../redux/hooks";
+import { ProductInterface } from "../../../../redux/shop/types";
 import { Link } from "react-router-dom";
 
 import ListItem from "@material-ui/core/ListItem";
@@ -17,8 +17,8 @@ import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import Button from "@material-ui/core/Button";
-import { RemoveButton } from "../../StyledComponents";
-import Overlay from "../../Overlay";
+import { RemoveButton } from "../../../StyledComponents";
+import Overlay from "../../../Overlay";
 
 interface Props {
   quantity: number;

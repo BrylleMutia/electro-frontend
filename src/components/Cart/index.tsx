@@ -2,10 +2,11 @@ import React, { useState } from "react";
 import styles from "./Cart.module.scss";
 import { useAppSelector, useAppDispatch } from "../../redux/hooks";
 import { toggleCartDrawer } from "../../redux/cart/cartSlice";
-import { numWithCommas } from "../../utils/filters"
+import { numWithCommas } from "../../utils/filters";
 import { Link } from "react-router-dom";
 
-import CartItem from "./CartItem";
+import ItemsList from "./ItemsList";
+import CartItem from "./ItemsList/CartItem";
 import Drawer from "@material-ui/core/Drawer";
 import List from "@material-ui/core/List";
 import ButtonGroup from "@material-ui/core/ButtonGroup";
@@ -18,31 +19,21 @@ function Cart() {
 
   const handleToggleDrawer = () => dispatch(toggleCartDrawer());
 
-  const getCartContent = () => {
-    if (cartItems.length) {
-      return (
-        <List className={styles.items}>
-          {cartItems.map((item, index) => (
-            <CartItem toggleCart={handleToggleDrawer} product={item.product} quantity={item.quantity} key={index} />
-          ))}
-        </List>
-      );
-    } else {
-      return <div className={styles.items}>No items in cart.</div>;
-    }
-  };
-
   return (
     <Drawer anchor="right" open={isCartOpen} onClose={handleToggleDrawer} elevation={5}>
       <div className={styles.drawer}>
         <h4>My Cart</h4>
 
-        {getCartContent()}
+        {cartItems.length ? <ItemsList items={cartItems} /> : <div className={styles.items}>No items in cart.</div>}
 
         <div className={styles.cart_actions}>
           <ButtonGroup fullWidth aria-label="outlined primary button group">
-            <Button variant="outlined" color="secondary" disableFocusRipple disableTouchRipple disableRipple>P {numWithCommas(total)}</Button>
-            <Button component={Link} onClick={handleToggleDrawer} to="/checkout" variant="contained" color="primary" disableElevation disabled={!total}>Checkout</Button>
+            <Button variant="outlined" color="secondary" disableFocusRipple disableTouchRipple disableRipple>
+              P {numWithCommas(total)}
+            </Button>
+            <Button component={Link} onClick={handleToggleDrawer} to="/checkout" variant="contained" color="primary" disableElevation disabled={!total}>
+              Checkout
+            </Button>
           </ButtonGroup>
         </div>
       </div>
@@ -51,4 +42,4 @@ function Cart() {
 }
 
 export default Cart;
-export { CartItem };
+export { ItemsList, CartItem };

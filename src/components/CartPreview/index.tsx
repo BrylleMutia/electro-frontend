@@ -10,11 +10,7 @@ function CartPreview() {
 
   return (
     <div>
-      <List className={styles.items}>
-        {cartItems.map((item, index) => (
-          <CartItem product={item.product} quantity={item.quantity} key={index} />
-        ))}
-      </List>
+      
     </div>
   );
 }
