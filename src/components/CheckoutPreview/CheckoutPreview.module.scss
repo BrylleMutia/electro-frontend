@@ -1,0 +1,33 @@
+@import "../../styles/variables";
+@import "../../styles/breakpoints";
+
+.checkout_preview {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+
+  @media (max-width: $lg) {
+    flex-direction: column;
+  }
+}
+
+.list_container {
+  display: flex;
+  flex-direction: column;
+
+  .items_list {
+    border-bottom: 2px solid $border-color;
+    padding-bottom: 0.3em;
+  }
+
+  .total {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    padding: 1em 4em;
+
+    & > h4 {
+      color: $secondary;
+    }
+  }
+}

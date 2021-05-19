@@ -3,6 +3,7 @@ import Tabs from "@material-ui/core/Tabs";
 import Chip from "@material-ui/core/Chip";
 import LinearProgress from "@material-ui/core/LinearProgress";
 import Button from "@material-ui/core/Button";
+import TextField from "@material-ui/core/TextField";
 
 export const StyledTabs = withStyles((theme) => ({
   root: {
@@ -53,3 +54,9 @@ export const CartButton = withStyles((theme) => ({
     textTransform: "none",
   },
 }))(Button);
+
+export const RoundedInput = withStyles((theme) => ({
+  root: {
+    borderRadius: "100px",
+  }
+}))(TextField);

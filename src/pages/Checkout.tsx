@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import CallToAction from "../components/CallToAction";
-import CartPreview from "../components/CartPreview";
+import CheckoutPreview from "../components/CheckoutPreview";
 import Breadcrumbs from "@material-ui/core/Breadcrumbs";
 import { StyledBreadcrumb } from "../components/StyledComponents";
 import HomeIcon from "@material-ui/icons/Home";
@@ -24,10 +24,13 @@ function Checkout() {
           </Breadcrumbs>
         </div>
 
-        <CartPreview />
+        <div className={styles.checkout_preview}>
+          <CheckoutPreview />
+        </div>
       </div>
 
       <CallToAction />
+
       <div className={styles.container}>
         <Footer />
       </div>

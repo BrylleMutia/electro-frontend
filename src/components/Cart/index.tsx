@@ -11,6 +11,7 @@ import Drawer from "@material-ui/core/Drawer";
 import List from "@material-ui/core/List";
 import ButtonGroup from "@material-ui/core/ButtonGroup";
 import Button from "@material-ui/core/Button";
+import NavigateNextIcon from '@material-ui/icons/NavigateNext';
 
 function Cart() {
   const { isCartOpen, cartItems, total } = useAppSelector((state) => state.cart);
@@ -24,14 +25,14 @@ function Cart() {
       <div className={styles.drawer}>
         <h4>My Cart</h4>
 
-        {cartItems.length ? <ItemsList items={cartItems} /> : <div className={styles.items}>No items in cart.</div>}
+        {cartItems.length ? <ItemsList /> : <div className={styles.items}>No items in cart.</div>}
 
         <div className={styles.cart_actions}>
           <ButtonGroup fullWidth aria-label="outlined primary button group">
             <Button variant="outlined" color="secondary" disableFocusRipple disableTouchRipple disableRipple>
               P {numWithCommas(total)}
             </Button>
-            <Button component={Link} onClick={handleToggleDrawer} to="/checkout" variant="contained" color="primary" disableElevation disabled={!total}>
+            <Button endIcon={<NavigateNextIcon />} component={Link} onClick={handleToggleDrawer} to="/checkout" variant="contained" color="primary" disableElevation disabled={!total}>
               Checkout
             </Button>
           </ButtonGroup>
