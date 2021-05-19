@@ -24,14 +24,16 @@
   align-items: center;
 }
 
-.product {
-  &_nav {
-    margin: 4em 1em 1em 1em;
-  }
+.product_nav {
+  margin: 4em 1em 1em 1em;
+}
 
-  &_tabs {
-    background: $background-color;
-  }
+.product_tabs {
+  background: $background-color;
+}
+
+.checkout_nav {
+  margin: 4em 1em 1em 1em;
 }
 
 @media (min-width: $sm) {

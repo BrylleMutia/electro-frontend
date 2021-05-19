@@ -19,7 +19,11 @@ import MenuIcon from "@material-ui/icons/Menu";
 import HelpIcon from "@material-ui/icons/Help";
 import { CartButton } from "../../components/StyledComponents";
 
-function Navbar(): JSX.Element {
+interface Props {
+  disableCartButton?: boolean;
+}
+
+const Navbar: React.FC<Props> = ({ disableCartButton = false }) => {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const { isAuthenticated } = useAppSelector((state) => state.auth);
   const { total } = useAppSelector((state) => state.cart);
@@ -93,18 +97,18 @@ function Navbar(): JSX.Element {
         </div>
 
         {matches ? (
-          <IconButton onClick={handleCartDrawerToggle}>
+          <IconButton disabled={disableCartButton} onClick={handleCartDrawerToggle}>
             <ShoppingCartIcon />
           </IconButton>
         ) : (
-          <CartButton startIcon={<ShoppingCartIcon />} variant="contained" color="primary" disableElevation={true} onClick={handleCartDrawerToggle}>
+          <CartButton disabled={disableCartButton} startIcon={<ShoppingCartIcon />} variant="contained" color="primary" disableElevation={true} onClick={handleCartDrawerToggle}>
             {!total ? "My Cart" : <CountUp start={total - total / 4} end={total} duration={0.5} formattingFn={(value) => `P ${numWithCommas(value)}`} />}
           </CartButton>
         )}
       </div>
     </nav>
   );
-}
+};
 
 export default Navbar;
 export { Search };

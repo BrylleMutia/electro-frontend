@@ -3,6 +3,7 @@ import styles from "./Cart.module.scss";
 import { useAppSelector, useAppDispatch } from "../../redux/hooks";
 import { toggleCartDrawer } from "../../redux/cart/cartSlice";
 import { numWithCommas } from "../../utils/filters"
+import { Link } from "react-router-dom";
 
 import CartItem from "./CartItem";
 import Drawer from "@material-ui/core/Drawer";
@@ -22,7 +23,7 @@ function Cart() {
       return (
         <List className={styles.items}>
           {cartItems.map((item, index) => (
-            <CartItem product={item.product} quantity={item.quantity} key={index} />
+            <CartItem toggleCart={handleToggleDrawer} product={item.product} quantity={item.quantity} key={index} />
           ))}
         </List>
       );
@@ -41,7 +42,7 @@ function Cart() {
         <div className={styles.cart_actions}>
           <ButtonGroup fullWidth aria-label="outlined primary button group">
             <Button variant="outlined" color="secondary" disableFocusRipple disableTouchRipple disableRipple>P {numWithCommas(total)}</Button>
-            <Button variant="contained" color="primary" disableElevation disabled={!total}>Checkout</Button>
+            <Button component={Link} onClick={handleToggleDrawer} to="/checkout" variant="contained" color="primary" disableElevation disabled={!total}>Checkout</Button>
           </ButtonGroup>
         </div>
       </div>
@@ -50,3 +51,4 @@ function Cart() {
 }
 
 export default Cart;
+export { CartItem };

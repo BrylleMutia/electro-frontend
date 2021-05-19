@@ -23,7 +23,7 @@ import Overlay from "../../Overlay";
 interface Props {
   quantity: number;
   product: ProductInterface;
-  toggleCart: () => void
+  toggleCart?: () => void
 }
 
 const CartItem: React.FC<Props> = ({ quantity, product, toggleCart }) => {
