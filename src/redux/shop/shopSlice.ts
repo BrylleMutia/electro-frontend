@@ -3,7 +3,6 @@ import axios from "axios";
 import type { RootState } from "../store";
 import type { ShopState, ProductInterface, GroupedProductsInterface, ProductDetailsInterface } from "./types";
 import type { ErrorResponse, UserDetails } from "../auth/types";
-import { useHeaders } from "../hooks";
 
 const MAX_PRODUCTS_PER_OFFER = 7;
 

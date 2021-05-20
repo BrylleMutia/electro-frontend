@@ -11,6 +11,7 @@ import Categories from "../components/Categories";
 import Sellers from "../components/Sellers";
 import CallToAction from "../components/CallToAction";
 import Footer from "../components/Footer";
+import Notify from "../components/Notify";
 
 export default function Home() {
   const dispatch = useAppDispatch();
@@ -44,6 +45,9 @@ export default function Home() {
       <div className={styles.container}>
         <Footer />
       </div>
+      
+      {/* for notifications / toast */}
+      <Notify />
     </>
   );
 }

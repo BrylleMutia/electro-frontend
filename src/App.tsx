@@ -1,8 +1,9 @@
 import React, { useEffect } from "react";
 import "./App.scss";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import { useAppDispatch } from "./redux/hooks";
+import { useAppDispatch, useAppSelector } from "./redux/hooks";
 import { updateCartFromLocalStorage } from "./redux/cart/cartSlice";
+import { loadDetails } from "./redux/auth/authSlice";
 
 import Auth from "./pages/Auth";
 import Home from "./pages/Home";
@@ -13,11 +14,15 @@ import Checkout from "./pages/Checkout";
 import Cart from "./components/Cart";
 
 function App(): JSX.Element {
+  const { userType } = useAppSelector((state) => state.auth);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
     // get cart items from localstorage
     dispatch(updateCartFromLocalStorage());
+
+    // get user details using token from LS
+    // dispatch(loadDetails(userType));
   }, []);
 
   return (
