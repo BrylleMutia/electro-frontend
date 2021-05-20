@@ -7,6 +7,7 @@ import useMediaQuery from "@material-ui/core/useMediaQuery";
 import { IconButton, Button, List, ListItemIcon, Drawer, ListItemText, Icon, ListItem } from "@material-ui/core";
 import { useAppSelector, useAppDispatch } from "../../redux/hooks";
 import { toggleCartDrawer } from "../../redux/cart/cartSlice";
+import { logout } from "../../redux/auth/authSlice";
 import { numWithCommas } from "../../utils/filters";
 
 import CountUp from "react-countup";
@@ -25,7 +26,7 @@ interface Props {
 
 const Navbar: React.FC<Props> = ({ disableCartButton = false }) => {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
-  const { isAuthenticated } = useAppSelector((state) => state.auth);
+  const { isAuthenticated, userType } = useAppSelector((state) => state.auth);
   const { total } = useAppSelector((state) => state.cart);
 
   const dispatch = useAppDispatch();
@@ -43,6 +44,12 @@ const Navbar: React.FC<Props> = ({ disableCartButton = false }) => {
         return <InputIcon />;
       default:
         return <HelpIcon />;
+    }
+  };
+
+  const handleLogout = () => {
+    if (userType) {
+      dispatch(logout(userType));
     }
   };
 
@@ -78,14 +85,12 @@ const Navbar: React.FC<Props> = ({ disableCartButton = false }) => {
                 })}
 
                 {isAuthenticated && (
-                  <Link to="#">
-                    <ListItem>
-                      <ListItemIcon>
-                        <InputIcon />
-                      </ListItemIcon>
-                      <ListItemText primary="Logout" />
-                    </ListItem>
-                  </Link>
+                  <ListItem onClick={handleLogout}>
+                    <ListItemIcon>
+                      <InputIcon />
+                    </ListItemIcon>
+                    <ListItemText primary="Logout" />
+                  </ListItem>
                 )}
               </List>
             </div>

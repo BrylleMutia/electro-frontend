@@ -1,8 +1,8 @@
 import { createSlice, PayloadAction, createAsyncThunk, isAnyOf } from "@reduxjs/toolkit";
 import axios from "axios";
 import type { RootState } from "../store";
-import type { RegisterInfo, LoginInfo } from "../../components/AuthForm";
-import { AuthState, AuthResponse, ErrorResponse, LogoutResponse, UserType } from "./types";
+import type { RegisterDetails, LoginDetails } from "../../components/AuthForm";
+import { AuthState, AuthResponse, ErrorResponse, LogoutResponse, UserType, UserDetails, HeadersConfig } from "./types";
 
 // Define the initial state using that type
 const initialState: AuthState = {
@@ -24,9 +24,9 @@ const initialState: AuthState = {
 //
 // `rejectValue` is useful when we need to type
 // possible errors.
-export const registerUser = createAsyncThunk<AuthResponse, RegisterInfo, { rejectValue: ErrorResponse }>("auth/registerUser", async (regInfo, thunkAPI) => {
+export const register = createAsyncThunk<AuthResponse, RegisterDetails, { rejectValue: ErrorResponse }>("auth/register", async (regDetails, thunkAPI) => {
   return axios
-    .post("/user/register", regInfo)
+    .post(`/${regDetails.type}/register`, regDetails.info)
     .then((response) => {
       return response.data;
     })
@@ -42,9 +42,9 @@ export const registerUser = createAsyncThunk<AuthResponse, RegisterInfo, { rejec
     });
 });
 
-export const loginUser = createAsyncThunk<AuthResponse, LoginInfo, { rejectValue: ErrorResponse }>("auth/loginUser", async (loginInfo, thunkAPI) => {
+export const login = createAsyncThunk<AuthResponse, LoginDetails, { rejectValue: ErrorResponse }>("auth/login", async (loginDetails, thunkAPI) => {
   return axios
-    .post("/user/login", loginInfo)
+    .post(`/${loginDetails.type}/login`, loginDetails.info)
     .then((response) => {
       return response.data;
     })
@@ -56,10 +56,10 @@ export const loginUser = createAsyncThunk<AuthResponse, LoginInfo, { rejectValue
     });
 });
 
-// SELLER AUTH
-export const registerSeller = createAsyncThunk<AuthResponse, RegisterInfo, { rejectValue: ErrorResponse }>("auth/registerSeller", async (regInfo, thunkAPI) => {
+
+export const loadDetails = createAsyncThunk<UserDetails, UserType, { rejectValue: ErrorResponse }>("auth/loadDetails", async (userType, thunkAPI) => {
   return axios
-    .post("/seller/register", regInfo)
+    .get(`/${userType}/verify`, tokenConfig())
     .then((response) => {
       return response.data;
     })
@@ -71,9 +71,9 @@ export const registerSeller = createAsyncThunk<AuthResponse, RegisterInfo, { rej
     });
 });
 
-export const loginSeller = createAsyncThunk<AuthResponse, LoginInfo, { rejectValue: ErrorResponse }>("auth/loginSeller", async (loginInfo, thunkAPI) => {
+export const logout = createAsyncThunk<{ message: string }, UserType, { rejectValue: ErrorResponse }>("auth/logout", async (userType, thunkAPI) => {
   return axios
-    .post("/seller/login", loginInfo)
+    .get(`/${userType}/logout`, tokenConfig())
     .then((response) => {
       return response.data;
     })
@@ -84,13 +84,8 @@ export const loginSeller = createAsyncThunk<AuthResponse, LoginInfo, { rejectVal
       });
     });
 });
-
 
 // ----------------- SLICE
-export const logoutSeller = createAsyncThunk<{ rejectValue: ErrorResponse }>("auth/logoutSeller", async (thunkAPI) => {
-  return axios.post("/seller/logout");
-});
-
 export const authSlice = createSlice({
   name: "auth",
   // `createSlice` will infer the state type from the `initialState` argument
@@ -103,12 +98,30 @@ export const authSlice = createSlice({
   // extraReducers field is used for listening to other actions dispatched by other slices or async actions
   // builder is used for adding cases, matchers (multiple actions, same mutation), default cases.
   extraReducers: (builder) => {
-    builder.addMatcher(isAnyOf(registerUser.pending, registerSeller.pending, loginSeller.pending, loginUser.pending), (state) => {
+    builder.addCase(logout.fulfilled, (state) => {
+      // reset state
+      state.isAuthenticated = false;
+      state.isLoading = false;
+      state.token = null;
+      state.userType = null;
+      state.userDetails = null;
+      state.error = { message: "", errors: {} };
+    });
+
+    builder.addCase(loadDetails.fulfilled, (state, action: PayloadAction<UserDetails>) => {
+      state.isLoading = false;
+      state.isAuthenticated = true;
+      state.userDetails = action.payload;
+      state.token = localStorage.getItem("token");
+      state.userType = action.payload.role_id === 1 ? UserType.BUYER : UserType.SELLER;
+    });
+
+    builder.addMatcher(isAnyOf(register.pending, login.pending, loadDetails.pending, logout.pending), (state) => {
       state.error = { message: "", errors: {} };
       state.isLoading = true;
     });
 
-    builder.addMatcher(isAnyOf(registerUser.fulfilled, registerSeller.fulfilled, loginSeller.fulfilled, loginUser.fulfilled), (state, action: PayloadAction<AuthResponse>) => {
+    builder.addMatcher(isAnyOf(register.fulfilled, login.fulfilled), (state, action: PayloadAction<AuthResponse>) => {
       state.isLoading = false;
       state.isAuthenticated = true;
       state.userDetails = action.payload.user;
@@ -119,14 +132,30 @@ export const authSlice = createSlice({
       localStorage.setItem("token", action.payload.token);
     });
 
-    builder.addMatcher(isAnyOf(registerUser.rejected, registerSeller.rejected, loginSeller.rejected, loginUser.rejected), (state, action: PayloadAction<ErrorResponse>) => {
+    builder.addMatcher(isAnyOf(register.rejected, login.rejected, loadDetails.pending, logout.rejected), (state, action: PayloadAction<ErrorResponse>) => {
       state.isLoading = false;
       state.error = action.payload;
     });
   },
 });
 
-export const { clearErrors } = authSlice.actions
+// -------------- HELPER FUNCTIONS
+export const tokenConfig = () => {
+  const token = localStorage.getItem("token");
+
+  const config: HeadersConfig = {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  };
+
+  // add token to headers
+  if (token) config.headers["Authorization"] = `Bearer ${token}`;
+
+  return config;
+};
+
+export const { clearErrors } = authSlice.actions;
 
 // can access this specific slice using useSelector(authSelector)
 // other code such as selectors can use the imported `RootState` type

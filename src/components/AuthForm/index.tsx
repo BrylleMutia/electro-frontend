@@ -6,8 +6,9 @@ import SellerImg from "./assets/seller.png";
 import { TextField, Tabs, Tab, Checkbox, FormControlLabel, Radio, RadioGroup, Button, Typography } from "@material-ui/core";
 import Alert from "@material-ui/lab/Alert";
 import { useAppSelector, useAppDispatch } from "../../redux/hooks";
-import { registerUser, loginUser, registerSeller, loginSeller, clearErrors } from "../../redux/auth/authSlice";
+import { register, login, clearErrors } from "../../redux/auth/authSlice";
 import { Redirect } from "react-router";
+import { UserType } from "../../redux/auth/types";
 
 export interface RegisterInfo {
   name: string;
@@ -20,10 +21,19 @@ export interface RegisterInfo {
   province: string;
   zip_code: string;
 }
+export interface RegisterDetails {
+  info: RegisterInfo;
+  type: UserType;
+}
 
 export interface LoginInfo {
   email: string;
   password: string;
+}
+
+export interface LoginDetails {
+  info: LoginInfo;
+  type: UserType;
 }
 
 function AuthForm() {
@@ -44,7 +54,7 @@ function AuthForm() {
     password: "",
   });
 
-  const [userType, setUserType] = useState<string | null>("buyer");
+  const [userType, setUserType] = useState<UserType>(UserType.BUYER);
   const [tabView, setTabView] = useState<number>(0);
   const [rememberUser, setRememberUser] = useState<boolean>(false);
 
@@ -52,7 +62,16 @@ function AuthForm() {
   const { isAuthenticated, error } = useAppSelector((state) => state.auth);
 
   const handleUserTypeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setUserType((e.target as HTMLInputElement).value);
+    switch (e.target.value) {
+      case "buyer":
+        setUserType(UserType.BUYER);
+        break;
+      case "seller":
+        setUserType(UserType.SELLER);
+        break;
+      default:
+        return;
+    }
   };
 
   const handleTabChange = (e: React.ChangeEvent<{}>, tabIndex: number) => {
@@ -75,30 +94,13 @@ function AuthForm() {
 
   const authenticateUser = (e: React.FormEvent) => {
     e.preventDefault();
-    // axios.get("/sellers").then(response => console.log(response.data));
-    switch (userType) {
-      case "buyer":
-        if (tabView === 0) {
-          // register
-          dispatch(registerUser(regInfo));
-        } else if (tabView === 1) {
-          // login
-          dispatch(loginUser(loginInfo));
-        }
-        break;
 
-      case "seller":
-        if (tabView === 0) {
-          // register
-          dispatch(registerSeller(regInfo));
-        } else if (tabView === 1) {
-          // login
-          dispatch(loginSeller(loginInfo));
-        }
-        break;
-
-      default:
-        return;
+    if (tabView === 0) {
+      // register
+      dispatch(register({ info: regInfo, type: userType }));
+    } else if (tabView === 1) {
+      // login
+      dispatch(login({ info: loginInfo, type: userType }));
     }
   };
 
@@ -119,8 +121,8 @@ function AuthForm() {
             </Tabs>
 
             <RadioGroup aria-label="user-type" color="primary" className={styles.radio_group} name="user-type" value={userType} onChange={handleUserTypeChange}>
-              <FormControlLabel value="buyer" control={<Radio />} label="Buyer" />
-              <FormControlLabel value="seller" control={<Radio />} label="Seller" />
+              <FormControlLabel value={UserType.BUYER} control={<Radio />} label="Buyer" />
+              <FormControlLabel value={UserType.SELLER} control={<Radio />} label="Seller" />
             </RadioGroup>
 
             {/* ERROR MESSAGES */}

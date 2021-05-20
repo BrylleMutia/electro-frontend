@@ -44,3 +44,12 @@ export interface AuthResponse {
 export interface LogoutResponse {
   message: string;
 }
+
+export interface HeadersConfig {
+  headers: HeadersInterface
+}
+
+export interface HeadersInterface {
+  "Content-Type": string,
+  "Authorization"?: string
+}
