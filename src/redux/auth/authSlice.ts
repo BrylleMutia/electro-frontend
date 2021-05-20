@@ -2,7 +2,7 @@ import { createSlice, PayloadAction, createAsyncThunk, isAnyOf } from "@reduxjs/
 import axios from "axios";
 import type { RootState } from "../store";
 import type { RegisterInfo, LoginInfo } from "../../components/AuthForm";
-import type { AuthState, AuthResponse, ErrorResponse, LogoutResponse } from "./types";
+import { AuthState, AuthResponse, ErrorResponse, LogoutResponse, UserType } from "./types";
 
 // Define the initial state using that type
 const initialState: AuthState = {
@@ -113,6 +113,7 @@ export const authSlice = createSlice({
       state.isAuthenticated = true;
       state.userDetails = action.payload.user;
       state.token = action.payload.token;
+      state.userType = action.payload.user.role_id === 1 ? UserType.BUYER : UserType.SELLER;
 
       //store bearer token in localStorage
       localStorage.setItem("token", action.payload.token);
