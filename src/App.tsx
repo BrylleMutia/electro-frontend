@@ -14,15 +14,16 @@ import Checkout from "./pages/Checkout";
 import Cart from "./components/Cart";
 
 function App(): JSX.Element {
-  const { userType } = useAppSelector((state) => state.auth);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
     // get cart items from localstorage
     dispatch(updateCartFromLocalStorage());
 
-    // get user details using token from LS
-    // dispatch(loadDetails(userType));
+    if (localStorage.getItem("token")) {
+      // if token is present in LS, fetch details
+      dispatch(loadDetails(1));
+    }
   }, []);
 
   return (

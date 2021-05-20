@@ -57,9 +57,9 @@ export const login = createAsyncThunk<AuthResponse, LoginDetails, { rejectValue:
 });
 
 
-export const loadDetails = createAsyncThunk<UserDetails, UserType, { rejectValue: ErrorResponse }>("auth/loadDetails", async (userType, thunkAPI) => {
+export const loadDetails = createAsyncThunk<UserDetails, number, { rejectValue: ErrorResponse }>("auth/loadDetails", async (_, thunkAPI) => {
   return axios
-    .get(`/${userType}/verify`, tokenConfig())
+    .get("/verify", tokenConfig())
     .then((response) => {
       return response.data;
     })
@@ -106,6 +106,9 @@ export const authSlice = createSlice({
       state.userType = null;
       state.userDetails = null;
       state.error = { message: "", errors: {} };
+
+      // remove token in localstorage
+      localStorage.removeItem("token");
     });
 
     builder.addCase(loadDetails.fulfilled, (state, action: PayloadAction<UserDetails>) => {
@@ -132,7 +135,7 @@ export const authSlice = createSlice({
       localStorage.setItem("token", action.payload.token);
     });
 
-    builder.addMatcher(isAnyOf(register.rejected, login.rejected, loadDetails.pending, logout.rejected), (state, action: PayloadAction<ErrorResponse>) => {
+    builder.addMatcher(isAnyOf(register.rejected, login.rejected, loadDetails.rejected, logout.rejected), (state, action: PayloadAction<ErrorResponse>) => {
       state.isLoading = false;
       state.error = action.payload;
     });

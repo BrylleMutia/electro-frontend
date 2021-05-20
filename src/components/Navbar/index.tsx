@@ -85,12 +85,14 @@ const Navbar: React.FC<Props> = ({ disableCartButton = false }) => {
                 })}
 
                 {isAuthenticated && (
-                  <ListItem onClick={handleLogout}>
-                    <ListItemIcon>
-                      <InputIcon />
-                    </ListItemIcon>
-                    <ListItemText primary="Logout" />
-                  </ListItem>
+                  <Link onClick={handleLogout} to="#">
+                    <ListItem>
+                      <ListItemIcon>
+                        <InputIcon />
+                      </ListItemIcon>
+                      <ListItemText primary="Logout" />
+                    </ListItem>
+                  </Link>
                 )}
               </List>
             </div>
