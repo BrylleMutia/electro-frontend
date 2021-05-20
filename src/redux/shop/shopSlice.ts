@@ -37,6 +37,7 @@ const initialState: ShopState = {
       updated_at: "",
       name: "",
       email: "",
+      phone: "",
       image: "",
       email_verified_at: null,
       address: null,

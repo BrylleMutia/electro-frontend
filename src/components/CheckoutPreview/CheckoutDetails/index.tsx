@@ -29,13 +29,13 @@ function CheckoutDetails() {
 
       <form>
         <TextField className={styles.detail_input} variant="standard" disabled value={userDetails?.name} label="Name" />
-        <TextField className={styles.detail_input} variant="standard" disabled value={userDetails?.address} label="Address" />
+        <TextField className={styles.detail_input} variant="standard" disabled value={userDetails?.address ?? ""} label="Address" />
         <TextField className={styles.detail_input} variant="standard" disabled value={userDetails?.barangay} label="Barangay" />
         <TextField className={styles.detail_input} variant="standard" disabled value={userDetails?.city} label="City" />
         <TextField className={styles.detail_input} variant="standard" disabled value={userDetails?.province} label="Province" />
         <TextField className={styles.detail_input} variant="standard" disabled value={userDetails?.zip_code} label="Zip Code" />
         <TextField className={styles.detail_input} variant="standard" disabled value={userDetails?.email} label="Email" />
-        <TextField className={styles.detail_input} variant="standard" disabled value="NOT ADDED YET" label="Phone" />
+        <TextField className={styles.detail_input} variant="standard" disabled value={userDetails?.phone} label="Phone" />
       </form>
     </main>
   );

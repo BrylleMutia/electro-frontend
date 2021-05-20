@@ -13,6 +13,7 @@ import { UserType } from "../../redux/auth/types";
 export interface RegisterInfo {
   name: string;
   email: string;
+  phone: string;
   password: string;
   password_confirmation: string;
   address: string | null;
@@ -40,6 +41,7 @@ function AuthForm() {
   const [regInfo, setRegInfo] = useState<RegisterInfo>({
     name: "",
     email: "",
+    phone: "",
     password: "",
     password_confirmation: "",
     address: "",
@@ -132,6 +134,7 @@ function AuthForm() {
             <TabPanel value={tabView} index={0}>
               <TextField onChange={handleRegInfoChange} name="name" fullWidth color="secondary" required type="text" id="form-name" label="Name" variant="outlined" margin="dense" />
               <TextField onChange={handleRegInfoChange} name="email" fullWidth color="secondary" required type="email" id="form-email" label="Email" variant="outlined" margin="dense" />
+              <TextField onChange={handleRegInfoChange} name="phone" fullWidth color="secondary" required type="phone" id="form-phone" label="Phone Number" variant="outlined" margin="dense" />
               <TextField onChange={handleRegInfoChange} name="password" fullWidth color="secondary" required type="password" id="form-password" label="Password" variant="outlined" margin="dense" />
               <TextField onChange={handleRegInfoChange} name="password_confirmation" fullWidth color="secondary" required type="password" id="form-repassword" label="Confirm Password" variant="outlined" margin="dense" />
               <TextField onChange={handleRegInfoChange} name="address" fullWidth color="secondary" type="text" id="form-address" label="Address" variant="outlined" margin="dense" />
