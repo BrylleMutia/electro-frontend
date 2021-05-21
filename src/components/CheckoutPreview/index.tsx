@@ -24,7 +24,7 @@ function CartPreview() {
           <h4>TOTAL:</h4>
           <h4>P {numWithCommas(total)}</h4>
         </div>
-        <Button startIcon={<CheckCircleIcon />} disabled={!isAuthenticated} style={{ alignSelf: "flex-end" }} disableElevation variant="contained" color="primary">
+        <Button className={styles.checkout_button} startIcon={<CheckCircleIcon />} disabled={!isAuthenticated} disableElevation variant="contained" color="primary">
           Continue to checkout
         </Button>
       </div>

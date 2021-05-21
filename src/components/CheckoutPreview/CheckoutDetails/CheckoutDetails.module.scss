@@ -1,3 +1,5 @@
+@import "../../../styles/breakpoints";
+
 .checkout_details {
   flex-basis: 100%;
 }
@@ -9,4 +11,22 @@
 
 .detail_input {
   margin-bottom: 1em !important;
+}
+
+@media (max-width: $lg) {
+  .details {
+    display: flex;
+    justify-content: center;
+
+    form {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .detail_input {
+      flex-grow: 1;
+      min-width: 10em;
+    }
+  }
 }

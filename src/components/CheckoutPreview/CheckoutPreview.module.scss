@@ -5,10 +5,6 @@
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-
-  @media (max-width: $lg) {
-    flex-direction: column;
-  }
 }
 
 .list_container {
@@ -24,10 +20,26 @@
     width: 100%;
     display: flex;
     justify-content: space-between;
-    padding: 1em 4em;
+    padding: 2em 0.5em;
 
     & > h4 {
       color: $secondary;
     }
+  }
+
+  .checkout_button {
+    @media (min-width: $xs) {
+      align-self: flex-end;
+    }
+  }
+}
+
+@media (max-width: $lg) {
+  .checkout_preview {
+    flex-direction: column;
+  }
+
+  .list_container {
+    align-items: center;
   }
 }
