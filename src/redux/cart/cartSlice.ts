@@ -2,13 +2,36 @@ import { createSlice, PayloadAction, createAsyncThunk, isAnyOf } from "@reduxjs/
 import axios from "axios";
 import { CartItemInterface } from "redux/cart/types";
 import type { RootState } from "../store";
-import type { CartState } from "./types";
+import type { CartState, OrderInterface } from "./types";
+import type { PurchaseDetails } from "../../components/PaymentForm";
+import { tokenConfig } from "../auth/authSlice";
+import type { ErrorResponse } from "../auth/types";
+
+export const confirmPurchase = createAsyncThunk<OrderInterface, PurchaseDetails, { rejectValue: ErrorResponse }>("shop/purchase", async (purchaseDetails, thunkAPI) => {
+  return axios
+    .post("/purchase", JSON.stringify(purchaseDetails), tokenConfig())
+    .then((response) => {
+      return response.data;
+    })
+    .catch((err) => {
+      return thunkAPI.rejectWithValue({
+        message: err.response.data.message,
+        errors: err.response.data?.errors,
+      });
+    });
+});
 
 // --------------- STATE
 const initialState: CartState = {
   isCartOpen: false,
   cartItems: [],
   total: 0,
+  orderDetails: null,
+  isLoading: false,
+  error: {
+    message: "",
+    errors: {},
+  },
 };
 
 // -------------- SLICE
@@ -44,10 +67,10 @@ export const cartSlice = createSlice({
     removeCartItem(state, action: PayloadAction<{ id: number }>) {
       const { id } = action.payload;
       state.cartItems = state.cartItems.filter((item) => item.product.id !== id);
-      
+
       // update item in localstorage
       localStorage.setItem("cart", JSON.stringify(state.cartItems));
-      
+
       // update cart total
       state.total = calculateCartTotal(state.cartItems);
     },
@@ -64,6 +87,24 @@ export const cartSlice = createSlice({
         localStorage.setItem("cart", JSON.stringify([]));
       }
     },
+  },
+  extraReducers: (builder) => {
+    builder.addCase(confirmPurchase.pending, (state) => {
+      state.isLoading = true;
+    });
+
+    builder.addCase(confirmPurchase.fulfilled, (state, action: PayloadAction<OrderInterface>) => {
+      state.orderDetails = action.payload;
+      state.isLoading = false;
+      state.error = {
+        message: "",
+        errors: {},
+      };
+    });
+
+    builder.addCase(confirmPurchase.rejected, (state, action: PayloadAction<any>) => {
+      state.error = action.payload;
+    });
   },
 });
 

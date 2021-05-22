@@ -10,8 +10,9 @@ import Home from "./pages/Home";
 import Product from "./pages/Product";
 import NotFound from "./pages/NotFound";
 import UnderConstruction from "./pages/UnderConstruction";
-import Checkout from "./pages/Checkout";
 import Cart from "./components/Cart";
+import Checkout from "./pages/Checkout";
+import Payment from "./pages/Payment";
 
 function App(): JSX.Element {
   const dispatch = useAppDispatch();
@@ -34,6 +35,7 @@ function App(): JSX.Element {
         <Route exact path="/" component={Home} />
         <Route exact path="/auth" component={Auth} />
         <Route exact path="/checkout" component={Checkout} />
+        <Route exact path="/payment" component={Payment} />
         <Route exact path="/test" component={UnderConstruction} />
         <Route path="/product/:id" component={Product} />
         <Route path="*" component={NotFound} />

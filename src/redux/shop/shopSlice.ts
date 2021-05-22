@@ -4,6 +4,7 @@ import type { RootState } from "../store";
 import type { ShopState, ProductInterface, GroupedProductsInterface, ProductDetailsInterface } from "./types";
 import type { ErrorResponse, UserDetails } from "../auth/types";
 
+
 const MAX_PRODUCTS_PER_OFFER = 7;
 
 const initialState: ShopState = {
@@ -91,6 +92,8 @@ export const getProductDetails = createAsyncThunk<ProductDetailsInterface, strin
       });
     });
 });
+
+
 
 // --------------- SLICE
 export const shopSlice = createSlice({
