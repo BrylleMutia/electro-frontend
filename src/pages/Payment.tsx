@@ -20,32 +20,23 @@ const stripe = loadStripe(stripeKey);
 
 function Payment() {
   return (
-    <div>
-      <Navbar disableCartButton={true} />
-      <div className={styles.container}>
-        <div className={styles.checkout_nav}>
-          <Breadcrumbs aria-label="breadcrumb">
-            <Link to="/">
-              <StyledBreadcrumb label="Home" icon={<HomeIcon fontSize="small" />} />
-            </Link>
-            <Link to="/checkout">
-              <StyledBreadcrumb label="Checkout" />
-            </Link>
-            <StyledBreadcrumb label="Payment" />
-          </Breadcrumbs>
-        </div>
-
-        <div className={styles.payment_form}>
-          <Elements stripe={stripe}>
-            <PaymentForm />
-          </Elements>
-        </div>
+    <div className={styles.container}>
+      <div className={styles.checkout_nav}>
+        <Breadcrumbs aria-label="breadcrumb">
+          <Link to="/">
+            <StyledBreadcrumb label="Home" icon={<HomeIcon fontSize="small" />} />
+          </Link>
+          <Link to="/checkout">
+            <StyledBreadcrumb label="Checkout" />
+          </Link>
+          <StyledBreadcrumb label="Payment" />
+        </Breadcrumbs>
       </div>
 
-      <CallToAction />
-
-      <div className={styles.container}>
-        <Footer />
+      <div className={styles.payment_form}>
+        <Elements stripe={stripe}>
+          <PaymentForm />
+        </Elements>
       </div>
     </div>
   );

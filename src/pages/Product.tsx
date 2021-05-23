@@ -31,8 +31,7 @@ function Product() {
     return <CircularProgress />;
   } else {
     return (
-      <main>
-        <Navbar />
+      <div>
         <div className={styles.container}>
           <div className={styles.product_nav}>
             <ProductNav />
@@ -46,11 +45,7 @@ function Product() {
             <ProductTabs />
           </div>
         </div>
-        <CallToAction />
-        <div className={styles.container}>
-          <Footer />
-        </div>
-      </main>
+      </div>
     );
   }
 }

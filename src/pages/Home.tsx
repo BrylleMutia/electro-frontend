@@ -22,7 +22,6 @@ export default function Home() {
 
   return (
     <>
-      <Navbar />
       <section className={styles.showcase}>
         <Showcase />
       </section>
@@ -40,10 +39,6 @@ export default function Home() {
         <div className={styles.sellers}>
           <Sellers />
         </div>
-      </div>
-      <CallToAction />
-      <div className={styles.container}>
-        <Footer />
       </div>
       
       {/* for notifications / toast */}

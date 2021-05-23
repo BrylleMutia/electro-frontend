@@ -4,6 +4,7 @@ import { CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
 import { useAppSelector, useAppDispatch } from "../../redux/hooks";
 import { UserDetails } from "../../redux/auth/types";
 import { confirmPurchase } from "../../redux/cart/cartSlice";
+import { useHistory } from "react-router-dom";
 
 import Button from "@material-ui/core/Button";
 import Alert from "@material-ui/lab/Alert";
@@ -18,9 +19,10 @@ function PaymentForm() {
   const stripe = useStripe();
   const elements = useElements();
   const dispatch = useAppDispatch();
+  const history = useHistory();
 
   const { userDetails } = useAppSelector((state) => state.auth);
-  const { total, cartItems, isLoading } = useAppSelector((state) => state.cart);
+  const { total, cartItems, isLoading, orderDetails } = useAppSelector((state) => state.cart);
 
   const [isPaymentLoading, setPaymentLoading] = useState(false);
 
@@ -72,9 +74,12 @@ function PaymentForm() {
         };
 
         // axios request here
-        dispatch(confirmPurchase(purchaseDetails));
-
-        // redirect to summary page
+        dispatch(confirmPurchase(purchaseDetails))
+          .then(() => {
+            // redirect to summary page
+            history.push("/summary");
+          })
+          .catch((err) => alert(err));
       }
     }
   };

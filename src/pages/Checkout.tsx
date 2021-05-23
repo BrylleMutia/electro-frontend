@@ -12,27 +12,18 @@ import HomeIcon from "@material-ui/icons/Home";
 
 function Checkout() {
   return (
-    <div>
-      <Navbar disableCartButton={true} />
-      <div className={styles.container}>
-        <div className={styles.checkout_nav}>
-          <Breadcrumbs aria-label="breadcrumb">
-            <Link to="/">
-              <StyledBreadcrumb label="Home" icon={<HomeIcon fontSize="small" />} />
-            </Link>
-            <StyledBreadcrumb label="Checkout" />
-          </Breadcrumbs>
-        </div>
-
-        <div className={styles.checkout_preview}>
-          <CheckoutPreview />
-        </div>
+    <div className={styles.container}>
+      <div className={styles.checkout_nav}>
+        <Breadcrumbs aria-label="breadcrumb">
+          <Link to="/">
+            <StyledBreadcrumb label="Home" icon={<HomeIcon fontSize="small" />} />
+          </Link>
+          <StyledBreadcrumb label="Checkout" />
+        </Breadcrumbs>
       </div>
 
-      <CallToAction />
-
-      <div className={styles.container}>
-        <Footer />
+      <div className={styles.checkout_preview}>
+        <CheckoutPreview />
       </div>
     </div>
   );
