@@ -1,3 +1,22 @@
+.payment_form {
+  .alert {
+    margin-bottom: 0.5em;
+
+    li {
+      margin-left: 1em;
+    }
+  }
+
+  form {
+    display: flex;
+    margin-top: 2em;
+
+    button {
+      margin-left: 1em;
+    }
+  }
+}
+
 .payment_card {
   background-color: white;
   padding: 10px 20px 11px;

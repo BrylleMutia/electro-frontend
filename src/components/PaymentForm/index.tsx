@@ -6,6 +6,7 @@ import { UserDetails } from "../../redux/auth/types";
 import { confirmPurchase } from "../../redux/cart/cartSlice";
 
 import Button from "@material-ui/core/Button";
+import Alert from "@material-ui/lab/Alert";
 
 export interface PurchaseDetails extends UserDetails {
   payment_method_id: string;
@@ -79,7 +80,18 @@ function PaymentForm() {
   };
 
   return (
-    <div>
+    <div className={styles.payment_form}>
+      <Alert className={styles.alert} severity="info">
+        As of now, the platform only accepts payments through <strong>card.</strong>
+      </Alert>
+      <Alert className={styles.alert} severity="info">
+        For testing purposes, you can use the following details: <br />{" "}
+        <ul>
+          <li>Card number: 4242 4242 4242 4242</li>
+          <li>CVC/EXP/ZIP: any (number)</li>
+        </ul>
+      </Alert>
+
       <form onSubmit={processPayment}>
         <CardElement
           className={styles.payment_card}
@@ -91,8 +103,8 @@ function PaymentForm() {
             },
           }}
         />
-        <Button type="submit" className="pay-button" disabled={isPaymentLoading}>
-          {isPaymentLoading || isLoading ? "Loading..." : "Pay"}
+        <Button type="submit" variant="contained" color="primary" disableElevation disabled={isPaymentLoading || isLoading}>
+          {isPaymentLoading || isLoading ? "Processing..." : "Pay"}
         </Button>
       </form>
     </div>
