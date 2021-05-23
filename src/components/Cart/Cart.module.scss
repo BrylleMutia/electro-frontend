@@ -8,8 +8,24 @@
   display: flex;
   flex-direction: column;
 
-  h4 {
-    margin: 1em 0;
+  .cart_header {
+    display: flex;
+    align-items: center;
+
+    .back {
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+
+      @media (min-width: $sm) {
+        display: none;
+      }
+    }
+
+    h4 {
+      margin: 1em 0;
+      margin-left: 1em;
+    }
   }
 
   .items {

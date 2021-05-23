@@ -11,7 +11,8 @@ import Drawer from "@material-ui/core/Drawer";
 import List from "@material-ui/core/List";
 import ButtonGroup from "@material-ui/core/ButtonGroup";
 import Button from "@material-ui/core/Button";
-import NavigateNextIcon from '@material-ui/icons/NavigateNext';
+import NavigateNextIcon from "@material-ui/icons/NavigateNext";
+import ChevronLeft from "@material-ui/icons/ChevronLeft";
 
 function Cart() {
   const { isCartOpen, cartItems, total } = useAppSelector((state) => state.cart);
@@ -23,7 +24,12 @@ function Cart() {
   return (
     <Drawer anchor="right" open={isCartOpen} onClose={handleToggleDrawer} elevation={5}>
       <div className={styles.drawer}>
-        <h4>My Cart</h4>
+        <div className={styles.cart_header}>
+          <span className={styles.back} onClick={handleToggleDrawer}>
+            <ChevronLeft />
+          </span>
+          <h4>My Cart</h4>
+        </div>
 
         {cartItems.length ? <ItemsList /> : <div className={styles.items}>No items in cart.</div>}
 
