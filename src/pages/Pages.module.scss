@@ -37,12 +37,10 @@
   margin: 4em 1em 1em 1em;
 }
 
-.checkout_preview {
-  margin: 4em 0;
-}
-
-.payment_form {
-  margin: 5em 0;
+.search {
+  @extend .my_lg;
+  display: flex;
+  justify-content: center;
 }
 
 

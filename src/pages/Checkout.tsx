@@ -22,7 +22,7 @@ function Checkout() {
         </Breadcrumbs>
       </div>
 
-      <div className={styles.checkout_preview}>
+      <div className={styles.my_md}>
         <CheckoutPreview />
       </div>
     </div>

@@ -33,7 +33,7 @@ function Payment() {
         </Breadcrumbs>
       </div>
 
-      <div className={styles.payment_form}>
+      <div className={styles.my_lg}>
         <Elements stripe={stripe}>
           <PaymentForm />
         </Elements>
