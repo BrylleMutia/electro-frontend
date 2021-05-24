@@ -1,0 +1,21 @@
+@import "../../../styles/breakpoints";
+
+.seller {
+  display: flex;
+  margin: 2em 0;
+
+  .seller_img {
+    width: 100%;
+    max-width: 15em;
+    margin: 0 5em 0 0;
+  }
+
+  @media (max-width: $sm) {
+    flex-direction: column;
+    align-items: center;
+
+    .seller_img {
+      margin: 0 0 3em 0;
+    }
+  }
+}

@@ -4,7 +4,7 @@ import { Link, useLocation } from "react-router-dom";
 import routes from "../../routes";
 import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
-import { IconButton, Button, List, ListItemIcon, Drawer, ListItemText, Icon, ListItem } from "@material-ui/core";
+import { IconButton, List, ListItemIcon, Drawer, ListItemText, ListItem } from "@material-ui/core";
 import { useAppSelector, useAppDispatch } from "../../redux/hooks";
 import { toggleCartDrawer } from "../../redux/cart/cartSlice";
 import { logout } from "../../redux/auth/authSlice";
