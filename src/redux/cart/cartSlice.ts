@@ -87,6 +87,13 @@ export const cartSlice = createSlice({
         localStorage.setItem("cart", JSON.stringify([]));
       }
     },
+    clearCart(state) {
+      state.cartItems = [];
+      state.total = 0;
+
+      // clear cart on localstorage
+      localStorage.setItem("cart", JSON.stringify([]));
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(confirmPurchase.pending, (state) => {
@@ -118,7 +125,7 @@ const calculateCartTotal = (cartItems: CartItemInterface[]) => {
   return totalPrice;
 };
 
-export const { toggleCartDrawer, addItemToCart, removeCartItem, updateCartFromLocalStorage } = cartSlice.actions;
+export const { toggleCartDrawer, addItemToCart, removeCartItem, updateCartFromLocalStorage, clearCart } = cartSlice.actions;
 
 // can access this specific slice using useSelector(authSelector)
 // other code such as selectors can use the imported `RootState` type

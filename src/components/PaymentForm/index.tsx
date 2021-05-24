@@ -3,7 +3,7 @@ import styles from "./PaymentForm.module.scss";
 import { CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
 import { useAppSelector, useAppDispatch } from "../../redux/hooks";
 import { UserDetails } from "../../redux/auth/types";
-import { confirmPurchase } from "../../redux/cart/cartSlice";
+import { confirmPurchase, clearCart } from "../../redux/cart/cartSlice";
 import { useHistory } from "react-router-dom";
 
 import Button from "@material-ui/core/Button";
@@ -78,6 +78,9 @@ function PaymentForm() {
           .then(() => {
             // redirect to summary page
             history.push("/summary");
+
+            // clear cart
+            dispatch(clearCart());
           })
           .catch((err) => alert(err));
       }
