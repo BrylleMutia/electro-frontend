@@ -3,12 +3,12 @@ import styles from "./Pages.module.scss";
 import { Link } from "react-router-dom";
 
 import SummaryTable from "../components/SummaryTable";
-import Navbar from "../components/Navbar";
-import Footer from "../components/Footer";
-import CallToAction from "../components/CallToAction";
 import Breadcrumbs from "@material-ui/core/Breadcrumbs";
 import { StyledBreadcrumb } from "../components/StyledComponents";
 import HomeIcon from "@material-ui/icons/Home";
+import Button from "@material-ui/core/Button";
+import NavigateBefore from "@material-ui/icons/NavigateBefore"
+
 
 function Summary() {
   return (
@@ -24,6 +24,8 @@ function Summary() {
 
       <div className={styles.payment_form}>
         <SummaryTable />
+
+        <Button component={Link} to="/" startIcon={<NavigateBefore />}>Home</Button>
       </div>
     </div>
   );
