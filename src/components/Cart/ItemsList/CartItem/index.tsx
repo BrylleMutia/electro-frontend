@@ -5,7 +5,7 @@ import { removeCartItem } from "../../../../redux/cart/cartSlice";
 import { useAppDispatch } from "../../../../redux/hooks";
 import { ProductInterface } from "../../../../redux/shop/types";
 import { Link } from "react-router-dom";
-import { toggleCartDrawer } from "../../../../redux/cart/cartSlice";
+import { closeCartDrawer } from "../../../../redux/cart/cartSlice";
 
 import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
@@ -45,7 +45,7 @@ const CartItem: React.FC<Props> = ({ quantity, product }) => {
     closeConfirmModal();
   };
 
-  const handleCartToggle = () => dispatch(toggleCartDrawer());
+  const handleCartToggle = () => dispatch(closeCartDrawer());
 
   return (
     <ListItem disableGutters className={styles.cart_item}>

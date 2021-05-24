@@ -42,6 +42,9 @@ export const cartSlice = createSlice({
     toggleCartDrawer(state) {
       state.isCartOpen = !state.isCartOpen;
     },
+    closeCartDrawer(state) {
+      state.isCartOpen = false;
+    },
     addItemToCart(state, action: PayloadAction<CartItemInterface>) {
       // just increase quantity if same product is already in cart
       const { id } = action.payload.product;
@@ -125,7 +128,7 @@ const calculateCartTotal = (cartItems: CartItemInterface[]) => {
   return totalPrice;
 };
 
-export const { toggleCartDrawer, addItemToCart, removeCartItem, updateCartFromLocalStorage, clearCart } = cartSlice.actions;
+export const { toggleCartDrawer, addItemToCart, removeCartItem, updateCartFromLocalStorage, clearCart, closeCartDrawer } = cartSlice.actions;
 
 // can access this specific slice using useSelector(authSelector)
 // other code such as selectors can use the imported `RootState` type
