@@ -1,6 +1,6 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import "./App.scss";
-import { BrowserRouter as Router, Switch, Route, useLocation, withRouter } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route, useLocation } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "./redux/hooks";
 import { updateCartFromLocalStorage } from "./redux/cart/cartSlice";
 import { loadDetails } from "./redux/auth/authSlice";
@@ -18,9 +18,13 @@ import Cart from "./components/Cart";
 import Checkout from "./pages/Checkout";
 import Payment from "./pages/Payment";
 import Summary from "./pages/Summary";
+import Disclaimer from "./components/Disclaimer";
 
 function App(): JSX.Element {
   const dispatch = useAppDispatch();
+  const [isDisclaimerOpen, setIsDisclaimerOpen] = useState(false);
+
+  const toggleDisclaimer = () => setIsDisclaimerOpen((prev) => !prev);
 
   useEffect(() => {
     // get cart items from localstorage
@@ -32,13 +36,21 @@ function App(): JSX.Element {
     }
   }, []);
 
+  useEffect(() => {
+    if (!localStorage.getItem("seen_disclaimer")) {
+      setIsDisclaimerOpen(true);
+
+      // save action to localstorage
+      localStorage.setItem("seen_disclaimer", "true");
+    }
+  }, []);
 
   return (
     <Router>
       {/* for scroll restoration on navigation */}
       <ScrollToTop />
 
-      <ExludeNavFromPages excludedPages={["/auth", "/test"]}>
+      <ExcludeNavFromPages excludedPages={["/auth", "/test"]}>
         <main>
           <Switch>
             {/* <ProtectedRoute isAuthenticated={isAuthenticated} exact path="/" component={Home} /> */}
@@ -53,7 +65,9 @@ function App(): JSX.Element {
             <Route path="*" component={NotFound} />
           </Switch>
         </main>
-      </ExludeNavFromPages>
+      </ExcludeNavFromPages>
+
+      <Disclaimer isOpen={isDisclaimerOpen} toggleDisclaimer={toggleDisclaimer} />
     </Router>
   );
 }
@@ -62,7 +76,7 @@ interface Props {
   excludedPages: string[];
 }
 
-const ExludeNavFromPages: React.FC<Props> = ({ excludedPages, children }) => {
+const ExcludeNavFromPages: React.FC<Props> = ({ excludedPages, children }) => {
   const location = useLocation();
 
   return (
