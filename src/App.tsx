@@ -9,16 +9,17 @@ import ScrollToTop from "./components/ScrollToTop";
 import Navbar from "./components/Navbar";
 import CallToAction from "./components/CallToAction";
 import Footer from "./components/Footer";
+import Disclaimer from "./components/Disclaimer";
+import Cart from "./components/Cart";
 import Auth from "./pages/Auth";
 import Home from "./pages/Home";
 import Product from "./pages/Product";
 import NotFound from "./pages/NotFound";
 import UnderConstruction from "./pages/UnderConstruction";
-import Cart from "./components/Cart";
 import Checkout from "./pages/Checkout";
 import Payment from "./pages/Payment";
 import Summary from "./pages/Summary";
-import Disclaimer from "./components/Disclaimer";
+import Search from "./pages/Search";
 
 function App(): JSX.Element {
   const dispatch = useAppDispatch();
@@ -58,6 +59,7 @@ function App(): JSX.Element {
             <Route exact path="/checkout" component={Checkout} />
             <Route exact path="/payment" component={Payment} />
             <Route exact path="/summary" component={Summary} />
+            <Route exact path="/search" component={Search} />
             <Route path="/product/:id" component={Product} />
 
             <Route exact path="/test" component={UnderConstruction} />

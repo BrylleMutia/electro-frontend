@@ -4,7 +4,6 @@ import type { RootState } from "../store";
 import type { ShopState, ProductInterface, GroupedProductsInterface, ProductDetailsInterface } from "./types";
 import type { ErrorResponse, UserDetails } from "../auth/types";
 
-
 const MAX_PRODUCTS_PER_OFFER = 7;
 
 const initialState: ShopState = {
@@ -12,6 +11,7 @@ const initialState: ShopState = {
   offers: {},
   categories: {},
   sellers: null,
+  searchResults: [],
   currentProduct: {
     id: 1,
     created_at: "",
@@ -93,7 +93,19 @@ export const getProductDetails = createAsyncThunk<ProductDetailsInterface, strin
     });
 });
 
-
+export const searchProducts = createAsyncThunk<ProductInterface[], string, { rejectValue: ErrorResponse }>("shop/searchProducts", async (query, thunkAPI) => {
+  return axios
+    .get(`/products/search/${query}`)
+    .then((response) => {
+      return response.data;
+    })
+    .catch((err) => {
+      return thunkAPI.rejectWithValue({
+        message: err.response.data.message,
+        errors: err.response.data?.errors,
+      });
+    });
+});
 
 // --------------- SLICE
 export const shopSlice = createSlice({
@@ -122,12 +134,22 @@ export const shopSlice = createSlice({
       };
     });
 
-    builder.addMatcher(isAnyOf(getAllProducts.pending, getProductDetails.pending), (state) => {
+    builder.addCase(searchProducts.fulfilled, (state, action: PayloadAction<ProductInterface[]>) => {
+      state.searchResults = action.payload;
+      state.isLoading = false;
+      state.error = {
+        message: "",
+        errors: {},
+      };
+    });
+
+    builder.addMatcher(isAnyOf(getAllProducts.pending, getProductDetails.pending, searchProducts.pending), (state) => {
       state.isLoading = true;
     });
 
-    builder.addMatcher(isAnyOf(getAllProducts.rejected, getAllProducts.rejected), (state, action: PayloadAction<ErrorResponse>) => {
+    builder.addMatcher(isAnyOf(getAllProducts.rejected, getAllProducts.rejected, searchProducts.rejected), (state, action: PayloadAction<ErrorResponse>) => {
       state.error = action.payload;
+      state.isLoading = false;
     });
   },
 });

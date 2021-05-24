@@ -6,6 +6,7 @@ export interface ShopState {
   categories: GroupedProductsInterface;
   sellers: UserDetails[] | null;
   currentProduct: ProductDetailsInterface;
+  searchResults: ProductInterface[]
   isLoading: boolean;
   error: ErrorResponse;
 }
