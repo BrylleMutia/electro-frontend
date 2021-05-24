@@ -81,7 +81,7 @@ const ExcludeNavFromPages: React.FC<Props> = ({ excludedPages, children }) => {
 
   return (
     <>
-      {!excludedPages.includes(location.pathname) && <Navbar />}
+      {!excludedPages.includes(location.pathname) && <Navbar disabledPages={["/checkout", "/payment"]} />}
 
       {children}
 

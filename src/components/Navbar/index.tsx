@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import styles from "./Navbar.module.scss";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import routes from "../../routes";
 import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
@@ -21,14 +21,15 @@ import HelpIcon from "@material-ui/icons/Help";
 import { CartButton } from "../../components/StyledComponents";
 
 interface Props {
-  disableCartButton?: boolean;
+  disabledPages?: string[]
 }
 
-const Navbar: React.FC<Props> = ({ disableCartButton = false }) => {
+const Navbar: React.FC<Props> = ({ disabledPages }) => {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const { isAuthenticated, userType } = useAppSelector((state) => state.auth);
   const { total } = useAppSelector((state) => state.cart);
 
+  const location = useLocation();
   const dispatch = useAppDispatch();
 
   const toggleMenuDrawer = () => setIsDrawerOpen((prev) => !prev);
@@ -104,11 +105,11 @@ const Navbar: React.FC<Props> = ({ disableCartButton = false }) => {
         </div>
 
         {matches ? (
-          <IconButton disabled={disableCartButton} onClick={handleCartDrawerToggle}>
+          <IconButton disabled={disabledPages?.includes(location.pathname)} onClick={handleCartDrawerToggle}>
             <ShoppingCartIcon />
           </IconButton>
         ) : (
-          <CartButton disabled={disableCartButton} startIcon={<ShoppingCartIcon />} variant="contained" color="primary" disableElevation={true} onClick={handleCartDrawerToggle}>
+          <CartButton disabled={disabledPages?.includes(location.pathname)} startIcon={<ShoppingCartIcon />} variant="contained" color="primary" disableElevation={true} onClick={handleCartDrawerToggle}>
             {!total ? "My Cart" : <CountUp start={total - total / 4} end={total} duration={0.5} formattingFn={(value) => `P ${numWithCommas(value)}`} />}
           </CartButton>
         )}
