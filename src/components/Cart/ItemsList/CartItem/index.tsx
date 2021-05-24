@@ -5,6 +5,7 @@ import { removeCartItem } from "../../../../redux/cart/cartSlice";
 import { useAppDispatch } from "../../../../redux/hooks";
 import { ProductInterface } from "../../../../redux/shop/types";
 import { Link } from "react-router-dom";
+import { toggleCartDrawer } from "../../../../redux/cart/cartSlice";
 
 import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
@@ -23,10 +24,9 @@ import Overlay from "../../../Overlay";
 interface Props {
   quantity: number;
   product: ProductInterface;
-  toggleCart?: () => void
 }
 
-const CartItem: React.FC<Props> = ({ quantity, product, toggleCart }) => {
+const CartItem: React.FC<Props> = ({ quantity, product }) => {
   const { product_name, product_image, price, id } = product;
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -45,6 +45,8 @@ const CartItem: React.FC<Props> = ({ quantity, product, toggleCart }) => {
     closeConfirmModal();
   };
 
+  const handleCartToggle = () => dispatch(toggleCartDrawer());
+
   return (
     <ListItem disableGutters className={styles.cart_item}>
       <IconButton onClick={openConfirmModal}>
@@ -52,7 +54,7 @@ const CartItem: React.FC<Props> = ({ quantity, product, toggleCart }) => {
       </IconButton>
 
       <div className={styles.product_image}>
-        <Link to={`/product/${id}`} onClick={toggleCart}>
+        <Link to={`/product/${id}`} onClick={handleCartToggle}>
           <Overlay label="Details" fontSize="0.8rem">
             <img src={product_image} alt="cart-item" />
           </Overlay>
