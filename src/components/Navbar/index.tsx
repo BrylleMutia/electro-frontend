@@ -18,10 +18,11 @@ import InputIcon from "@material-ui/icons/Input";
 import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
 import MenuIcon from "@material-ui/icons/Menu";
 import HelpIcon from "@material-ui/icons/Help";
+import HomeIcon from "@material-ui/icons/Home";
 import { CartButton } from "../../components/StyledComponents";
 
 interface Props {
-  disabledPages?: string[]
+  disabledPages?: string[];
 }
 
 const Navbar: React.FC<Props> = ({ disabledPages }) => {
@@ -72,8 +73,18 @@ const Navbar: React.FC<Props> = ({ disabledPages }) => {
           <Drawer anchor="left" open={isDrawerOpen} onClose={toggleMenuDrawer}>
             <div className={styles.drawer} onClick={toggleMenuDrawer}>
               <List>
+                <Link onClick={handleLogout} to="/">
+                  <ListItem>
+                    <ListItemIcon>
+                      <HomeIcon />
+                    </ListItemIcon>
+                    <ListItemText primary="Home" />
+                  </ListItem>
+                </Link>
+
                 {routes.map((route, index) => {
-                  if (route.path === "/auth" && isAuthenticated) return;
+                  if (!route.isProtected && isAuthenticated) return;
+                  if (route.isProtected && !isAuthenticated) return;
 
                   return (
                     <Link to={route.path} key={index}>
