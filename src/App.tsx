@@ -20,6 +20,7 @@ import Checkout from "./pages/Checkout";
 import Payment from "./pages/Payment";
 import Summary from "./pages/Summary";
 import Search from "./pages/Search";
+import Profile from "./pages/Profile";
 
 function App(): JSX.Element {
   const dispatch = useAppDispatch();
@@ -56,6 +57,7 @@ function App(): JSX.Element {
           <Switch>
             {/* <ProtectedRoute isAuthenticated={isAuthenticated} exact path="/" component={Home} /> */}
             <Route exact path="/" component={Home} />
+            <Route exact path="/profile" component={Profile} />
             <Route exact path="/checkout" component={Checkout} />
             <Route exact path="/payment" component={Payment} />
             <Route exact path="/summary" component={Summary} />

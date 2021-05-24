@@ -73,7 +73,7 @@ const Navbar: React.FC<Props> = ({ disabledPages }) => {
           <Drawer anchor="left" open={isDrawerOpen} onClose={toggleMenuDrawer}>
             <div className={styles.drawer} onClick={toggleMenuDrawer}>
               <List>
-                <Link onClick={handleLogout} to="/">
+                <Link to="/">
                   <ListItem>
                     <ListItemIcon>
                       <HomeIcon />
