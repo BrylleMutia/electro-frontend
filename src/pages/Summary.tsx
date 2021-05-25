@@ -1,6 +1,7 @@
 import React from "react";
 import styles from "./Pages.module.scss";
 import { Link } from "react-router-dom";
+import { useAppSelector } from "../redux/hooks";
 
 import SummaryTable from "../components/SummaryTable";
 import Breadcrumbs from "@material-ui/core/Breadcrumbs";
@@ -11,6 +12,8 @@ import NavigateBefore from "@material-ui/icons/NavigateBefore"
 
 
 function Summary() {
+  const { orderDetails } = useAppSelector((state) => state.cart);
+
   return (
     <div className={styles.container}>
       <div className={styles.checkout_nav}>
@@ -22,8 +25,8 @@ function Summary() {
         </Breadcrumbs>
       </div>
 
-      <div className={styles.payment_form}>
-        <SummaryTable />
+      <div className={styles.my_md}>
+        <SummaryTable orderDetails={orderDetails} />
 
         <Button component={Link} to="/" startIcon={<NavigateBefore />}>Home</Button>
       </div>

@@ -12,21 +12,35 @@ export interface CartState {
 
 export interface OrderInterface {
   id: number;
+  created_at: string;
+  updated_at: string;
   user_id: number;
   transaction_id: string;
   total: number;
-  updated_at: string;
-  created_at: string;
   products: OrderProductsInterface[];
 }
 
-export interface OrderProductsInterface extends ProductInterface {
+export interface MinDetailsProduct {
+  id: number;
+  created_at: string;
+  updated_at: string;
+  product_name: string;
+  slug: string;
+  price: string | number;
+  product_image: string;
+  description: string;
+  seller_id: number;
+  offer_id: number;
+}
+
+export interface OrderProductsInterface extends MinDetailsProduct {
   pivot: {
     order_id: number;
     product_id: number;
     quantity: number;
   };
 }
+
 
 export interface CartItemInterface {
   quantity: number;

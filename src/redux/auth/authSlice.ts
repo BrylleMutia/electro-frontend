@@ -2,7 +2,8 @@ import { createSlice, PayloadAction, createAsyncThunk, isAnyOf } from "@reduxjs/
 import axios from "axios";
 import type { RootState } from "../store";
 import type { RegisterDetails, LoginDetails } from "../../components/AuthForm";
-import { AuthState, AuthResponse, ErrorResponse, LogoutResponse, UserType, UserDetails, HeadersConfig } from "./types";
+import { AuthState, AuthResponse, ErrorResponse, UserType, UserDetails, HeadersConfig } from "./types";
+import type { OrderInterface } from "../cart/types"
 
 // Define the initial state using that type
 const initialState: AuthState = {
@@ -11,6 +12,35 @@ const initialState: AuthState = {
   isLoading: false,
   userType: null,
   userDetails: null,
+  orderHistory: [
+    {
+      id: 1,
+      created_at: "",
+      updated_at: "",
+      user_id: 1,
+      transaction_id: "",
+      total: 1,
+      products: [
+        {
+          id: 1,
+          created_at: "",
+          updated_at: "",
+          product_name: "",
+          slug: "",
+          price: "",
+          product_image: "",
+          description: "",
+          seller_id: 1,
+          offer_id: 1,
+          pivot: {
+            order_id: 1,
+            product_id: 1,
+            quantity: 1,
+          },
+        },
+      ],
+    },
+  ],
   error: { message: "", errors: {} },
 };
 
@@ -56,7 +86,6 @@ export const login = createAsyncThunk<AuthResponse, LoginDetails, { rejectValue:
     });
 });
 
-
 export const loadDetails = createAsyncThunk<UserDetails, number, { rejectValue: ErrorResponse }>("auth/loadDetails", async (_, thunkAPI) => {
   return axios
     .get("/verify", tokenConfig())
@@ -74,6 +103,20 @@ export const loadDetails = createAsyncThunk<UserDetails, number, { rejectValue: 
 export const logout = createAsyncThunk<{ message: string }, UserType, { rejectValue: ErrorResponse }>("auth/logout", async (userType, thunkAPI) => {
   return axios
     .get(`/${userType}/logout`, tokenConfig())
+    .then((response) => {
+      return response.data;
+    })
+    .catch((err) => {
+      return thunkAPI.rejectWithValue({
+        message: err.response.data.message,
+        errors: err.response.data?.errors,
+      });
+    });
+});
+
+export const getOrderHistory = createAsyncThunk<OrderInterface[], number, { rejectValue: ErrorResponse }>("auth/getOrderHistory", async (limit, thunkAPI) => {
+  return axios
+    .get(`/buyer/orders?limit=${limit}`, tokenConfig())
     .then((response) => {
       return response.data;
     })
@@ -119,7 +162,11 @@ export const authSlice = createSlice({
       state.userType = action.payload.role_id === 1 ? UserType.BUYER : UserType.SELLER;
     });
 
-    builder.addMatcher(isAnyOf(register.pending, login.pending, loadDetails.pending, logout.pending), (state) => {
+    builder.addCase(getOrderHistory.fulfilled, (state, action: PayloadAction<OrderInterface[]>) => {
+      state.orderHistory = action.payload;
+    });
+
+    builder.addMatcher(isAnyOf(register.pending, login.pending, loadDetails.pending, logout.pending, getOrderHistory.pending), (state) => {
       state.error = { message: "", errors: {} };
       state.isLoading = true;
     });
@@ -135,7 +182,7 @@ export const authSlice = createSlice({
       localStorage.setItem("token", action.payload.token);
     });
 
-    builder.addMatcher(isAnyOf(register.rejected, login.rejected, loadDetails.rejected, logout.rejected), (state, action: PayloadAction<ErrorResponse>) => {
+    builder.addMatcher(isAnyOf(register.rejected, login.rejected, loadDetails.rejected, logout.rejected, getOrderHistory.rejected), (state, action: PayloadAction<ErrorResponse>) => {
       state.isLoading = false;
       state.error = action.payload;
     });

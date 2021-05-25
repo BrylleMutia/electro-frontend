@@ -1,9 +1,12 @@
+import { OrderInterface } from "../cart/types";
+
 export interface AuthState {
   token: string | null;
   isAuthenticated: boolean;
   isLoading: boolean;
   userType: UserType | null;
   userDetails: UserDetails | null;
+  orderHistory: OrderInterface[];
   error: ErrorResponse;
 }
 
@@ -47,10 +50,10 @@ export interface LogoutResponse {
 }
 
 export interface HeadersConfig {
-  headers: HeadersInterface
+  headers: HeadersInterface;
 }
 
 export interface HeadersInterface {
-  "Content-Type": string,
-  "Authorization"?: string
+  "Content-Type": string;
+  Authorization?: string;
 }

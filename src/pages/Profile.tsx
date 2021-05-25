@@ -1,8 +1,10 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styles from "./Pages.module.scss";
 import { Link } from "react-router-dom";
-import { useAppSelector } from "../redux/hooks";
+import { useAppSelector, useAppDispatch } from "../redux/hooks";
+import { getOrderHistory } from "../redux/auth/authSlice";
 
+import History from "../components/History";
 import { InfoTab } from "../components/ProductTabs";
 import Breadcrumbs from "@material-ui/core/Breadcrumbs";
 import { StyledBreadcrumb } from "../components/StyledComponents";
@@ -12,7 +14,13 @@ import HighlightOffIcon from "@material-ui/icons/HighlightOff";
 import { Paper } from "@material-ui/core";
 
 export default function Profile() {
-  const { userDetails } = useAppSelector((state) => state.auth);
+  const { userDetails, orderHistory } = useAppSelector((state) => state.auth);
+
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(getOrderHistory(0));
+  }, []);
 
   if (!userDetails)
     return (
@@ -36,6 +44,8 @@ export default function Profile() {
         <Paper elevation={1} className={styles.profile}>
           <InfoTab details={userDetails} />
         </Paper>
+
+        <History historyDetails={orderHistory} />
       </div>
     </div>
   );

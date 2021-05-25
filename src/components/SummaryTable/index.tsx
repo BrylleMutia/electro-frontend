@@ -10,10 +10,14 @@ import TableContainer from "@material-ui/core/TableContainer";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Hidden from "@material-ui/core/Hidden";
+import { OrderInterface } from "../../redux/cart/types";
 
-function SummaryTable() {
-  const { orderDetails } = useAppSelector((state) => state.cart);
+interface Props {
+  orderDetails: OrderInterface | null;
+  hideHeading?: boolean;
+}
 
+const SummaryTable: React.FC<Props> = ({ orderDetails, hideHeading = false }) => {
   const getOverallAmount = () => {
     if (orderDetails?.products.length) {
       let overallAmount = orderDetails?.products.reduce((totalAmount, product) => totalAmount + Number(product.price), 0);
@@ -24,7 +28,7 @@ function SummaryTable() {
   return (
     <div className={styles.summary}>
       <h5>Transaction ID: {orderDetails?.transaction_id} </h5>
-      <h3>Thank you for your purchase!</h3>
+      {!hideHeading && <h3>Thank you for your purchase!</h3>}
 
       <TableContainer>
         <Table className={styles.table} aria-label="simple table">
@@ -73,6 +77,6 @@ function SummaryTable() {
       </TableContainer>
     </div>
   );
-}
+};
 
 export default SummaryTable;

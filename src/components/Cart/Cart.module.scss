@@ -16,10 +16,6 @@
       display: flex;
       align-items: center;
       cursor: pointer;
-
-      @media (min-width: $sm) {
-        display: none;
-      }
     }
 
     h4 {
