@@ -6,7 +6,6 @@ import { Link } from "react-router-dom";
 import TextField from "@material-ui/core/TextField";
 import Alert from "@material-ui/lab/Alert";
 import HighlightOffIcon from "@material-ui/icons/HighlightOff";
-import { RoundedInput } from "../../StyledComponents";
 
 function CheckoutDetails() {
   const { isAuthenticated, userDetails } = useAppSelector((state) => state.auth);

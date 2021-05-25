@@ -1,12 +1,13 @@
 import React, { useState } from "react";
 import styles from "./ProductTabs.module.scss";
-import { withStyles } from "@material-ui/core/styles";
+import { withStyles } from "@material-ui/core/styles"
+import { useAppSelector } from "../../redux/hooks";;
 
 import { StyledTabs } from "../StyledComponents";
 import Tab from "@material-ui/core/Tab";
 import TabPanel from "../AuthForm/TabPanel";
 import ReviewsTab from "./ReviewsTab";
-import SellerTab from "./SellerTab";
+import InfoTab from "./InfoTab";
 
 const PRODUCT_TABS = ["Reviews", "Seller"];
 
@@ -14,6 +15,8 @@ const PRODUCT_TABS = ["Reviews", "Seller"];
 
 function ProductTabs() {
   const [tabView, setTabView] = useState<number>(0);
+  const { currentProduct } = useAppSelector((state) => state.shop);
+
 
   const handleTabChange = (e: React.ChangeEvent<{}>, tabIndex: number) => {
     setTabView(tabIndex);
@@ -31,10 +34,11 @@ function ProductTabs() {
         <ReviewsTab />
       </TabPanel>
       <TabPanel value={tabView} index={1}>
-        <SellerTab />
+        <InfoTab details={currentProduct.seller} />
       </TabPanel>
     </div>
   );
 }
 
 export default ProductTabs;
+export { ReviewsTab, InfoTab };

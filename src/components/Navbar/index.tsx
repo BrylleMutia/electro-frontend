@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import styles from "./Navbar.module.scss";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useHistory } from "react-router-dom";
 import routes from "../../routes";
 import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
@@ -31,6 +31,7 @@ const Navbar: React.FC<Props> = ({ disabledPages }) => {
   const { total } = useAppSelector((state) => state.cart);
 
   const location = useLocation();
+  const history = useHistory();
   const dispatch = useAppDispatch();
 
   const toggleMenuDrawer = () => setIsDrawerOpen((prev) => !prev);
@@ -51,7 +52,9 @@ const Navbar: React.FC<Props> = ({ disabledPages }) => {
 
   const handleLogout = () => {
     if (userType) {
-      dispatch(logout(userType));
+      dispatch(logout(userType)).then(() => {
+        history.push("/");
+      });
     }
   };
 
