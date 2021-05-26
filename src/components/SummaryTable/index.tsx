@@ -18,13 +18,6 @@ interface Props {
 }
 
 const SummaryTable: React.FC<Props> = ({ orderDetails, hideHeading = false }) => {
-  const getOverallAmount = () => {
-    if (orderDetails?.products.length) {
-      let overallAmount = orderDetails?.products.reduce((totalAmount, product) => totalAmount + Number(product.price), 0);
-      return numWithCommas(overallAmount);
-    }
-  };
-
   return (
     <div className={styles.summary}>
       <h5>Transaction ID: {orderDetails?.transaction_id} </h5>
@@ -69,7 +62,7 @@ const SummaryTable: React.FC<Props> = ({ orderDetails, hideHeading = false }) =>
                 </TableCell>
               </Hidden>
               <TableCell padding="none" className={styles.table_footer} align="right">
-                P {getOverallAmount()}
+                P {numWithCommas((orderDetails?.total ?? 0) / 100) }  {/** divide by 100 to remove cents */ }
               </TableCell>
             </TableRow>
           </TableBody>

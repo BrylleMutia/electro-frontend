@@ -113,6 +113,7 @@ export const cartSlice = createSlice({
     });
 
     builder.addCase(confirmPurchase.rejected, (state, action: PayloadAction<any>) => {
+      state.isLoading = false;
       state.error = action.payload;
     });
   },

@@ -47,7 +47,7 @@ const Product: React.FC<Props> = ({ productDetails, index, showcaseFirstItem = f
 
         <Overlay label="See details">
           <div className={styles.product_image}>
-            <img key={index} src={product_image} alt="product" />
+            <img key={index} src={product_image} alt={product_name} />
           </div>
         </Overlay>
       </Link>
