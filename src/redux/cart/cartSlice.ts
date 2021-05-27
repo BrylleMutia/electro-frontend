@@ -10,15 +10,13 @@ import type { ErrorResponse } from "../auth/types";
 export const confirmPurchase = createAsyncThunk<OrderInterface, PurchaseDetails, { rejectValue: ErrorResponse }>("shop/purchase", async (purchaseDetails, thunkAPI) => {
   return axios
     .post("/purchase", JSON.stringify(purchaseDetails), tokenConfig())
-    .then((response) => {
-      return response.data;
-    })
-    .catch((err) => {
-      return thunkAPI.rejectWithValue({
+    .then((response) => response.data)
+    .catch((err) =>
+      thunkAPI.rejectWithValue({
         message: err.response.data.message,
         errors: err.response.data?.errors,
-      });
-    });
+      })
+    );
 });
 
 // --------------- STATE

@@ -57,75 +57,64 @@ const initialState: AuthState = {
 export const register = createAsyncThunk<AuthResponse, RegisterDetails, { rejectValue: ErrorResponse }>("auth/register", async (regDetails, thunkAPI) => {
   return axios
     .post(`/${regDetails.type}/register`, regDetails.info)
-    .then((response) => {
-      return response.data;
-    })
-    .catch((err) => {
-      // The second argument, `thunkApi`, is an object
-      // that contains all those fields
-      // and the `rejectWithValue` function:
-
-      return thunkAPI.rejectWithValue({
+    .then((response) => response.data)
+    .catch((err) =>
+    // The second argument, `thunkApi`, is an object
+    // that contains all those fields
+    // and the `rejectWithValue` function:
+      thunkAPI.rejectWithValue({
         message: err.response.data.message,
         errors: err.response.data?.errors,
-      });
-    });
+      })
+    );
 });
 
 export const login = createAsyncThunk<AuthResponse, LoginDetails, { rejectValue: ErrorResponse }>("auth/login", async (loginDetails, thunkAPI) => {
   return axios
     .post(`/${loginDetails.type}/login`, loginDetails.info)
-    .then((response) => {
-      return response.data;
-    })
-    .catch((err) => {
-      return thunkAPI.rejectWithValue({
+    .then((response) => response.data)
+    .catch((err) =>
+      thunkAPI.rejectWithValue({
         message: err.response.data.message,
         errors: err.response.data?.errors,
-      });
-    });
+      })
+    );
 });
 
 export const loadDetails = createAsyncThunk<UserDetails, number, { rejectValue: ErrorResponse }>("auth/loadDetails", async (_, thunkAPI) => {
   return axios
     .get("/verify", tokenConfig())
-    .then((response) => {
-      return response.data;
-    })
-    .catch((err) => {
-      return thunkAPI.rejectWithValue({
+    .then((response) => response.data)
+    .catch((err) =>
+      thunkAPI.rejectWithValue({
         message: err.response.data.message,
         errors: err.response.data?.errors,
-      });
-    });
+      })
+    );
 });
 
 export const logout = createAsyncThunk<{ message: string }, UserType, { rejectValue: ErrorResponse }>("auth/logout", async (userType, thunkAPI) => {
   return axios
     .get(`/${userType}/logout`, tokenConfig())
-    .then((response) => {
-      return response.data;
-    })
-    .catch((err) => {
-      return thunkAPI.rejectWithValue({
+    .then((response) => response.data)
+    .catch((err) =>
+      thunkAPI.rejectWithValue({
         message: err.response.data.message,
         errors: err.response.data?.errors,
-      });
-    });
+      })
+    );
 });
 
 export const getOrderHistory = createAsyncThunk<OrderInterface[], number, { rejectValue: ErrorResponse }>("auth/getOrderHistory", async (limit, thunkAPI) => {
   return axios
     .get(`/buyer/orders?limit=${limit}`, tokenConfig())
-    .then((response) => {
-      return response.data;
-    })
-    .catch((err) => {
-      return thunkAPI.rejectWithValue({
+    .then((response) => response.data)
+    .catch((err) =>
+      thunkAPI.rejectWithValue({
         message: err.response.data.message,
         errors: err.response.data?.errors,
-      });
-    });
+      })
+    );
 });
 
 // ----------------- SLICE
