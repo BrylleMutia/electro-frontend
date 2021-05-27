@@ -1,8 +1,10 @@
 import { createSlice, PayloadAction, createAsyncThunk, isAnyOf } from "@reduxjs/toolkit";
 import axios from "axios";
 import type { RootState } from "../store";
-import type { ShopState, ProductInterface, GroupedProductsInterface, ProductDetailsInterface } from "./types";
+import type { ShopState, ProductInterface, GroupedProductsInterface, ProductDetailsInterface, ReviewInterface } from "./types";
 import type { ErrorResponse, UserDetails } from "../auth/types";
+import type { ReviewInfo } from "../../components/ProductTabs";
+import { tokenConfig } from "../auth/authSlice";
 
 const MAX_PRODUCTS_PER_OFFER = 7;
 
@@ -68,43 +70,49 @@ const initialState: ShopState = {
 export const getAllProducts = createAsyncThunk<ProductInterface[], number, { rejectValue: ErrorResponse }>("shop/getAllProducts", async (limit, thunkAPI) => {
   return axios
     .get(`/products?limit=${limit}`)
-    .then((response) => {
-      return response.data;
-    })
-    .catch((err) => {
-      return thunkAPI.rejectWithValue({
+    .then((response) => response.data)
+    .catch((err) =>
+      thunkAPI.rejectWithValue({
         message: err.response.data.message,
         errors: err.response.data?.errors,
-      });
-    });
+      })
+    );
 });
 
 export const getProductDetails = createAsyncThunk<ProductDetailsInterface, string, { rejectValue: ErrorResponse }>("shop/getProductDetails", async (id, thunkAPI) => {
   return axios
     .get(`/products/${id}`)
-    .then((response) => {
-      return response.data;
-    })
-    .catch((err) => {
-      return thunkAPI.rejectWithValue({
+    .then((response) => response.data)
+    .catch((err) =>
+      thunkAPI.rejectWithValue({
         message: err.response.data.message,
         errors: err.response.data?.errors,
-      });
-    });
+      })
+    );
 });
 
 export const searchProducts = createAsyncThunk<ProductInterface[], string, { rejectValue: ErrorResponse }>("shop/searchProducts", async (query, thunkAPI) => {
   return axios
     .get(`/products/search/${query}`)
-    .then((response) => {
-      return response.data;
-    })
-    .catch((err) => {
-      return thunkAPI.rejectWithValue({
+    .then((response) => response.data)
+    .catch((err) =>
+      thunkAPI.rejectWithValue({
         message: err.response.data.message,
         errors: err.response.data?.errors,
-      });
-    });
+      })
+    );
+});
+
+export const submitProductReview = createAsyncThunk<ReviewInterface[], ReviewInfo, { rejectValue: ErrorResponse }>("shop/submitProductReview", async (reviewInfo, thunkAPI) => {
+  return axios
+    .post("/product/review", JSON.stringify(reviewInfo), tokenConfig())
+    .then((response) => response.data)
+    .catch((err) =>
+      thunkAPI.rejectWithValue({
+        message: err.response.data.message,
+        errors: err.response.data?.errors,
+      })
+    );
 });
 
 // --------------- SLICE
@@ -143,11 +151,20 @@ export const shopSlice = createSlice({
       };
     });
 
-    builder.addMatcher(isAnyOf(getAllProducts.pending, getProductDetails.pending, searchProducts.pending), (state) => {
+    builder.addCase(submitProductReview.fulfilled, (state, action: PayloadAction<ReviewInterface[]>) => {
+      state.currentProduct.reviews = action.payload;
+      state.isLoading = false;
+      state.error = {
+        message: "",
+        errors: {},
+      };
+    })
+
+    builder.addMatcher(isAnyOf(getAllProducts.pending, getProductDetails.pending, searchProducts.pending, submitProductReview.pending), (state) => {
       state.isLoading = true;
     });
 
-    builder.addMatcher(isAnyOf(getAllProducts.rejected, getAllProducts.rejected, searchProducts.rejected), (state, action: PayloadAction<ErrorResponse>) => {
+    builder.addMatcher(isAnyOf(getAllProducts.rejected, getAllProducts.rejected, searchProducts.rejected, submitProductReview.rejected), (state, action: PayloadAction<ErrorResponse>) => {
       state.error = action.payload;
       state.isLoading = false;
     });
