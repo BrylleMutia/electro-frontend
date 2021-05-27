@@ -62,7 +62,7 @@ function App(): JSX.Element {
             <Route exact path="/payment" component={Payment} />
             <Route exact path="/summary" component={Summary} />
             <Route exact path="/search" component={Search} />
-            <Route path="/product/:id" component={Product} />
+            <Route path="/product/:product_id" component={Product} />
 
             <Route exact path="/test" component={UnderConstruction} />
             <Route exact path="/auth" component={Auth} />
