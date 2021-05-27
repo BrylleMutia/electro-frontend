@@ -1,13 +1,18 @@
 import React, { useState } from "react";
 import styles from "./ProductTabs.module.scss";
 import { withStyles } from "@material-ui/core/styles"
-import { useAppSelector } from "../../redux/hooks";;
+import { useAppSelector } from "../../redux/hooks";
+import type { ReviewInfo } from "./ReviewsTab/ReviewForm"
+
 
 import { StyledTabs } from "../StyledComponents";
 import Tab from "@material-ui/core/Tab";
 import TabPanel from "../AuthForm/TabPanel";
 import ReviewsTab from "./ReviewsTab";
 import InfoTab from "./InfoTab";
+import Review from "./ReviewsTab/Review";
+import RatingBar from "./ReviewsTab/RatingBar";
+import ReviewForm from "./ReviewsTab/ReviewForm";
 
 const PRODUCT_TABS = ["Reviews", "Seller"];
 
@@ -41,4 +46,5 @@ function ProductTabs() {
 }
 
 export default ProductTabs;
-export { ReviewsTab, InfoTab };
+export { ReviewsTab, InfoTab, ReviewForm, Review, RatingBar };
+export type { ReviewInfo };
