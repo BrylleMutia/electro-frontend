@@ -117,7 +117,7 @@ function ReviewsTab() {
 
       <div className={styles.reviews}>
         {paginatedReviews[currentPage - 1].map((review, index) => (
-          <div className={styles.mb_md}>
+          <div className={styles.mb_md} key={index}>
             <Review reviewDetails={review} key={index} />
           </div>
         ))}
