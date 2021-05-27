@@ -13,18 +13,18 @@ import CallToAction from "../components/CallToAction";
 import Footer from "../components/Footer";
 
 interface RouteParams {
-  id: string;
+  product_id: string;
   selection: string;
 }
 
 function Product() {
-  let { id } = useParams<RouteParams>();
+  let { product_id } = useParams<RouteParams>();
   let { isLoading } = useAppSelector((state) => state.shop);
 
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    dispatch(getProductDetails(id));
+    dispatch(getProductDetails(product_id));
   }, []);
 
   if (isLoading) {

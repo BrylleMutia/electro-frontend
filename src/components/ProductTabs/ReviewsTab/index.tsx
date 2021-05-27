@@ -9,12 +9,11 @@ import Review from "./Review";
 import RatingBar from "./RatingBar";
 import ReviewForm from "./ReviewForm";
 
-
-
 type ReviewPageInterface = ReviewInterface[];
 
 function ReviewsTab() {
   const { reviews } = useAppSelector((state) => state.shop.currentProduct);
+  const { userDetails, isAuthenticated } = useAppSelector((state) => state.auth);
   const [paginatedReviews, setPaginatedReviews] = useState<ReviewPageInterface[]>([[]]);
   const [currentPage, setCurrentPage] = useState(1);
 
@@ -59,6 +58,15 @@ function ReviewsTab() {
     } else return 0;
   };
 
+  const getCurrentUserReview = () => {
+    // retrieve if user already submitted a review
+    // display review instead of review form
+    if (isAuthenticated) {
+      const currentUserReview = reviews?.find((review) => review.user_id === userDetails?.id);
+      return currentUserReview;
+    }
+  };
+
   useEffect(() => {
     getRatingStats();
   }, []);
@@ -80,9 +88,13 @@ function ReviewsTab() {
     }
   }, []);
 
-
-
-  if (!reviews?.length) return <h4>No reviews</h4>;
+  if (!reviews?.length)
+    return (
+      <div className={styles.no_reviews}>
+        <h4>No reviews</h4>
+        <ReviewForm isHidden={!isAuthenticated} />
+      </div>
+    );
 
   return (
     <div className={styles.rating_container}>
@@ -100,7 +112,7 @@ function ReviewsTab() {
           </div>
         </div>
 
-        <ReviewForm />
+        <ReviewForm isHidden={!isAuthenticated} currentUserReview={getCurrentUserReview()} />
       </div>
 
       <div className={styles.reviews}>
@@ -117,3 +129,4 @@ function ReviewsTab() {
 }
 
 export default ReviewsTab;
+export { ReviewForm, Review, RatingBar };

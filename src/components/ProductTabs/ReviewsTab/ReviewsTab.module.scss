@@ -31,12 +31,21 @@
   }
 }
 
+.no_reviews {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
 
 @media (max-width: $md) {
-  .rating_bar_container {
+  .rating_bar_container, .no_reviews {
     flex-direction: column;
     justify-content: center;
     margin-bottom: 3em;
+
+    & > h4 {
+      margin-bottom: 2em;
+    }
 
     .rating_bar {
       margin-bottom: 3em;
