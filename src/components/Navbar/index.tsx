@@ -76,38 +76,32 @@ const Navbar: React.FC<Props> = ({ disabledPages }) => {
           <Drawer anchor="left" open={isDrawerOpen} onClose={toggleMenuDrawer}>
             <div className={styles.drawer} onClick={toggleMenuDrawer}>
               <List>
-                <Link to="/">
-                  <ListItem>
-                    <ListItemIcon>
-                      <HomeIcon />
-                    </ListItemIcon>
-                    <ListItemText primary="Home" />
-                  </ListItem>
-                </Link>
+                <ListItem component={Link} to="/">
+                  <ListItemIcon>
+                    <HomeIcon />
+                  </ListItemIcon>
+                  <ListItemText primary="Home" />
+                </ListItem>
 
                 {routes.map((route, index) => {
                   if (!route.isProtected && isAuthenticated) return;
                   if (route.isProtected && !isAuthenticated) return;
 
                   return (
-                    <Link to={route.path} key={index}>
-                      <ListItem key={index}>
-                        <ListItemIcon>{getNavIcons(route.name)}</ListItemIcon>
-                        <ListItemText primary={route.name} />
-                      </ListItem>
-                    </Link>
+                    <ListItem key={index} component={Link} to={route.path}>
+                      <ListItemIcon>{getNavIcons(route.name)}</ListItemIcon>
+                      <ListItemText primary={route.name} />
+                    </ListItem>
                   );
                 })}
 
                 {isAuthenticated && (
-                  <Link onClick={handleLogout} to="#">
-                    <ListItem>
-                      <ListItemIcon>
-                        <InputIcon />
-                      </ListItemIcon>
-                      <ListItemText primary="Logout" />
-                    </ListItem>
-                  </Link>
+                  <ListItem onClick={handleLogout} component={Link} to="#">
+                    <ListItemIcon>
+                      <InputIcon />
+                    </ListItemIcon>
+                    <ListItemText primary="Logout" />
+                  </ListItem>
                 )}
               </List>
             </div>
