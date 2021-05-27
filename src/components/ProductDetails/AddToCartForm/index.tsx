@@ -41,6 +41,7 @@ const AddToCartForm: React.FC<Props> = ({ product }) => {
         </div>
 
         <h1 className={styles.price}>P {numWithCommas(price)}</h1>
+        <p> = P {numWithCommas(Number(price) * quantity)}</p>
 
         <form onSubmit={handleAddItemToCart}>
           <TextField
