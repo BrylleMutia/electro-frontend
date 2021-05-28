@@ -12,7 +12,8 @@ import ReviewForm from "./ReviewForm";
 type ReviewPageInterface = ReviewInterface[];
 
 function ReviewsTab() {
-  const { reviews } = useAppSelector((state) => state.shop.currentProduct);
+  const { currentProduct, isLoading } = useAppSelector((state) => state.shop);
+  const { reviews } = currentProduct;
   const { userDetails, isAuthenticated } = useAppSelector((state) => state.auth);
   const [paginatedReviews, setPaginatedReviews] = useState<ReviewPageInterface[]>([[]]);
   const [currentPage, setCurrentPage] = useState(1);
@@ -118,7 +119,7 @@ function ReviewsTab() {
       <div className={styles.reviews}>
         {paginatedReviews[currentPage - 1].map((review, index) => (
           <div className={styles.mb_md} key={index}>
-            <Review reviewDetails={review} key={index} />
+            <Review reviewDetails={review} key={index} isLoading={isLoading} />
           </div>
         ))}
 
