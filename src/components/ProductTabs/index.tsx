@@ -1,9 +1,8 @@
 import React, { useState } from "react";
 import styles from "./ProductTabs.module.scss";
-import { withStyles } from "@material-ui/core/styles"
+import { withStyles } from "@material-ui/core/styles";
 import { useAppSelector } from "../../redux/hooks";
-import type { ReviewInfo } from "./ReviewsTab/ReviewForm"
-
+import type { ReviewInfo } from "./ReviewsTab/ReviewForm";
 
 import { StyledTabs } from "../StyledComponents";
 import Tab from "@material-ui/core/Tab";
@@ -16,12 +15,9 @@ import ReviewForm from "./ReviewsTab/ReviewForm";
 
 const PRODUCT_TABS = ["Reviews", "Seller"];
 
-
-
 function ProductTabs() {
   const [tabView, setTabView] = useState<number>(0);
-  const { currentProduct } = useAppSelector((state) => state.shop);
-
+  const { currentProduct, isLoading } = useAppSelector((state) => state.shop);
 
   const handleTabChange = (e: React.ChangeEvent<{}>, tabIndex: number) => {
     setTabView(tabIndex);
@@ -39,7 +35,7 @@ function ProductTabs() {
         <ReviewsTab />
       </TabPanel>
       <TabPanel value={tabView} index={1}>
-        <InfoTab details={currentProduct.seller} />
+        <InfoTab isLoading={isLoading} details={currentProduct.seller} />
       </TabPanel>
     </div>
   );

@@ -6,15 +6,15 @@ import { getOrderHistory } from "../redux/auth/authSlice";
 
 import History from "../components/History";
 import { InfoTab } from "../components/ProductTabs";
-import Breadcrumbs from "@material-ui/core/Breadcrumbs";
 import { StyledBreadcrumb } from "../components/StyledComponents";
+import Breadcrumbs from "@material-ui/core/Breadcrumbs";
 import HomeIcon from "@material-ui/icons/Home";
 import Alert from "@material-ui/lab/Alert";
 import HighlightOffIcon from "@material-ui/icons/HighlightOff";
 import { Paper } from "@material-ui/core";
 
 export default function Profile() {
-  const { userDetails, orderHistory } = useAppSelector((state) => state.auth);
+  const { userDetails, orderHistory, isLoading } = useAppSelector((state) => state.auth);
 
   const dispatch = useAppDispatch();
 
@@ -42,7 +42,7 @@ export default function Profile() {
 
       <div className={styles.my_lg}>
         <Paper elevation={1} className={styles.profile}>
-          <InfoTab details={userDetails} />
+          <InfoTab details={userDetails} isLoading={isLoading} />
         </Paper>
 
         <History historyDetails={orderHistory} />
