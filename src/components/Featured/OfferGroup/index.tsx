@@ -6,14 +6,15 @@ import cx from "classnames";
 
 interface Props {
   offerProducts: ProductInterface[];
+  isLoading: boolean;
 }
 
-const OfferGroup: React.FC<Props> = ({ offerProducts }) => {
+const OfferGroup: React.FC<Props> = ({ offerProducts, isLoading }) => {
   return (
     <div className={styles.offer_grid}>
       {offerProducts.map((offerProduct, index) => (
         <div className={cx(index == 0 ? styles.first : styles.other)} key={index}>
-          <Product productDetails={offerProduct} showcaseFirstItem={true} index={index} />
+          <Product isLoading={isLoading} productDetails={offerProduct} showcaseFirstItem={true} index={index} />
         </div>
       ))}
     </div>

@@ -8,7 +8,7 @@ import { TabPanel } from "../AuthForm";
 import Category from "./Category";
 
 const Categories = () => {
-  const { categories } = useAppSelector((state) => state.shop);
+  const { categories, isLoading } = useAppSelector((state) => state.shop);
   const [tabView, setTabView] = useState<number>(0);
 
   const handleTabChange = (e: React.ChangeEvent<{}>, tabIndex: number) => {
@@ -26,7 +26,7 @@ const Categories = () => {
       {Object.keys(categories).map((categoryTitle, index) => (
         <TabPanel value={tabView} index={index} key={index} padding={0}>
           <div style={{ marginTop: "1.5em" }}>
-            <Category categoryProducts={categories[categoryTitle]} />
+            <Category isLoading={isLoading} categoryProducts={categories[categoryTitle]} />
           </div>
         </TabPanel>
       ))}

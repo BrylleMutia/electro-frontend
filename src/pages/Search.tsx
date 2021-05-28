@@ -31,7 +31,7 @@ function Search() {
         ) : (
           <div>
             <h4>{searchResults.length ? "Search results:" : "No products found."} </h4>
-            <Category categoryProducts={searchResults} />
+            <Category isLoading={isLoading} categoryProducts={searchResults} />
           </div>
         )}
       </div>

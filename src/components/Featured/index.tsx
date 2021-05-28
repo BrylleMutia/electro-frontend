@@ -3,13 +3,13 @@ import styles from "./Featured.module.scss";
 import { useAppSelector } from "../../redux/hooks";
 
 import { StyledTabs } from "../StyledComponents";
-import Tab from "@material-ui/core/Tab";
 import { TabPanel } from "../AuthForm";
 import OfferGroup from "./OfferGroup";
 import Product from "./OfferGroup/Product";
+import Tab from "@material-ui/core/Tab";
 
 function Featured() {
-  const { offers } = useAppSelector((state) => state.shop);
+  const { offers, isLoading } = useAppSelector((state) => state.shop);
   const [tabView, setTabView] = useState<number>(0);
 
   const handleTabChange = (e: React.ChangeEvent<{}>, tabIndex: number) => {
@@ -26,7 +26,7 @@ function Featured() {
 
       {Object.keys(offers).map((offerTitle, index) => (
         <TabPanel value={tabView} index={index} key={index}>
-          <OfferGroup key={index} offerProducts={offers[offerTitle]} />
+          <OfferGroup key={index} offerProducts={offers[offerTitle]} isLoading={isLoading} />
         </TabPanel>
       ))}
     </section>

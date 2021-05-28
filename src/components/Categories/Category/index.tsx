@@ -8,11 +8,12 @@ import cx from "classnames";
 
 interface Props {
   categoryProducts: ProductInterface[];
+  isLoading: boolean;
 }
 
 type CategoryPage = ProductInterface[];
 
-const Category: React.FC<Props> = ({ categoryProducts }) => {
+const Category: React.FC<Props> = ({ categoryProducts, isLoading }) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [paginatedProducts, setPaginatedProducts] = useState<CategoryPage[]>([[]]);
 
@@ -40,7 +41,7 @@ const Category: React.FC<Props> = ({ categoryProducts }) => {
       <div className={styles.category_grid}>
         {paginatedProducts[currentPage - 1].map((product, index) => (
           <div className={styles.grid_item} key={index}>
-            <Product productDetails={product} index={index} />
+            <Product isLoading={isLoading} productDetails={product} index={index} />
           </div>
         ))}
       </div>
