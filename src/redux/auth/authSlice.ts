@@ -117,6 +117,18 @@ export const getOrderHistory = createAsyncThunk<OrderInterface[], number, { reje
     );
 });
 
+export const updateUserInfo = createAsyncThunk<UserDetails, { userType: UserType, userInfo: FormData }, { rejectValue: ErrorResponse }>("auth/updateUserInfo", async (updateInfo, thunkAPI) => {
+  return axios
+    .post(`/${updateInfo.userType}/update`, updateInfo.userInfo, tokenConfig())
+    .then((response) => response.data)
+    .catch((err) =>
+      thunkAPI.rejectWithValue({
+        message: err.response.data.message,
+        errors: err.response.data?.errors,
+      })
+    ); 
+})
+
 // ----------------- SLICE
 export const authSlice = createSlice({
   name: "auth",
@@ -143,7 +155,13 @@ export const authSlice = createSlice({
       localStorage.removeItem("token");
     });
 
-    builder.addCase(loadDetails.fulfilled, (state, action: PayloadAction<UserDetails>) => {
+    
+    builder.addCase(getOrderHistory.fulfilled, (state, action: PayloadAction<OrderInterface[]>) => {
+      state.isLoading = false;
+      state.orderHistory = action.payload;
+    });
+    
+    builder.addMatcher(isAnyOf(loadDetails.fulfilled, updateUserInfo.fulfilled), (state, action: PayloadAction<UserDetails>) => {
       state.isLoading = false;
       state.isAuthenticated = true;
       state.userDetails = action.payload;
@@ -151,11 +169,7 @@ export const authSlice = createSlice({
       state.userType = action.payload.role_id === 1 ? UserType.BUYER : UserType.SELLER;
     });
 
-    builder.addCase(getOrderHistory.fulfilled, (state, action: PayloadAction<OrderInterface[]>) => {
-      state.orderHistory = action.payload;
-    });
-
-    builder.addMatcher(isAnyOf(register.pending, login.pending, loadDetails.pending, logout.pending, getOrderHistory.pending), (state) => {
+    builder.addMatcher(isAnyOf(register.pending, login.pending, loadDetails.pending, logout.pending, getOrderHistory.pending, updateUserInfo.pending), (state) => {
       state.error = { message: "", errors: {} };
       state.isLoading = true;
     });
@@ -171,7 +185,7 @@ export const authSlice = createSlice({
       localStorage.setItem("token", action.payload.token);
     });
 
-    builder.addMatcher(isAnyOf(register.rejected, login.rejected, loadDetails.rejected, logout.rejected, getOrderHistory.rejected), (state, action: PayloadAction<ErrorResponse>) => {
+    builder.addMatcher(isAnyOf(register.rejected, login.rejected, loadDetails.rejected, logout.rejected, getOrderHistory.rejected, updateUserInfo.rejected), (state, action: PayloadAction<ErrorResponse>) => {
       state.isLoading = false;
       state.error = action.payload;
     });

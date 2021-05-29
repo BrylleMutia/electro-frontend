@@ -35,7 +35,7 @@ function ProductTabs() {
         <ReviewsTab />
       </TabPanel>
       <TabPanel value={tabView} index={1}>
-        <InfoTab isLoading={isLoading} details={currentProduct.seller} />
+        <InfoTab isLoading={isLoading} details={currentProduct.seller} hideEditButton={true} />
       </TabPanel>
     </div>
   );

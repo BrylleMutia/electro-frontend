@@ -42,7 +42,7 @@ export default function Profile() {
 
       <div className={styles.my_lg}>
         <Paper elevation={1} className={styles.profile}>
-          <InfoTab details={userDetails} isLoading={isLoading} />
+          <InfoTab details={userDetails} isLoading={isLoading} hideEditButton={false} />
         </Paper>
 
         <History historyDetails={orderHistory} />
