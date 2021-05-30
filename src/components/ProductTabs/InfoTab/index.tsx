@@ -55,7 +55,7 @@ const InfoTab: React.FC<Props> = ({ details, isLoading, hideEditButton }) => {
 
   const handleProfileImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files?.length) {
-      // contains a temporary preview to be shown to the user
+      // create a temporary preview to be shown to the user
       setProfilePreviewImage(URL.createObjectURL(e.target.files[0]));
       setProfileImage(e.target.files[0]);
     }
@@ -85,7 +85,7 @@ const InfoTab: React.FC<Props> = ({ details, isLoading, hideEditButton }) => {
       <div>
         <div>
           <h5>Name</h5>
-          {isEditMode ? <Input value={profileName} name="name" style={{ marginBottom: "0.5em" }} onChange={(e) => setProfileName(e.target.value)} /> : <p>{isLoading ? <Skeleton /> : details.name}</p>}
+          {isEditMode ? <Input className={styles.update_name} value={profileName} name="name" style={{ marginBottom: "0.5em" }} onChange={(e) => setProfileName(e.target.value)} /> : <p>{isLoading ? <Skeleton /> : details.name}</p>}
         </div>
         <div>
           <h5>Email</h5>
@@ -98,7 +98,7 @@ const InfoTab: React.FC<Props> = ({ details, isLoading, hideEditButton }) => {
         <div>
           <h5>Address</h5>
           {isEditMode ? (
-            <form>
+            <form className={styles.update_address}>
               <Input value={profileAddress} name="address" placeholder="Address" onChange={(e) => setProfileAddress(e.target.value)} />
               <Input value={profileBarangay} name="barangay" placeholder="Barangay" onChange={(e) => setProfileBarangay(e.target.value)} />
               <Input value={profileCity} name="city" placeholder="City" onChange={(e) => setProfileCity(e.target.value)} />
