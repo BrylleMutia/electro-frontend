@@ -11,6 +11,7 @@ import CallToAction from "./components/CallToAction";
 import Footer from "./components/Footer";
 import Disclaimer from "./components/Disclaimer";
 import Cart from "./components/Cart";
+import SellerProducts from "./components/SellerProducts";
 import Auth from "./pages/Auth";
 import Home from "./pages/Home";
 import Product from "./pages/Product";
@@ -81,11 +82,12 @@ interface Props {
 }
 
 const ExcludeNavFromPages: React.FC<Props> = ({ excludedPages, children }) => {
+  const { userType } = useAppSelector((state) => state.auth);
   const location = useLocation();
 
   return (
     <>
-      {!excludedPages.includes(location.pathname) && <Navbar disabledPages={["/checkout", "/payment"]} />}
+      {!excludedPages.includes(location.pathname) && <Navbar buttonLabel={userType === "buyer"  || userType === null ? "My Cart" : "My Products"} disabledPages={["/checkout", "/payment"]} />}
 
       {children}
 
@@ -97,7 +99,7 @@ const ExcludeNavFromPages: React.FC<Props> = ({ excludedPages, children }) => {
         </div>
       )}
 
-      <Cart />
+      {userType === "buyer" || userType === null ? <Cart /> : <SellerProducts />}
     </>
   );
 };

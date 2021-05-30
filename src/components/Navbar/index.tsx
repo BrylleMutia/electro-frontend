@@ -23,9 +23,10 @@ import { CartButton } from "../../components/StyledComponents";
 
 interface Props {
   disabledPages?: string[];
+  buttonLabel: string;
 }
 
-const Navbar: React.FC<Props> = ({ disabledPages }) => {
+const Navbar: React.FC<Props> = ({ disabledPages, buttonLabel }) => {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const { isAuthenticated, userType } = useAppSelector((state) => state.auth);
   const { total } = useAppSelector((state) => state.cart);
@@ -118,7 +119,7 @@ const Navbar: React.FC<Props> = ({ disabledPages }) => {
           </IconButton>
         ) : (
           <CartButton disabled={disabledPages?.includes(location.pathname)} startIcon={<ShoppingCartIcon />} variant="contained" color="primary" disableElevation={true} onClick={handleCartDrawerToggle}>
-            {!total ? "My Cart" : <CountUp start={total - total / 4} end={total} duration={0.5} formattingFn={(value) => `P ${numWithCommas(value)}`} />}
+            {!total ? buttonLabel : <CountUp start={total - total / 4} end={total} duration={0.5} formattingFn={(value) => `P ${numWithCommas(value)}`} />}
           </CartButton>
         )}
       </div>

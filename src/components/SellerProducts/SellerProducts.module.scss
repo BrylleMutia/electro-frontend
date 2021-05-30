@@ -1,0 +1,39 @@
+@import "../../styles/breakpoints";
+
+.drawer {
+  width: 30em;
+  max-width: 30em;
+  padding: 1em;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+
+  .cart_header {
+    display: flex;
+    align-items: center;
+
+    .back {
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+    }
+
+    h4 {
+      margin: 1em 0;
+      margin-left: 1em;
+    }
+  }
+
+  .items {
+    flex-basis: 90%;
+    overflow-y: auto;
+  }
+
+  .cart_actions {
+    padding-top: 1em;
+  }
+
+  @media (max-width: $md) {
+    width: 100%;
+  }
+}
