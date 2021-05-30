@@ -3,7 +3,7 @@ import axios from "axios";
 import type { RootState } from "../store";
 import type { RegisterDetails, LoginDetails } from "../../components/AuthForm";
 import { AuthState, AuthResponse, ErrorResponse, UserType, UserDetails, HeadersConfig } from "./types";
-import type { OrderInterface } from "../cart/types"
+import type { OrderInterface } from "../cart/types";
 
 // Define the initial state using that type
 const initialState: AuthState = {
@@ -59,9 +59,9 @@ export const register = createAsyncThunk<AuthResponse, RegisterDetails, { reject
     .post(`/${regDetails.type}/register`, regDetails.info)
     .then((response) => response.data)
     .catch((err) =>
-    // The second argument, `thunkApi`, is an object
-    // that contains all those fields
-    // and the `rejectWithValue` function:
+      // The second argument, `thunkApi`, is an object
+      // that contains all those fields
+      // and the `rejectWithValue` function:
       thunkAPI.rejectWithValue({
         message: err.response.data.message,
         errors: err.response.data?.errors,
@@ -117,7 +117,7 @@ export const getOrderHistory = createAsyncThunk<OrderInterface[], number, { reje
     );
 });
 
-export const updateUserInfo = createAsyncThunk<UserDetails, { userType: UserType, userInfo: FormData }, { rejectValue: ErrorResponse }>("auth/updateUserInfo", async (updateInfo, thunkAPI) => {
+export const updateUserInfo = createAsyncThunk<UserDetails, { userType: UserType; userInfo: FormData }, { rejectValue: ErrorResponse }>("auth/updateUserInfo", async (updateInfo, thunkAPI) => {
   return axios
     .post(`/${updateInfo.userType}/update`, updateInfo.userInfo, tokenConfig())
     .then((response) => response.data)
@@ -126,8 +126,8 @@ export const updateUserInfo = createAsyncThunk<UserDetails, { userType: UserType
         message: err.response.data.message,
         errors: err.response.data?.errors,
       })
-    ); 
-})
+    );
+});
 
 // ----------------- SLICE
 export const authSlice = createSlice({
@@ -155,18 +155,17 @@ export const authSlice = createSlice({
       localStorage.removeItem("token");
     });
 
-    
     builder.addCase(getOrderHistory.fulfilled, (state, action: PayloadAction<OrderInterface[]>) => {
       state.isLoading = false;
       state.orderHistory = action.payload;
     });
-    
+
     builder.addMatcher(isAnyOf(loadDetails.fulfilled, updateUserInfo.fulfilled), (state, action: PayloadAction<UserDetails>) => {
       state.isLoading = false;
       state.isAuthenticated = true;
       state.userDetails = action.payload;
       state.token = localStorage.getItem("token");
-      state.userType = action.payload.role_id === 1 ? UserType.BUYER : UserType.SELLER;
+      state.userType = action.payload.role_id === 1 ? "buyer" : "seller";
     });
 
     builder.addMatcher(isAnyOf(register.pending, login.pending, loadDetails.pending, logout.pending, getOrderHistory.pending, updateUserInfo.pending), (state) => {
@@ -179,7 +178,7 @@ export const authSlice = createSlice({
       state.isAuthenticated = true;
       state.userDetails = action.payload.user;
       state.token = action.payload.token;
-      state.userType = action.payload.user.role_id === 1 ? UserType.BUYER : UserType.SELLER;
+      state.userType = action.payload.user.role_id === 1 ? "buyer" : "seller";
 
       //store bearer token in localStorage
       localStorage.setItem("token", action.payload.token);

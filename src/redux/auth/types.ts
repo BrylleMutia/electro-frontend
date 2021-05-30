@@ -27,11 +27,11 @@ export interface UserDetails {
   role_id: number;
 }
 
-// export type UserType = "buyer" | "seller";
-export enum UserType {
-  BUYER = "buyer",
-  SELLER = "seller",
-}
+export type UserType = "buyer" | "seller";
+// export enum UserType {
+//   BUYER = "buyer",
+//   SELLER = "seller",
+// }
 
 export interface ErrorResponse {
   message: string;

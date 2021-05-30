@@ -56,7 +56,7 @@ function AuthForm() {
     password: "",
   });
 
-  const [userType, setUserType] = useState<UserType>(UserType.BUYER);
+  const [userType, setUserType] = useState<UserType>("buyer");
   const [tabView, setTabView] = useState<number>(0);
   const [rememberUser, setRememberUser] = useState<boolean>(false);
 
@@ -66,10 +66,10 @@ function AuthForm() {
   const handleUserTypeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     switch (e.target.value) {
       case "buyer":
-        setUserType(UserType.BUYER);
+        setUserType("buyer");
         break;
       case "seller":
-        setUserType(UserType.SELLER);
+        setUserType("seller");
         break;
       default:
         return;
@@ -123,8 +123,8 @@ function AuthForm() {
             </Tabs>
 
             <RadioGroup aria-label="user-type" color="primary" className={styles.radio_group} name="user-type" value={userType} onChange={handleUserTypeChange}>
-              <FormControlLabel value={UserType.BUYER} control={<Radio />} label="Buyer" />
-              <FormControlLabel value={UserType.SELLER} control={<Radio />} label="Seller" />
+              <FormControlLabel value="buyer" control={<Radio />} label="Buyer" />
+              <FormControlLabel value="seller" control={<Radio />} label="Seller" />
             </RadioGroup>
 
             {/* ERROR MESSAGES */}
