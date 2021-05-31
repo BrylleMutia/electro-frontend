@@ -20,6 +20,7 @@ import MenuIcon from "@material-ui/icons/Menu";
 import HelpIcon from "@material-ui/icons/Help";
 import HomeIcon from "@material-ui/icons/Home";
 import { CartButton } from "../../components/StyledComponents";
+import { showNotif } from "redux/control/controlSlice";
 
 interface Props {
   buttonLabel: string;
@@ -56,6 +57,7 @@ const Navbar: React.FC<Props> = ({ buttonLabel, variant = "temporary", disabledP
     if (userType) {
       dispatch(logout(userType)).then(() => {
         history.push("/");
+        dispatch(showNotif({ alertMsg: "Logged out!", alertVariant: "info" }))
       });
     }
   };

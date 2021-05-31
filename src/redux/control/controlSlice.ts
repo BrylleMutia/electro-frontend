@@ -19,11 +19,16 @@ export const controlSlice = createSlice({
   reducers: {
     showNotif(state, action: PayloadAction<AlertInterface>) {
       state.alert = action.payload;
-    }
+      state.alert.isAlertShown = true;
+    },
+    hideNotif(state, action: PayloadAction<AlertInterface>) {
+      state.alert = action.payload;
+      state.alert.isAlertShown = false;
+    },
   }
 });
 
 
-export const { showNotif } = controlSlice.actions;
+export const { showNotif, hideNotif } = controlSlice.actions;
 export const controlSelector = (state: RootState) => state.control;
 export default controlSlice.reducer;

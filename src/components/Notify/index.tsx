@@ -1,5 +1,5 @@
 import React from "react";
-import { showNotif } from "../../redux/control/controlSlice";
+import { hideNotif } from "../../redux/control/controlSlice";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 
 import Snackbar from "@material-ui/core/Snackbar";
@@ -13,7 +13,7 @@ const Notify = () => {
   // close then reset alert settings
   const handleCloseAlert = () => {
     dispatch(
-      showNotif({
+      hideNotif({
         alertMsg: "",
         alertVariant: "success",
         isAlertShown: false,

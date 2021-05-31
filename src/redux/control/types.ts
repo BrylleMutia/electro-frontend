@@ -3,9 +3,9 @@ export interface ControlState {
 }
 
 export interface AlertInterface {
-  alertVariant: alertTypes;
   alertMsg: string | null;
-  isAlertShown: boolean;
+  isAlertShown?: boolean;
+  alertVariant?: alertTypes;
 }
 
 export type alertTypes = "success" | "info" | "warning" | "error";

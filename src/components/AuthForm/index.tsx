@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import styles from "./Auth.module.scss";
+import { unwrapResult } from "@reduxjs/toolkit";
+
 import TabPanel from "./TabPanel";
 import BuyerImg from "./assets/buyer.png";
 import SellerImg from "./assets/seller.png";
@@ -10,6 +12,7 @@ import { register, login, clearErrors } from "../../redux/auth/authSlice";
 import { Redirect } from "react-router";
 import { UserType } from "../../redux/auth/types";
 import { useHistory } from "react-router-dom";
+import { showNotif } from "redux/control/controlSlice";
 
 export interface RegisterInfo {
   name: string;
@@ -63,7 +66,7 @@ function AuthForm() {
 
   const dispatch = useAppDispatch();
   const history = useHistory();
-  const { isAuthenticated, error } = useAppSelector((state) => state.auth);
+  const { isAuthenticated, error, userDetails } = useAppSelector((state) => state.auth);
 
   const handleUserTypeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     switch (e.target.value) {
@@ -100,11 +103,21 @@ function AuthForm() {
     e.preventDefault();
 
     if (tabView === 0) {
-      // register
-      dispatch(register({ info: regInfo, type: userType })).then(() => history.push(userType === "seller" ? "/seller/dashboard" : "/"));
+      dispatch(register({ info: regInfo, type: userType }))
+        .then(unwrapResult) // unwrap first to get original payload on fulfilled request (https://redux-toolkit.js.org/api/createAsyncThunk#handling-thunk-results)
+        .then((fullfilledPayload) => {
+          // redirect then show toast
+          history.push(userType === "seller" ? "/seller/dashboard" : "/");
+          dispatch(showNotif({ alertMsg: `Welcome, ${fullfilledPayload.user.name}!` }));
+        });
     } else if (tabView === 1) {
-      // login
-      dispatch(login({ info: loginInfo, type: userType })).then(() => history.push(userType === "seller" ? "/seller/dashboard" : "/"));
+      dispatch(login({ info: loginInfo, type: userType }))
+        .then(unwrapResult)
+        .then((fullfilledPayload) => {
+          // redirect then show toast
+          history.push(userType === "seller" ? "/seller/dashboard" : "/");
+          dispatch(showNotif({ alertMsg: `Welcome back, ${fullfilledPayload.user.name}!` }));
+        });
     }
   };
 
