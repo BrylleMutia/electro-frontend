@@ -8,6 +8,7 @@ import Skeleton from "@material-ui/lab/Skeleton";
 import Button from "@material-ui/core/Button";
 import Input from "@material-ui/core/Input";
 import PublishIcon from "@material-ui/icons/Publish";
+import Avatar from "@material-ui/core/Avatar";
 
 interface Props {
   details: UserDetails;
@@ -65,12 +66,14 @@ const InfoTab: React.FC<Props> = ({ details, isLoading, hideEditButton }) => {
     <div className={styles.seller}>
       <div className={styles.seller_img}>
         {isLoading ? (
-          <Skeleton>
-            <img src={details.image} alt={details.name} />
+          <Skeleton variant="circle">
+            <div className={styles.img_container}>
+              <Avatar className={styles.pic} src={details.image} alt={details.name} />
+            </div>
           </Skeleton>
         ) : (
           <div className={styles.img_container}>
-            <img src={isEditMode ? profilePreviewImage : details.image} alt={details.name} />
+            <Avatar className={styles.pic} src={isEditMode ? profilePreviewImage : details.image} alt={details.name} />
             <Button hidden={!isEditMode} component="label" variant="outlined" size="small" color="secondary" startIcon={<PublishIcon />}>
               Change picture
               <Input hidden={true} type="file" name="image" onChange={handleProfileImageChange} />
