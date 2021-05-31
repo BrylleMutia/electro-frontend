@@ -13,15 +13,16 @@ import Disclaimer from "./components/Disclaimer";
 import Cart from "./components/Cart";
 import SellerProducts from "./components/SellerProducts";
 import Auth from "./pages/Auth";
-import Home from "./pages/Home";
+import Home from "./pages/buyer/Home";
 import Product from "./pages/Product";
 import NotFound from "./pages/NotFound";
 import UnderConstruction from "./pages/UnderConstruction";
-import Checkout from "./pages/Checkout";
-import Payment from "./pages/Payment";
-import Summary from "./pages/Summary";
 import Search from "./pages/Search";
 import Profile from "./pages/Profile";
+import Checkout from "./pages/buyer/Checkout";
+import Payment from "./pages/buyer/Payment";
+import Summary from "./pages/buyer/Summary";
+import Dashboard from "./pages/seller/Dashboard";
 
 function App(): JSX.Element {
   const dispatch = useAppDispatch();
@@ -65,6 +66,8 @@ function App(): JSX.Element {
             <Route exact path="/search" component={Search} />
             <Route path="/product/:product_id" component={Product} />
 
+            <Route path="/seller/dashboard" component={Dashboard} />
+
             <Route exact path="/test" component={UnderConstruction} />
             <Route exact path="/auth" component={Auth} />
             <Route path="*" component={NotFound} />
@@ -87,7 +90,7 @@ const ExcludeNavFromPages: React.FC<Props> = ({ excludedPages, children }) => {
 
   return (
     <>
-      {!excludedPages.includes(location.pathname) && <Navbar buttonLabel={userType === "buyer"  || userType === null ? "My Cart" : "My Products"} disabledPages={["/checkout", "/payment"]} />}
+      {!excludedPages.includes(location.pathname) && <Navbar variant={userType === "seller" ? "permanent" : "temporary"} buttonLabel={userType === "buyer" || userType === null ? "My Cart" : "My Products"} disabledPages={["/checkout", "/payment"]} />}
 
       {children}
 

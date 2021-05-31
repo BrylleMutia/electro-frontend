@@ -1,0 +1,29 @@
+@import "../../styles/breakpoints";
+@import "../../styles/variables";
+@import "../../styles/layouts";
+
+.showcase {
+  margin-top: 7em;
+}
+
+.featured {
+  margin: 3em 0;
+}
+
+.category {
+  background: $background-color;
+}
+
+.sellers {
+  margin: 2em 0;
+}
+
+.checkout_nav {
+  margin: 4em 1em 1em 1em;
+}
+
+@media (min-width: $sm) {
+  .featured {
+    margin-bottom: 4em;
+  }
+}

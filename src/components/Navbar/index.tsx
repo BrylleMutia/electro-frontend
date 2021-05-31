@@ -22,11 +22,12 @@ import HomeIcon from "@material-ui/icons/Home";
 import { CartButton } from "../../components/StyledComponents";
 
 interface Props {
-  disabledPages?: string[];
   buttonLabel: string;
+  disabledPages?: string[];
+  variant?: "permanent" | "temporary";
 }
 
-const Navbar: React.FC<Props> = ({ disabledPages, buttonLabel }) => {
+const Navbar: React.FC<Props> = ({ buttonLabel, variant = "temporary", disabledPages }) => {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const { isAuthenticated, userType } = useAppSelector((state) => state.auth);
   const { total } = useAppSelector((state) => state.cart);
@@ -70,11 +71,11 @@ const Navbar: React.FC<Props> = ({ disabledPages, buttonLabel }) => {
             <Logo />
           </div>
 
-          <IconButton aria-controls="simple-menu" aria-haspopup="true" onClick={toggleMenuDrawer}>
+          <IconButton hidden={variant === "permanent" ? true : false} aria-controls="simple-menu" aria-haspopup="true" onClick={toggleMenuDrawer}>
             <MenuIcon />
           </IconButton>
 
-          <Drawer anchor="left" open={isDrawerOpen} onClose={toggleMenuDrawer}>
+          <Drawer variant={variant} anchor="left" open={isDrawerOpen} onClose={toggleMenuDrawer}>
             <div className={styles.drawer} onClick={toggleMenuDrawer}>
               <List>
                 <ListItem component={Link} to="/">

@@ -1,17 +1,13 @@
 import React, { useEffect } from "react";
-import { useAppDispatch } from "../redux/hooks";
-import { getAllProducts } from "../redux/shop/shopSlice";
-import styles from "./Pages.module.scss";
-import cx from "classnames";
+import { useAppDispatch } from "../../redux/hooks";
+import { getAllProducts } from "../../redux/shop/shopSlice";
+import styles from "./Buyer.module.scss";
 
-import Navbar from "../components/Navbar";
-import Showcase from "../components/Showcase";
-import Featured from "../components/Featured";
-import Categories from "../components/Categories";
-import Sellers from "../components/Sellers";
-import CallToAction from "../components/CallToAction";
-import Footer from "../components/Footer";
-import Notify from "../components/Notify";
+import Showcase from "../../components/Showcase";
+import Featured from "../../components/Featured";
+import Categories from "../../components/Categories";
+import Sellers from "../../components/Sellers";
+import Notify from "../../components/Notify";
 
 export default function Home() {
   const dispatch = useAppDispatch();

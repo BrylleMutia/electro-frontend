@@ -9,6 +9,7 @@ import { useAppSelector, useAppDispatch } from "../../redux/hooks";
 import { register, login, clearErrors } from "../../redux/auth/authSlice";
 import { Redirect } from "react-router";
 import { UserType } from "../../redux/auth/types";
+import { useHistory } from "react-router-dom";
 
 export interface RegisterInfo {
   name: string;
@@ -61,6 +62,7 @@ function AuthForm() {
   const [rememberUser, setRememberUser] = useState<boolean>(false);
 
   const dispatch = useAppDispatch();
+  const history = useHistory();
   const { isAuthenticated, error } = useAppSelector((state) => state.auth);
 
   const handleUserTypeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -99,10 +101,10 @@ function AuthForm() {
 
     if (tabView === 0) {
       // register
-      dispatch(register({ info: regInfo, type: userType }));
+      dispatch(register({ info: regInfo, type: userType })).then(() => history.push(userType === "seller" ? "/seller/dashboard" : "/"));
     } else if (tabView === 1) {
       // login
-      dispatch(login({ info: loginInfo, type: userType }));
+      dispatch(login({ info: loginInfo, type: userType })).then(() => history.push(userType === "seller" ? "/seller/dashboard" : "/"));
     }
   };
 
@@ -111,62 +113,60 @@ function AuthForm() {
     return error.errors[Object.keys(error.errors)[0]];
   };
 
-  if (!isAuthenticated) {
-    return (
-      <div className={styles.auth}>
-        <img src={userType === "buyer" ? BuyerImg : SellerImg} alt="user-type" />
-        <div className={styles.auth_form}>
-          <form onSubmit={authenticateUser}>
-            <Tabs textColor="secondary" variant="fullWidth" indicatorColor="secondary" centered value={tabView} onChange={handleTabChange} aria-label="simple tabs example">
-              <Tab label="Register" />
-              <Tab label="Login" />
-            </Tabs>
+  return (
+    <div className={styles.auth}>
+      <img src={userType === "buyer" ? BuyerImg : SellerImg} alt="user-type" />
+      <div className={styles.auth_form}>
+        <form onSubmit={authenticateUser}>
+          <Tabs textColor="secondary" variant="fullWidth" indicatorColor="secondary" centered value={tabView} onChange={handleTabChange} aria-label="simple tabs example">
+            <Tab label="Register" />
+            <Tab label="Login" />
+          </Tabs>
 
-            <RadioGroup aria-label="user-type" color="primary" className={styles.radio_group} name="user-type" value={userType} onChange={handleUserTypeChange}>
-              <FormControlLabel value="buyer" control={<Radio />} label="Buyer" />
-              <FormControlLabel value="seller" control={<Radio />} label="Seller" />
-            </RadioGroup>
+          <RadioGroup aria-label="user-type" color="primary" className={styles.radio_group} name="user-type" value={userType} onChange={handleUserTypeChange}>
+            <FormControlLabel value="buyer" control={<Radio />} label="Buyer" />
+            <FormControlLabel value="seller" control={<Radio />} label="Seller" />
+          </RadioGroup>
 
-            {/* ERROR MESSAGES */}
-            {error.message && <Alert severity="error">{getErrorMessage()}</Alert>}
+          {/* ERROR MESSAGES */}
+          {error.message && <Alert severity="error">{getErrorMessage()}</Alert>}
 
-            {/* FORM FIELDS */}
-            <TabPanel value={tabView} index={0}>
-              <TextField onChange={handleRegInfoChange} name="name" fullWidth color="secondary" required type="text" id="form-name" label="Name" variant="outlined" margin="dense" />
-              <TextField onChange={handleRegInfoChange} name="email" fullWidth color="secondary" required type="email" id="form-email" label="Email" variant="outlined" margin="dense" />
-              <TextField onChange={handleRegInfoChange} name="phone" fullWidth color="secondary" required type="phone" id="form-phone" label="Phone Number" variant="outlined" margin="dense" />
-              <TextField onChange={handleRegInfoChange} name="password" fullWidth color="secondary" required type="password" id="form-password" label="Password" variant="outlined" margin="dense" />
-              <TextField onChange={handleRegInfoChange} name="password_confirmation" fullWidth color="secondary" required type="password" id="form-repassword" label="Confirm Password" variant="outlined" margin="dense" />
-              <TextField onChange={handleRegInfoChange} name="address" fullWidth color="secondary" type="text" id="form-address" label="Address" variant="outlined" margin="dense" />
-              <TextField onChange={handleRegInfoChange} name="barangay" fullWidth color="secondary" required type="text" id="form-barangay" label="Barangay" variant="outlined" margin="dense" />
-              <TextField onChange={handleRegInfoChange} name="city" fullWidth color="secondary" required type="text" id="form-city" label="City" variant="outlined" margin="dense" />
-              <TextField onChange={handleRegInfoChange} name="province" fullWidth color="secondary" required type="text" id="form-province" label="Province" variant="outlined" margin="dense" />
-              <TextField onChange={handleRegInfoChange} name="zip_code" fullWidth color="secondary" required type="text" id="form-zip_code" label="Zip Code" variant="outlined" margin="dense" />
+          {/* FORM FIELDS */}
+          <TabPanel value={tabView} index={0}>
+            <TextField onChange={handleRegInfoChange} name="name" fullWidth color="secondary" required type="text" id="form-name" label="Name" variant="outlined" margin="dense" />
+            <TextField onChange={handleRegInfoChange} name="email" fullWidth color="secondary" required type="email" id="form-email" label="Email" variant="outlined" margin="dense" />
+            <TextField onChange={handleRegInfoChange} name="phone" fullWidth color="secondary" required type="phone" id="form-phone" label="Phone Number" variant="outlined" margin="dense" />
+            <TextField onChange={handleRegInfoChange} name="password" fullWidth color="secondary" required type="password" id="form-password" label="Password" variant="outlined" margin="dense" />
+            <TextField onChange={handleRegInfoChange} name="password_confirmation" fullWidth color="secondary" required type="password" id="form-repassword" label="Confirm Password" variant="outlined" margin="dense" />
+            <TextField onChange={handleRegInfoChange} name="address" fullWidth color="secondary" type="text" id="form-address" label="Address" variant="outlined" margin="dense" />
+            <TextField onChange={handleRegInfoChange} name="barangay" fullWidth color="secondary" required type="text" id="form-barangay" label="Barangay" variant="outlined" margin="dense" />
+            <TextField onChange={handleRegInfoChange} name="city" fullWidth color="secondary" required type="text" id="form-city" label="City" variant="outlined" margin="dense" />
+            <TextField onChange={handleRegInfoChange} name="province" fullWidth color="secondary" required type="text" id="form-province" label="Province" variant="outlined" margin="dense" />
+            <TextField onChange={handleRegInfoChange} name="zip_code" fullWidth color="secondary" required type="text" id="form-zip_code" label="Zip Code" variant="outlined" margin="dense" />
 
-              <Button type="submit" variant="contained" color="secondary" className={styles.button}>
-                Register
+            <Button type="submit" variant="contained" color="secondary" className={styles.button}>
+              Register
+            </Button>
+          </TabPanel>
+
+          <TabPanel value={tabView} index={1}>
+            <TextField onChange={handleLoginInfoChange} name="email" fullWidth color="secondary" required type="email" id="form-email" label="Email" variant="outlined" margin="dense" />
+            <TextField onChange={handleLoginInfoChange} name="password" fullWidth color="secondary" required type="password" id="form-password" label="Password" variant="outlined" margin="dense" />
+            <FormControlLabel label="Remember Me" control={<Checkbox checked={rememberUser} onChange={handleRememberUserToggle} inputProps={{ "aria-label": "primary checkbox" }} />} />
+
+            <div className={styles.button_wrapper}>
+              <Typography component="a" href="#" color="secondary">
+                Forgot password?
+              </Typography>
+              <Button type="submit" variant="contained" color="secondary">
+                Login
               </Button>
-            </TabPanel>
-
-            <TabPanel value={tabView} index={1}>
-              <TextField onChange={handleLoginInfoChange} name="email" fullWidth color="secondary" required type="email" id="form-email" label="Email" variant="outlined" margin="dense" />
-              <TextField onChange={handleLoginInfoChange} name="password" fullWidth color="secondary" required type="password" id="form-password" label="Password" variant="outlined" margin="dense" />
-              <FormControlLabel label="Remember Me" control={<Checkbox checked={rememberUser} onChange={handleRememberUserToggle} inputProps={{ "aria-label": "primary checkbox" }} />} />
-
-              <div className={styles.button_wrapper}>
-                <Typography component="a" href="#" color="secondary">
-                  Forgot password?
-                </Typography>
-                <Button type="submit" variant="contained" color="secondary">
-                  Login
-                </Button>
-              </div>
-            </TabPanel>
-          </form>
-        </div>
+            </div>
+          </TabPanel>
+        </form>
       </div>
-    );
-  } else return <Redirect to="/" />;
+    </div>
+  );
 }
 
 export { TabPanel };

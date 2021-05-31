@@ -1,11 +1,11 @@
 import React from "react";
-import styles from "./Pages.module.scss";
+import styles from "./Buyer.module.scss";
 import { Link } from "react-router-dom";
-import { useAppSelector } from "../redux/hooks";
+import { useAppSelector } from "../../redux/hooks";
 
-import SummaryTable from "../components/SummaryTable";
+import SummaryTable from "../../components/SummaryTable";
 import Breadcrumbs from "@material-ui/core/Breadcrumbs";
-import { StyledBreadcrumb } from "../components/StyledComponents";
+import { StyledBreadcrumb } from "../../components/StyledComponents";
 import HomeIcon from "@material-ui/icons/Home";
 import Button from "@material-ui/core/Button";
 import NavigateBefore from "@material-ui/icons/NavigateBefore"
