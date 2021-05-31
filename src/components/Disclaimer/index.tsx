@@ -23,7 +23,6 @@ const Disclaimer: React.FC<Props> = ({ isOpen, toggleDisclaimer }) => {
             <Alert severity="info">
               This is a <strong>Work in progress</strong>, other features are not implemented yet. <br />
               But updates are ongoing, so any feedback would be great!
-              <br /> <br /> NOTE: Most of seller features are not yet functional.
             </Alert>
           </DialogContentText>
         </DialogContent>

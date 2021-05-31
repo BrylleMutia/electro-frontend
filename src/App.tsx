@@ -66,7 +66,7 @@ function App(): JSX.Element {
             <Route exact path="/search" component={Search} />
             <Route path="/product/:product_id" component={Product} />
 
-            <Route path="/seller/dashboard" component={Dashboard} />
+            <Route path="/seller/dashboard" component={UnderConstruction} />
 
             <Route exact path="/test" component={UnderConstruction} />
             <Route exact path="/auth" component={Auth} />

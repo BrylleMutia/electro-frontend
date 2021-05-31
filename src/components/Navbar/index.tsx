@@ -78,7 +78,7 @@ const Navbar: React.FC<Props> = ({ buttonLabel, variant = "temporary", disabledP
           <Drawer variant={variant} anchor="left" open={isDrawerOpen} onClose={toggleMenuDrawer}>
             <div className={styles.drawer} onClick={toggleMenuDrawer}>
               <List>
-                <ListItem component={Link} to="/">
+                <ListItem component={Link} to={userType === "seller" ? "/seller/dashboard" : "/"}>
                   <ListItemIcon>
                     <HomeIcon />
                   </ListItemIcon>
