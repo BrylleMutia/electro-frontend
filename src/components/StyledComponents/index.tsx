@@ -50,13 +50,18 @@ export const RemoveButton = withStyles((theme) => ({
 
 export const CartButton = withStyles((theme) => ({
   root: {
-    borderRadius: "20px",
+    borderRadius: "30px",
     textTransform: "none",
+
+    "&:hover": {
+      color: "#fff",
+      backgroundColor: theme.palette.secondary.dark,
+    },
   },
 }))(Button);
 
 export const RoundedInput = withStyles((theme) => ({
   root: {
     borderRadius: "100px",
-  }
+  },
 }))(TextField);
