@@ -14,7 +14,7 @@ import HighlightOffIcon from "@material-ui/icons/HighlightOff";
 import { Paper } from "@material-ui/core";
 
 export default function Profile() {
-  const { userDetails, orderHistory, isLoading } = useAppSelector((state) => state.auth);
+  const { userDetails, orderHistory, isLoading, userType } = useAppSelector((state) => state.auth);
 
   const dispatch = useAppDispatch();
 
@@ -33,7 +33,7 @@ export default function Profile() {
     <div className={styles.container}>
       <div className={styles.checkout_nav}>
         <Breadcrumbs aria-label="breadcrumb">
-          <Link to="/">
+          <Link to={userType === "seller" ? "/seller/dashboard" : "/"}>
             <StyledBreadcrumb label="Home" icon={<HomeIcon fontSize="small" />} />
           </Link>
           <StyledBreadcrumb label="Profile" />

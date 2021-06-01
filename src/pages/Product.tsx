@@ -5,12 +5,9 @@ import { getProductDetails } from "../redux/shop/shopSlice";
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
 
 import CircularProgress from "@material-ui/core/CircularProgress";
-import Navbar from "../components/Navbar";
 import ProductNav from "../components/ProductNav";
 import ProductDetails from "../components/ProductDetails";
 import ProductTabs from "../components/ProductTabs";
-import CallToAction from "../components/CallToAction";
-import Footer from "../components/Footer";
 
 interface RouteParams {
   product_id: string;

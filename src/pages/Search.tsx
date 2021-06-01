@@ -11,12 +11,13 @@ import { CircularProgress } from "@material-ui/core";
 
 function Search() {
   const { isLoading, searchResults } = useAppSelector((state) => state.shop);
+  const { userType } = useAppSelector((state) => state.auth);
 
   return (
     <div className={styles.container}>
       <div className={styles.checkout_nav}>
         <Breadcrumbs aria-label="breadcrumb">
-          <Link to="/">
+          <Link to={userType === "seller" ? "/seller/dashboard" : "/"}>
             <StyledBreadcrumb label="Home" icon={<HomeIcon fontSize="small" />} />
           </Link>
           <StyledBreadcrumb label="Search" />
