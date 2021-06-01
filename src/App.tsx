@@ -90,7 +90,7 @@ const ExcludeNavFromPages: React.FC<Props> = ({ excludedPages, children }) => {
 
   return (
     <>
-      {!excludedPages.includes(location.pathname) && <Navbar variant={userType === "seller" ? "permanent" : "temporary"} buttonLabel={userType === "buyer" || userType === null ? "My Cart" : "My Products"} disabledPages={["/checkout", "/payment"]} />}
+      {!excludedPages.includes(location.pathname) && <Navbar buttonLabel={userType === "buyer" || userType === null ? "My Cart" : "My Products"} disabledPages={["/checkout", "/payment"]} />}
 
       {children}
 

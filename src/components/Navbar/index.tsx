@@ -25,10 +25,9 @@ import { showNotif } from "redux/control/controlSlice";
 interface Props {
   buttonLabel: string;
   disabledPages?: string[];
-  variant?: "permanent" | "temporary";
 }
 
-const Navbar: React.FC<Props> = ({ buttonLabel, variant = "temporary", disabledPages }) => {
+const Navbar: React.FC<Props> = ({ buttonLabel, disabledPages }) => {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const { isAuthenticated, userType } = useAppSelector((state) => state.auth);
   const { total } = useAppSelector((state) => state.cart);
@@ -73,11 +72,11 @@ const Navbar: React.FC<Props> = ({ buttonLabel, variant = "temporary", disabledP
             <Logo />
           </div>
 
-          <IconButton hidden={variant === "permanent" ? true : false} aria-controls="simple-menu" aria-haspopup="true" onClick={toggleMenuDrawer}>
+          <IconButton aria-controls="simple-menu" aria-haspopup="true" onClick={toggleMenuDrawer}>
             <MenuIcon />
           </IconButton>
 
-          <Drawer variant={variant} anchor="left" open={isDrawerOpen} onClose={toggleMenuDrawer}>
+          <Drawer variant="temporary" anchor="left" open={isDrawerOpen} onClose={toggleMenuDrawer}>
             <div className={styles.logo_container_mobile}>
               <Logo />
             </div>
