@@ -8,6 +8,8 @@ import Breadcrumbs from "@material-ui/core/Breadcrumbs";
 import { StyledBreadcrumb } from "../components/StyledComponents";
 import HomeIcon from "@material-ui/icons/Home";
 import { CircularProgress } from "@material-ui/core";
+import HomeLink from "../components/HomeLink";
+
 
 function Search() {
   const { isLoading, searchResults } = useAppSelector((state) => state.shop);
@@ -17,9 +19,9 @@ function Search() {
     <div className={styles.container}>
       <div className={styles.checkout_nav}>
         <Breadcrumbs aria-label="breadcrumb">
-          <Link to={userType === "seller" ? "/seller/dashboard" : "/"}>
+          <HomeLink>
             <StyledBreadcrumb label="Home" icon={<HomeIcon fontSize="small" />} />
-          </Link>
+          </HomeLink>
           <StyledBreadcrumb label="Search" />
         </Breadcrumbs>
       </div>

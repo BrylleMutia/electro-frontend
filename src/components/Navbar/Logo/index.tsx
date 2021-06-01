@@ -1,10 +1,11 @@
 import React from "react";
 import styles from "./Logo.module.scss";
-import { Link } from "react-router-dom";
+
+import HomeLink from "../../HomeLink";
 
 function Logo() {
   return (
-    <Link to="/">
+    <HomeLink>
       <svg version="1.1" x="0px" y="0px" width="156px" height="37px" viewBox="0 0 175.748 42.52" enable-background="new 0 0 175.748 42.52">
         <ellipse fill-rule="evenodd" clip-rule="evenodd" fill="#FDD700" cx="170.05" cy="36.341" rx="5.32" ry="5.367"></ellipse>
         <path
@@ -47,7 +48,7 @@ function Logo() {
                                             c-1.293,2.365-1.951,5.158-1.729,8.408c0.209,3.053,1.191,5.496,2.619,7.508c2.842,4.004,7.385,6.973,13.656,6.377
                                             c5.976-0.568,9.574-3.936,11.816-8.354c-0.141-0.271-0.221-0.604-0.336-0.902C92.929,31.364,90.843,30.485,88.812,29.55z"></path>
       </svg>
-    </Link>
+    </HomeLink>
   );
 }
 

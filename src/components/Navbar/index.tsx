@@ -21,6 +21,7 @@ import HelpIcon from "@material-ui/icons/Help";
 import HomeIcon from "@material-ui/icons/Home";
 import { CartButton } from "../../components/StyledComponents";
 import { showNotif } from "redux/control/controlSlice";
+import HomeLink from "../HomeLink";
 
 interface Props {
   buttonLabel: string;
@@ -83,11 +84,13 @@ const Navbar: React.FC<Props> = ({ buttonLabel, disabledPages }) => {
 
             <div className={styles.drawer} onClick={toggleMenuDrawer}>
               <List>
-                <ListItem component={Link} to={userType === "seller" ? "/seller/dashboard" : "/"}>
+                <ListItem>
                   <ListItemIcon>
                     <HomeIcon />
                   </ListItemIcon>
-                  <ListItemText primary="Home" />
+                  <HomeLink>
+                    <ListItemText primary="Home" />
+                  </HomeLink>
                 </ListItem>
 
                 {routes.map((route, index) => {

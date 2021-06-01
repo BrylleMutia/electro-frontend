@@ -12,6 +12,7 @@ import HomeIcon from "@material-ui/icons/Home";
 import Alert from "@material-ui/lab/Alert";
 import HighlightOffIcon from "@material-ui/icons/HighlightOff";
 import { Paper } from "@material-ui/core";
+import HomeLink from "../components/HomeLink";
 
 export default function Profile() {
   const { userDetails, orderHistory, isLoading, userType } = useAppSelector((state) => state.auth);
@@ -33,9 +34,9 @@ export default function Profile() {
     <div className={styles.container}>
       <div className={styles.checkout_nav}>
         <Breadcrumbs aria-label="breadcrumb">
-          <Link to={userType === "seller" ? "/seller/dashboard" : "/"}>
+          <HomeLink>
             <StyledBreadcrumb label="Home" icon={<HomeIcon fontSize="small" />} />
-          </Link>
+          </HomeLink>
           <StyledBreadcrumb label="Profile" />
         </Breadcrumbs>
       </div>
