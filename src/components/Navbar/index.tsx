@@ -57,7 +57,7 @@ const Navbar: React.FC<Props> = ({ buttonLabel, variant = "temporary", disabledP
     if (userType) {
       dispatch(logout(userType)).then(() => {
         history.push("/");
-        dispatch(showNotif({ alertMsg: "Logged out!", alertVariant: "info" }))
+        dispatch(showNotif({ alertMsg: "Logged out!", alertVariant: "info" }));
       });
     }
   };
@@ -78,6 +78,10 @@ const Navbar: React.FC<Props> = ({ buttonLabel, variant = "temporary", disabledP
           </IconButton>
 
           <Drawer variant={variant} anchor="left" open={isDrawerOpen} onClose={toggleMenuDrawer}>
+            <div className={styles.logo_container_mobile}>
+              <Logo />
+            </div>
+
             <div className={styles.drawer} onClick={toggleMenuDrawer}>
               <List>
                 <ListItem component={Link} to={userType === "seller" ? "/seller/dashboard" : "/"}>

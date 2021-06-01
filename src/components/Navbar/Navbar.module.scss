@@ -30,6 +30,10 @@
   min-width: 13em;
 }
 
+.logo_container_mobile {
+  display: none;
+}
+
 .search_wrapper {
   margin: 0 3em 0 5em;
   flex: 1;
@@ -47,5 +51,10 @@
   }
   .logo_container {
     display: none;
+  }
+  .logo_container_mobile {
+    display: flex;
+    justify-content: center;
+    padding: 1em 0;
   }
 }
