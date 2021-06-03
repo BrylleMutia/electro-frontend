@@ -103,20 +103,20 @@ function AuthForm() {
     e.preventDefault();
 
     if (tabView === 0) {
-      dispatch(register({ info: regInfo, type: userType }))
-        .then(unwrapResult) // unwrap first to get original payload on fulfilled request (https://redux-toolkit.js.org/api/createAsyncThunk#handling-thunk-results)
-        .then((fullfilledPayload) => {
-          // redirect then show toast
-          history.push(userType === "seller" ? "/seller/dashboard" : "/");
-          dispatch(showNotif({ alertMsg: `Welcome, ${fullfilledPayload.user.name}!` }));
-        });
-    } else if (tabView === 1) {
       dispatch(login({ info: loginInfo, type: userType }))
         .then(unwrapResult)
         .then((fullfilledPayload) => {
           // redirect then show toast
           history.push(userType === "seller" ? "/seller/dashboard" : "/");
           dispatch(showNotif({ alertMsg: `Welcome back, ${fullfilledPayload.user.name}!` }));
+        });
+    } else if (tabView === 1) {
+      dispatch(register({ info: regInfo, type: userType }))
+        .then(unwrapResult) // unwrap first to get original payload on fulfilled request (https://redux-toolkit.js.org/api/createAsyncThunk#handling-thunk-results)
+        .then((fullfilledPayload) => {
+          // redirect then show toast
+          history.push(userType === "seller" ? "/seller/dashboard" : "/");
+          dispatch(showNotif({ alertMsg: `Welcome, ${fullfilledPayload.user.name}!` }));
         });
     }
   };
@@ -132,8 +132,8 @@ function AuthForm() {
       <div className={styles.auth_form}>
         <form onSubmit={authenticateUser}>
           <Tabs textColor="secondary" variant="fullWidth" indicatorColor="secondary" centered value={tabView} onChange={handleTabChange} aria-label="simple tabs example">
-            <Tab label="Register" />
             <Tab label="Login" />
+            <Tab label="Register" />
           </Tabs>
 
           <RadioGroup aria-label="user-type" color="primary" className={styles.radio_group} name="user-type" value={userType} onChange={handleUserTypeChange}>
@@ -145,7 +145,23 @@ function AuthForm() {
           {error.message && <Alert severity="error">{getErrorMessage()}</Alert>}
 
           {/* FORM FIELDS */}
+
           <TabPanel value={tabView} index={0}>
+            <TextField onChange={handleLoginInfoChange} name="email" fullWidth color="secondary" required type="email" id="form-email" label="Email" variant="outlined" margin="dense" />
+            <TextField onChange={handleLoginInfoChange} name="password" fullWidth color="secondary" required type="password" id="form-password" label="Password" variant="outlined" margin="dense" />
+            <FormControlLabel label="Remember Me" control={<Checkbox checked={rememberUser} onChange={handleRememberUserToggle} inputProps={{ "aria-label": "primary checkbox" }} />} />
+
+            <div className={styles.button_wrapper}>
+              <Typography component="a" href="#" color="secondary">
+                Forgot password?
+              </Typography>
+              <Button type="submit" variant="contained" color="secondary">
+                Login
+              </Button>
+            </div>
+          </TabPanel>
+
+          <TabPanel value={tabView} index={1}>
             <TextField onChange={handleRegInfoChange} name="name" fullWidth color="secondary" required type="text" id="form-name" label="Name" variant="outlined" margin="dense" />
             <TextField onChange={handleRegInfoChange} name="email" fullWidth color="secondary" required type="email" id="form-email" label="Email" variant="outlined" margin="dense" />
             <TextField onChange={handleRegInfoChange} name="phone" fullWidth color="secondary" required type="phone" id="form-phone" label="Phone Number" variant="outlined" margin="dense" />
@@ -160,21 +176,6 @@ function AuthForm() {
             <Button type="submit" variant="contained" color="secondary" className={styles.button}>
               Register
             </Button>
-          </TabPanel>
-
-          <TabPanel value={tabView} index={1}>
-            <TextField onChange={handleLoginInfoChange} name="email" fullWidth color="secondary" required type="email" id="form-email" label="Email" variant="outlined" margin="dense" />
-            <TextField onChange={handleLoginInfoChange} name="password" fullWidth color="secondary" required type="password" id="form-password" label="Password" variant="outlined" margin="dense" />
-            <FormControlLabel label="Remember Me" control={<Checkbox checked={rememberUser} onChange={handleRememberUserToggle} inputProps={{ "aria-label": "primary checkbox" }} />} />
-
-            <div className={styles.button_wrapper}>
-              <Typography component="a" href="#" color="secondary">
-                Forgot password?
-              </Typography>
-              <Button type="submit" variant="contained" color="secondary">
-                Login
-              </Button>
-            </div>
           </TabPanel>
         </form>
       </div>

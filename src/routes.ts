@@ -5,12 +5,12 @@ const routes = [
     isProtected: true
   },
   {
-    name: "Register",
+    name: "Login",
     path: "/auth",
     isProtected: false
   },
   {
-    name: "Login",
+    name: "Register",
     path: "/auth",
     isProtected: false
   },
