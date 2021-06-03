@@ -6,6 +6,8 @@ import theme from "./theme";
 import axios from "axios";
 import { store } from "./redux/store";
 import { Provider } from "react-redux";
+import { BrowserRouter as Router } from "react-router-dom";
+
 
 // AXIOS GLOBAL DEFAULTS
 axios.defaults.baseURL = "http://localhost:8000/api";
@@ -38,7 +40,9 @@ axios.defaults.headers.post["Content-Type"] = "application/json";
 ReactDOM.render(
   <ThemeProvider theme={theme}>
     <Provider store={store}>
+      <Router>
         <App />
+      </Router>
     </Provider>
   </ThemeProvider>,
   document.getElementById("root")
