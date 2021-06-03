@@ -20,7 +20,7 @@ export interface ProductInterface {
   price: string | number;
   product_image: string;
   description: string;
-  categories: CategoryInterface[];
+  categories: ProductCategoryInterface[];
   seller_id: number;
   seller: UserDetails;
   offer_id: number;
@@ -42,7 +42,7 @@ export interface OfferInterface {
   offer_title: string;
 }
 
-export interface CategoryInterface {
+export interface ProductCategoryInterface {
   id: number;
   name: string;
   pivot: {
@@ -60,4 +60,12 @@ export interface ReviewInterface {
   feedback: string;
   user_id: number;
   user: UserDetails;
+}
+
+export interface CategoryInterface {
+  id: number;
+  created_at: string;
+  updated_at: string;
+  name: string;
+  slug: string;
 }

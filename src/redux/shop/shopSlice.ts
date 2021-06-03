@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction, createAsyncThunk, isAnyOf } from "@reduxjs/toolkit";
 import axios from "axios";
 import type { RootState } from "../store";
-import type { ShopState, ProductInterface, GroupedProductsInterface, ProductDetailsInterface, ReviewInterface } from "./types";
+import type { ShopState, ProductInterface, GroupedProductsInterface, ProductDetailsInterface, ReviewInterface, CategoryInterface } from "./types";
 import type { ErrorResponse, UserDetails } from "../auth/types";
 import type { ReviewInfo } from "../../components/ProductTabs";
 import { tokenConfig } from "../auth/authSlice";
@@ -115,6 +115,18 @@ export const submitProductReview = createAsyncThunk<ReviewInterface[], ReviewInf
     );
 });
 
+export const getAllCategories = createAsyncThunk<CategoryInterface[], string, { rejectValue: ErrorResponse }>("shop/getAllCategories", async (_, thunkAPI) => {
+  return axios
+    .get("/categories")
+    .then((response) => response.data)
+    .catch((err) =>
+      thunkAPI.rejectWithValue({
+        message: err.response.data.message,
+        errors: err.response.data?.errors,
+      })
+    );
+});
+
 // --------------- SLICE
 export const shopSlice = createSlice({
   name: "shop",
@@ -158,7 +170,8 @@ export const shopSlice = createSlice({
         message: "",
         errors: {},
       };
-    })
+    });
+
 
     builder.addMatcher(isAnyOf(getAllProducts.pending, getProductDetails.pending, searchProducts.pending, submitProductReview.pending), (state) => {
       state.isLoading = true;
