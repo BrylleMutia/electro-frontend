@@ -184,7 +184,13 @@ export const authSlice = createSlice({
       localStorage.setItem("token", action.payload.token);
     });
 
-    builder.addMatcher(isAnyOf(register.rejected, login.rejected, loadDetails.rejected, logout.rejected, getOrderHistory.rejected, updateUserInfo.rejected), (state, action: PayloadAction<ErrorResponse>) => {
+    builder.addMatcher(isAnyOf(register.rejected, login.rejected, loadDetails.rejected), (state, action: PayloadAction<ErrorResponse>) => {
+      state.isLoading = false;
+      state.error = action.payload;
+      localStorage.removeItem("token");
+    });
+
+    builder.addMatcher(isAnyOf(logout.rejected, getOrderHistory.rejected, updateUserInfo.rejected), (state, action: PayloadAction<ErrorResponse>) => {
       state.isLoading = false;
       state.error = action.payload;
     });
