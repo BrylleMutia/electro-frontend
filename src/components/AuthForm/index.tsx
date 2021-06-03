@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import styles from "./Auth.module.scss";
 import { unwrapResult } from "@reduxjs/toolkit";
+import { SellerHome, BuyerHome } from "../HomeLink"
 
 import TabPanel from "./TabPanel";
 import BuyerImg from "./assets/buyer.png";
@@ -107,7 +108,7 @@ function AuthForm() {
         .then(unwrapResult)
         .then((fullfilledPayload) => {
           // redirect then show toast
-          history.push(userType === "seller" ? "/seller/dashboard" : "/");
+          history.push(userType === "seller" ? SellerHome : BuyerHome);
           dispatch(showNotif({ alertMsg: `Welcome back, ${fullfilledPayload.user.name}!` }));
         });
     } else if (tabView === 1) {
@@ -115,7 +116,7 @@ function AuthForm() {
         .then(unwrapResult) // unwrap first to get original payload on fulfilled request (https://redux-toolkit.js.org/api/createAsyncThunk#handling-thunk-results)
         .then((fullfilledPayload) => {
           // redirect then show toast
-          history.push(userType === "seller" ? "/seller/dashboard" : "/");
+          history.push(userType === "seller" ? SellerHome : BuyerHome);
           dispatch(showNotif({ alertMsg: `Welcome, ${fullfilledPayload.user.name}!` }));
         });
     }

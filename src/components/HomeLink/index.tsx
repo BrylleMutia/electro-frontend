@@ -19,3 +19,4 @@ const HomeLink: React.FC<Props> = ({ props, children }) => {
 };
 
 export default HomeLink;
+export { SellerHome, BuyerHome };
