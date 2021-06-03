@@ -1,0 +1,69 @@
+@import "../../styles/variables";
+
+.add_product {
+  display: flex;
+  justify-content: center;
+}
+
+.img_container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  .pic {
+    object-fit: contain;
+    max-height: 20em;
+    min-height: 10em;
+    width: 20em;
+  }
+
+  & > h4 {
+    padding: 5em;
+    border: 1px solid $border-color;
+  }
+
+  .attach_btn {
+    margin: 1em 0;
+  }
+}
+
+.product_form {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  flex-basis: 100%;
+
+  .details {
+    margin-bottom: 1em;
+
+    .first {
+      margin-right: 0.5em;
+    }
+  }
+
+  textarea {
+    border-radius: 5px;
+    outline: none;
+    border: 1px solid $input-border-color;
+    padding: 0.5em;
+  }
+
+  button.submit_button {
+    margin-top: 2em;
+    align-self: flex-end;
+  }
+}
+
+.form_control {
+  min-width: 10em;
+
+  .chips {
+    display: flex;
+    flex-wrap: wrap;
+
+    .chip {
+      margin: 0.2em;
+    }
+  }
+}
