@@ -1,8 +1,10 @@
 @import "../../styles/variables";
+@import "../../styles/breakpoints";
 
 .add_product {
   display: flex;
   justify-content: center;
+  margin-bottom: 5em;
 }
 
 .img_container {
@@ -36,9 +38,10 @@
 
   .details {
     margin-bottom: 1em;
+    display: flex;
 
     .first {
-      margin-right: 0.5em;
+      margin: 0 0.5em 0 0;
     }
   }
 
@@ -51,19 +54,41 @@
 
   button.submit_button {
     margin-top: 2em;
-    align-self: flex-end;
   }
 }
 
-.form_control {
-  min-width: 10em;
+.categories {
+  display: flex;
+  align-items: center;
+
+  & > .form_control {
+    flex-basis: 90%;
+    min-width: 10em;
+  }
 
   .chips {
     display: flex;
     flex-wrap: wrap;
-
+  
     .chip {
       margin: 0.2em;
     }
+  }
+}
+
+
+@media (max-width: $md) {
+  .add_product {
+    flex-direction: column;
+  }
+
+  .img_container {
+    margin-bottom: 3em;
+  }
+}
+
+@media (min-width: $xs) {
+  button.submit_button {
+    align-self: flex-end;
   }
 }

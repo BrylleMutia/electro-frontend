@@ -67,7 +67,7 @@ function AuthForm() {
 
   const dispatch = useAppDispatch();
   const history = useHistory();
-  const { isAuthenticated, error, userDetails } = useAppSelector((state) => state.auth);
+  const { error } = useAppSelector((state) => state.auth);
 
   const handleUserTypeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     switch (e.target.value) {
@@ -170,7 +170,7 @@ function AuthForm() {
             <TextField onChange={handleRegInfoChange} name="password_confirmation" fullWidth color="secondary" required type="password" id="form-repassword" label="Confirm Password" variant="outlined" margin="dense" />
             <TextField onChange={handleRegInfoChange} name="address" fullWidth color="secondary" type="text" id="form-address" label="Address" variant="outlined" margin="dense" />
             <TextField onChange={handleRegInfoChange} name="barangay" fullWidth color="secondary" required type="text" id="form-barangay" label="Barangay" variant="outlined" margin="dense" />
-            <TextField onChange={handleRegInfoChange} name="city" fullWidth color="secondary" required type="text" id="form-city" label="City" variant="outlined" margin="dense" />
+            <TextField onChange={handleRegInfoChange} name="city" fullWidth color="secondary" required type="text" id="form-city" label="City / Municipality" variant="outlined" margin="dense" />
             <TextField onChange={handleRegInfoChange} name="province" fullWidth color="secondary" required type="text" id="form-province" label="Province" variant="outlined" margin="dense" />
             <TextField onChange={handleRegInfoChange} name="zip_code" fullWidth color="secondary" required type="text" id="form-zip_code" label="Zip Code" variant="outlined" margin="dense" />
 
