@@ -5,6 +5,7 @@ import type { ShopState, ProductInterface, GroupedProductsInterface, ProductDeta
 import type { ErrorResponse, UserDetails } from "../auth/types";
 import type { ReviewInfo } from "../../components/ProductTabs";
 import { tokenConfig } from "../auth/authSlice";
+import { ADDRGETNETWORKPARAMS } from "node:dns";
 
 const MAX_PRODUCTS_PER_OFFER = 7;
 
@@ -12,6 +13,7 @@ const initialState: ShopState = {
   products: [],
   offers: {},
   categories: {},
+  availableCategories: [],
   sellers: null,
   searchResults: [],
   currentProduct: {
@@ -117,7 +119,19 @@ export const submitProductReview = createAsyncThunk<ReviewInterface[], ReviewInf
 
 export const getAllCategories = createAsyncThunk<CategoryInterface[], string, { rejectValue: ErrorResponse }>("shop/getAllCategories", async (_, thunkAPI) => {
   return axios
-    .get("/categories")
+    .get("/categories", tokenConfig())
+    .then((response) => response.data)
+    .catch((err) =>
+      thunkAPI.rejectWithValue({
+        message: err.response.data.message,
+        errors: err.response.data?.errors,
+      })
+    );
+});
+
+export const addNewCategory = createAsyncThunk<CategoryInterface, { name: string }, { rejectValue: ErrorResponse }>("shop/addNewCategory", async (newCategory, thunkAPI) => {
+  return axios
+    .post("/categories", newCategory, tokenConfig())
     .then((response) => response.data)
     .catch((err) =>
       thunkAPI.rejectWithValue({
@@ -172,12 +186,21 @@ export const shopSlice = createSlice({
       };
     });
 
+    builder.addCase(getAllCategories.fulfilled, (state, action: PayloadAction<CategoryInterface[]>) => {
+      state.availableCategories = action.payload;
+      state.isLoading = false;
+    });
 
-    builder.addMatcher(isAnyOf(getAllProducts.pending, getProductDetails.pending, searchProducts.pending, submitProductReview.pending), (state) => {
+    builder.addCase(addNewCategory.fulfilled, (state, action: PayloadAction<CategoryInterface>) => {
+      state.availableCategories.unshift(action.payload);
+      state.isLoading = false;
+    });
+
+    builder.addMatcher(isAnyOf(getAllProducts.pending, getProductDetails.pending, searchProducts.pending, submitProductReview.pending, getAllCategories.pending, addNewCategory.pending), (state) => {
       state.isLoading = true;
     });
 
-    builder.addMatcher(isAnyOf(getAllProducts.rejected, getAllProducts.rejected, searchProducts.rejected, submitProductReview.rejected), (state, action: PayloadAction<ErrorResponse>) => {
+    builder.addMatcher(isAnyOf(getAllProducts.rejected, getAllProducts.rejected, searchProducts.rejected, submitProductReview.rejected, getAllCategories.rejected, addNewCategory.rejected), (state, action: PayloadAction<ErrorResponse>) => {
       state.error = action.payload;
       state.isLoading = false;
     });

@@ -4,6 +4,7 @@ export interface ShopState {
   products: ProductInterface[];
   offers: GroupedProductsInterface;
   categories: GroupedProductsInterface;
+  availableCategories: CategoryInterface[];
   sellers: UserDetails[] | null;
   currentProduct: ProductDetailsInterface;
   searchResults: ProductInterface[];
