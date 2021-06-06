@@ -185,7 +185,11 @@ export const shopSlice = createSlice({
     });
 
     builder.addCase(addNewProduct.fulfilled, (state, action: PayloadAction<ProductInterface>) => {
-      console.log("New Product", action.payload);
+      state.isLoading = false;
+      state.error = {
+        message: "",
+        errors: {},
+      };
     });
 
     builder.addCase(searchProducts.fulfilled, (state, action: PayloadAction<ProductInterface[]>) => {
