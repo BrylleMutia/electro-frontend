@@ -2,8 +2,10 @@ import React, { useState, useEffect } from "react";
 import styles from "./AddProductForm.module.scss";
 import { useAppSelector, useAppDispatch } from "../../redux/hooks";
 import { useTheme, Theme } from "@material-ui/core/styles";
-import { getAllCategories, addNewCategory } from "../../redux/shop/shopSlice";
+import { getAllCategories, addNewCategory, addNewProduct, setError } from "../../redux/shop/shopSlice";
+import { showNotif } from "../../redux/control/controlSlice";
 
+import Alert from "@material-ui/lab/Alert";
 import Button from "@material-ui/core/Button";
 import IconButton from "@material-ui/core/IconButton";
 import TextField from "@material-ui/core/TextField";
@@ -21,8 +23,9 @@ import InputAdornment from "@material-ui/core/InputAdornment";
 import PostAddIcon from "@material-ui/icons/PostAdd";
 import PublishIcon from "@material-ui/icons/Publish";
 import AddBoxIcon from "@material-ui/icons/AddBox";
+import { unwrapResult } from "@reduxjs/toolkit";
 
-interface AddProductInfo {
+export interface AddProductInfo {
   product_name: string;
   price: number;
   product_image: File | null;
@@ -32,8 +35,8 @@ interface AddProductInfo {
 }
 
 function AddProduct() {
-  const { userDetails } = useAppSelector((state) => state.auth);
-  const { availableCategories } = useAppSelector((state) => state.shop);
+  const { userDetails, userType } = useAppSelector((state) => state.auth);
+  const { availableCategories, error } = useAppSelector((state) => state.shop);
 
   const dispatch = useAppDispatch();
 
@@ -41,11 +44,11 @@ function AddProduct() {
   const [newCategory, setNewCategory] = useState("");
 
   const [productName, setProductName] = useState("");
-  const [price, setPrice] = useState(0);
+  const [price, setPrice] = useState("");
   const [description, setDescription] = useState("");
-  const [productImage, setProductImage] = useState<File | null>(null);
+  const [productImage, setProductImage] = useState<File | string>("");
   const [productPreviewImage, setProductPreviewImage] = useState<string>("");
-  const [productCategories, setProductCategories] = useState<string[]>([]);
+  const [productCategories, setProductCategories] = useState<number[]>([]);
 
   const theme = useTheme();
 
@@ -58,18 +61,71 @@ function AddProduct() {
   };
 
   const handleCategoriesChange = (event: React.ChangeEvent<{ value: unknown }>) => {
-    setProductCategories(event.target.value as string[]);
+    setProductCategories(event.target.value as number[]);
   };
 
-  const getStyles = (category: string, categories: string[], theme: Theme) => {
+  const getStyles = (category: number, categories: number[], theme: Theme) => {
     return {
       fontWeight: categories.indexOf(category) === -1 ? theme.typography.fontWeightRegular : theme.typography.fontWeightMedium,
     };
   };
 
-  const submitNewCategory = () => {
+  const submitNewCategory = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
     dispatch(addNewCategory({ name: newCategory }));
     setIsCategoryDialogOpen(false);
+  };
+
+  const handleAddNewProduct = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    if (!productCategories.length) {
+      dispatch(
+        setError({
+          message: "Categories can't be empty.",
+          errors: {
+            categories: ["Product category is required."],
+          },
+        })
+      );
+
+      return;
+    }
+
+    if (userType === "seller" && userDetails) {
+      let productData = new FormData();
+
+      productData.append("product_name", productName);
+      productData.append("price", price.toString());
+      productData.append("description", description);
+      productData.append("product_image", productImage);
+      productData.append("seller_id", userDetails.id.toString());
+      productData.append("offer_id", "");
+      productData.append("categories", JSON.stringify(productCategories));
+
+      dispatch(addNewProduct(productData))
+        .then(unwrapResult)
+        .then((response) => {
+          clearNewProductForm();
+          dispatch(showNotif({ alertMsg: `${response.product_name} added!` }));
+        })
+        .catch((err) => console.log(err));
+    }
+  };
+
+  const clearNewProductForm = () => {
+    setProductName("");
+    setPrice("");
+    setDescription("");
+    setProductImage("");
+    setProductPreviewImage("");
+    setProductCategories([]);
+  };
+
+  const getErrorMessage = () => {
+    // display first error only
+    return error.errors[Object.keys(error.errors)[0]];
   };
 
   useEffect(() => {
@@ -84,24 +140,29 @@ function AddProduct() {
           Attach image
           <Input hidden={true} type="file" name="image" onChange={handleProductImageChange} />
         </Button>
+
+        {/* ERROR MESSAGES */}
+        {error.message && <Alert severity="error">{getErrorMessage()}</Alert>}
       </div>
 
-      <form className={styles.product_form}>
+      <form className={styles.product_form} onSubmit={handleAddNewProduct}>
         <div className={styles.details}>
-          <TextField fullWidth className={styles.first} name="product_name" variant="outlined" label="Product Name" required />
+          <TextField fullWidth className={styles.first} value={productName} onChange={(e) => setProductName(e.target.value)} name="product_name" variant="outlined" label="Product Name" required />
           <TextField
             fullWidth
             name="price"
             type="number"
             variant="outlined"
             label="Price"
+            value={price}
             required
+            onChange={(e) => setPrice(e.target.value)}
             InputProps={{
               startAdornment: <InputAdornment position="start">P</InputAdornment>,
             }}
           />
         </div>
-        <TextareaAutosize name="description" required rowsMin={5} placeholder="Description" />
+        <TextareaAutosize name="description" required rowsMin={5} placeholder="Description" onChange={(e) => setDescription(e.target.value)} />
 
         <div className={styles.categories}>
           <FormControl className={styles.form_control} style={{ margin: "1em 0" }}>
@@ -116,9 +177,11 @@ function AddProduct() {
               input={<Input id="select-multiple-chip" />}
               renderValue={(selected) => (
                 <div className={styles.chips}>
-                  {(selected as string[]).map((value) => (
-                    <Chip key={value} label={value} className={styles.chip} />
-                  ))}
+                  {(selected as number[]).map((value) => {
+                    // get category name from ids to display on select component
+                    let categoryName = availableCategories.find((category) => category.id === value)?.name;
+                    return <Chip key={value} label={categoryName} className={styles.chip} />;
+                  })}
                 </div>
               )}
               MenuProps={{
@@ -130,7 +193,7 @@ function AddProduct() {
                 },
               }}>
               {availableCategories.map((category, index) => (
-                <MenuItem key={index} value={category.name} style={getStyles(category.name, productCategories, theme)}>
+                <MenuItem key={index} value={category.id} style={getStyles(category.id, productCategories, theme)}>
                   {category.name}
                 </MenuItem>
               ))}
@@ -148,14 +211,16 @@ function AddProduct() {
       </form>
 
       <Dialog open={isCategoryDialogOpen} onClose={() => setIsCategoryDialogOpen(false)} aria-labelledby="alert-dialog-title" aria-describedby="alert-dialog-description">
-        <DialogContent>
-          <TextField autoFocus value={newCategory} onChange={(e) => setNewCategory(e.target.value)} margin="dense" id="new-category" label="New Category" fullWidth color="secondary" />
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={submitNewCategory} size="small" color="secondary" disableElevation>
-            Add category
-          </Button>
-        </DialogActions>
+        <form onSubmit={submitNewCategory}>
+          <DialogContent>
+            <TextField autoFocus value={newCategory} onChange={(e) => setNewCategory(e.target.value)} margin="dense" id="new-category" label="New Category" fullWidth color="secondary" />
+          </DialogContent>
+          <DialogActions>
+            <Button type="submit" size="small" color="secondary" disableElevation>
+              Add category
+            </Button>
+          </DialogActions>
+        </form>
       </Dialog>
     </div>
   );
