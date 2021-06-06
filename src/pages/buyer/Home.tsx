@@ -7,7 +7,6 @@ import Showcase from "../../components/Showcase";
 import Featured from "../../components/Featured";
 import Categories from "../../components/Categories";
 import Sellers from "../../components/Sellers";
-import Notify from "../../components/Notify";
 
 export default function Home() {
   const dispatch = useAppDispatch();
@@ -36,9 +35,6 @@ export default function Home() {
           <Sellers />
         </div>
       </div>
-      
-      {/* for notifications / toast */}
-      <Notify />
     </>
   );
 }

@@ -14,6 +14,7 @@ import Footer from "./components/Footer";
 import Disclaimer from "./components/Disclaimer";
 import Cart from "./components/Cart";
 import SellerProducts from "./components/SellerProducts";
+import Notify from "./components/Notify";
 import Auth from "./pages/Auth";
 import Home from "./pages/buyer/Home";
 import Product from "./pages/Product";
@@ -115,6 +116,9 @@ const ExcludeNavFromPages: React.FC<Props> = ({ excludedPages, children }) => {
       )}
 
       {userType === "buyer" || userType === null ? <Cart /> : <SellerProducts />}
+
+      {/* for notifications / toast */}
+      <Notify />
     </>
   );
 };
