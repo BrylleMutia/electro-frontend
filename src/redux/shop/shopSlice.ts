@@ -5,7 +5,7 @@ import type { ShopState, ProductInterface, GroupedProductsInterface, ProductDeta
 import type { ErrorResponse, UserDetails } from "../auth/types";
 import type { ReviewInfo } from "../../components/ProductTabs";
 import { tokenConfig } from "../auth/authSlice";
-import { ADDRGETNETWORKPARAMS } from "node:dns";
+import type { AddProductInfo } from "../../components/AddProductForm";
 
 const MAX_PRODUCTS_PER_OFFER = 7;
 
@@ -105,9 +105,21 @@ export const searchProducts = createAsyncThunk<ProductInterface[], string, { rej
     );
 });
 
+export const addNewProduct = createAsyncThunk<ProductInterface, FormData, { rejectValue: ErrorResponse }>("shop/addNewProduct", async (newProductInfo, thunkAPI) => {
+  return axios
+    .post("/products", newProductInfo, tokenConfig())
+    .then((response) => response.data)
+    .catch((err) =>
+      thunkAPI.rejectWithValue({
+        message: err.response.data.message,
+        errors: err.response.data?.errors,
+      })
+    );
+});
+
 export const submitProductReview = createAsyncThunk<ReviewInterface[], ReviewInfo, { rejectValue: ErrorResponse }>("shop/submitProductReview", async (reviewInfo, thunkAPI) => {
   return axios
-    .post("/product/review", JSON.stringify(reviewInfo), tokenConfig())
+    .post("/products/review", reviewInfo, tokenConfig())
     .then((response) => response.data)
     .catch((err) =>
       thunkAPI.rejectWithValue({
@@ -145,7 +157,11 @@ export const addNewCategory = createAsyncThunk<CategoryInterface, { name: string
 export const shopSlice = createSlice({
   name: "shop",
   initialState,
-  reducers: {},
+  reducers: {
+    setError(state, action: PayloadAction<ErrorResponse>) {
+      state.error = action.payload;
+    },
+  },
   extraReducers: (builder) => {
     builder.addCase(getAllProducts.fulfilled, (state, action: PayloadAction<ProductInterface[]>) => {
       state.products = action.payload;
@@ -166,6 +182,10 @@ export const shopSlice = createSlice({
         message: "",
         errors: {},
       };
+    });
+
+    builder.addCase(addNewProduct.fulfilled, (state, action: PayloadAction<ProductInterface>) => {
+      console.log("New Product", action.payload);
     });
 
     builder.addCase(searchProducts.fulfilled, (state, action: PayloadAction<ProductInterface[]>) => {
@@ -196,14 +216,21 @@ export const shopSlice = createSlice({
       state.isLoading = false;
     });
 
-    builder.addMatcher(isAnyOf(getAllProducts.pending, getProductDetails.pending, searchProducts.pending, submitProductReview.pending, getAllCategories.pending, addNewCategory.pending), (state) => {
+    builder.addMatcher(isAnyOf(getAllProducts.pending, getProductDetails.pending, addNewProduct.pending, searchProducts.pending, submitProductReview.pending, getAllCategories.pending, addNewCategory.pending), (state) => {
       state.isLoading = true;
+      state.error = {
+        message: "",
+        errors: {},
+      };
     });
 
-    builder.addMatcher(isAnyOf(getAllProducts.rejected, getAllProducts.rejected, searchProducts.rejected, submitProductReview.rejected, getAllCategories.rejected, addNewCategory.rejected), (state, action: PayloadAction<ErrorResponse>) => {
-      state.error = action.payload;
-      state.isLoading = false;
-    });
+    builder.addMatcher(
+      isAnyOf(getAllProducts.rejected, getAllProducts.rejected, addNewProduct.rejected, getProductDetails.rejected, searchProducts.rejected, submitProductReview.rejected, getAllCategories.rejected, addNewCategory.rejected),
+      (state, action: PayloadAction<ErrorResponse>) => {
+        state.error = action.payload;
+        state.isLoading = false;
+      }
+    );
   },
 });
 
@@ -214,6 +241,7 @@ const groupProductsByOffer = (products: ProductInterface[]) => {
 
   products.map((product) => {
     const { offer } = product;
+    if (!offer) return;
 
     if (newProducts.hasOwnProperty(offer.offer_title)) {
       if (newProducts[offer.offer_title].length < MAX_PRODUCTS_PER_OFFER) {
@@ -262,5 +290,6 @@ const getAllSellers = (products: ProductInterface[]) => {
   return uniqueSellers;
 };
 
+export const { setError } = shopSlice.actions;
 export const shopSelector = (state: RootState) => state.shop;
 export default shopSlice.reducer;
