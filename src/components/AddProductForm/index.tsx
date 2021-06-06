@@ -5,6 +5,7 @@ import { useTheme, Theme } from "@material-ui/core/styles";
 import { getAllCategories, addNewCategory, addNewProduct, setError } from "../../redux/shop/shopSlice";
 import { showNotif } from "../../redux/control/controlSlice";
 
+import NewCategoryDialog from "./NewCategoryDialog";
 import Alert from "@material-ui/lab/Alert";
 import Button from "@material-ui/core/Button";
 import IconButton from "@material-ui/core/IconButton";
@@ -16,9 +17,6 @@ import MenuItem from "@material-ui/core/MenuItem";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
 import Chip from "@material-ui/core/Chip";
-import Dialog from "@material-ui/core/Dialog";
-import DialogContent from "@material-ui/core/DialogContent";
-import DialogActions from "@material-ui/core/DialogActions";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import PostAddIcon from "@material-ui/icons/PostAdd";
 import PublishIcon from "@material-ui/icons/Publish";
@@ -41,7 +39,6 @@ function AddProduct() {
   const dispatch = useAppDispatch();
 
   const [isCategoryDialogOpen, setIsCategoryDialogOpen] = useState(false);
-  const [newCategory, setNewCategory] = useState("");
 
   const [productName, setProductName] = useState("");
   const [price, setPrice] = useState("");
@@ -64,17 +61,12 @@ function AddProduct() {
     setProductCategories(event.target.value as number[]);
   };
 
+  const closeNewCategoryDialog = () => setIsCategoryDialogOpen(false);
+
   const getStyles = (category: number, categories: number[], theme: Theme) => {
     return {
       fontWeight: categories.indexOf(category) === -1 ? theme.typography.fontWeightRegular : theme.typography.fontWeightMedium,
     };
-  };
-
-  const submitNewCategory = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-
-    dispatch(addNewCategory({ name: newCategory }));
-    setIsCategoryDialogOpen(false);
   };
 
   const handleAddNewProduct = (e: React.FormEvent<HTMLFormElement>) => {
@@ -210,18 +202,7 @@ function AddProduct() {
         </Button>
       </form>
 
-      <Dialog open={isCategoryDialogOpen} onClose={() => setIsCategoryDialogOpen(false)} aria-labelledby="alert-dialog-title" aria-describedby="alert-dialog-description">
-        <form onSubmit={submitNewCategory}>
-          <DialogContent>
-            <TextField autoFocus value={newCategory} onChange={(e) => setNewCategory(e.target.value)} margin="dense" id="new-category" label="New Category" fullWidth color="secondary" />
-          </DialogContent>
-          <DialogActions>
-            <Button type="submit" size="small" color="secondary" disableElevation>
-              Add category
-            </Button>
-          </DialogActions>
-        </form>
-      </Dialog>
+      <NewCategoryDialog isCategoryDialogOpen={isCategoryDialogOpen} closeNewCategoryDialog={closeNewCategoryDialog} />
     </div>
   );
 }
