@@ -2,10 +2,11 @@ import React, { useState, useEffect } from "react";
 import styles from "./AddProductForm.module.scss";
 import { useAppSelector, useAppDispatch } from "../../redux/hooks";
 import { useTheme, Theme } from "@material-ui/core/styles";
-import { getAllCategories, addNewCategory, addNewProduct, setError } from "../../redux/shop/shopSlice";
-import { showNotif } from "../../redux/control/controlSlice";
+import { getAllCategories, addNewProduct, setError } from "../../redux/shop/shopSlice";
+import type { ProductInterface } from "../../redux/shop/types";
 
 import NewCategoryDialog from "./NewCategoryDialog";
+import NewProductCard from "./NewProductCard";
 import Alert from "@material-ui/lab/Alert";
 import Button from "@material-ui/core/Button";
 import IconButton from "@material-ui/core/IconButton";
@@ -18,6 +19,8 @@ import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
 import Chip from "@material-ui/core/Chip";
 import InputAdornment from "@material-ui/core/InputAdornment";
+import Dialog from "@material-ui/core/Dialog";
+import DialogActions from "@material-ui/core/DialogActions";
 import PostAddIcon from "@material-ui/icons/PostAdd";
 import PublishIcon from "@material-ui/icons/Publish";
 import AddBoxIcon from "@material-ui/icons/AddBox";
@@ -39,6 +42,8 @@ function AddProduct() {
   const dispatch = useAppDispatch();
 
   const [isCategoryDialogOpen, setIsCategoryDialogOpen] = useState(false);
+  const [isNewProductDialogOpen, setIsNewProductDialogOpen] = useState(false);
+  const [newProductDetails, setNewProductDetails] = useState<ProductInterface | null>(null);
 
   const [productName, setProductName] = useState("");
   const [price, setPrice] = useState("");
@@ -100,7 +105,12 @@ function AddProduct() {
         .then(unwrapResult)
         .then((response) => {
           clearNewProductForm();
-          dispatch(showNotif({ alertMsg: `${response.product_name} added!` }));
+
+          // display new product preview dialog
+          setNewProductDetails(response);
+          setIsNewProductDialogOpen(true);
+
+          // dispatch(showNotif({ alertMsg: `${response.product_name} added!` }));
         })
         .catch((err) => console.log(err));
     }
@@ -154,7 +164,7 @@ function AddProduct() {
             }}
           />
         </div>
-        <TextareaAutosize name="description" required rowsMin={5} placeholder="Description" onChange={(e) => setDescription(e.target.value)} />
+        <TextareaAutosize name="description" value={description} required rowsMin={5} placeholder="Description" onChange={(e) => setDescription(e.target.value)} />
 
         <div className={styles.categories}>
           <FormControl className={styles.form_control} style={{ margin: "1em 0" }}>
@@ -203,6 +213,15 @@ function AddProduct() {
       </form>
 
       <NewCategoryDialog isCategoryDialogOpen={isCategoryDialogOpen} closeNewCategoryDialog={closeNewCategoryDialog} />
+
+      <Dialog open={isNewProductDialogOpen} onClose={() => setIsNewProductDialogOpen(false)}>
+        <NewProductCard newProductDetails={newProductDetails} cardElevation={0} />
+        <DialogActions>
+          <Button size="small" color="primary" onClick={() => setIsNewProductDialogOpen(false)}>
+            Okay
+          </Button>
+        </DialogActions>
+      </Dialog>
     </div>
   );
 }
