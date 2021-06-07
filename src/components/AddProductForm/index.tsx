@@ -215,7 +215,9 @@ function AddProduct() {
       <NewCategoryDialog isCategoryDialogOpen={isCategoryDialogOpen} closeNewCategoryDialog={closeNewCategoryDialog} />
 
       <Dialog open={isNewProductDialogOpen} onClose={() => setIsNewProductDialogOpen(false)}>
-        <NewProductCard newProductDetails={newProductDetails} cardElevation={0} />
+        <div className={styles.product_card}>
+          <NewProductCard newProductDetails={newProductDetails} cardElevation={0} />
+        </div>
         <DialogActions>
           <Button size="small" color="primary" onClick={() => setIsNewProductDialogOpen(false)}>
             Okay

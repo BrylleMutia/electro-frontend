@@ -69,13 +69,20 @@
   .chips {
     display: flex;
     flex-wrap: wrap;
-  
+
     .chip {
       margin: 0.2em;
     }
   }
 }
 
+.product_card {
+  width: 24em;
+
+  @media (max-width: $sm) {
+    width: 21em;
+  }
+}
 
 @media (max-width: $md) {
   .add_product {

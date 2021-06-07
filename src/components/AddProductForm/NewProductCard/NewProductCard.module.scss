@@ -1,22 +1,16 @@
 @import "../../../styles/breakpoints";
 
-.card {
-  width: 24em;
 
-  @media (max-width: $sm) {
-    width: 21em;
-  }
 
   .product_img {
     height: 15em;
   }
 
   .categories_container {
-    margin: 1em 0;
+    margin: 0.5em 0;
 
     & > * {
       margin-right: 0.5em;
       margin-bottom: 0.3em;
     }
   }
-}

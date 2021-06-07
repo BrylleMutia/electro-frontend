@@ -24,7 +24,7 @@ const NewProductCard: React.FC<Props> = ({ newProductDetails, withActions = fals
   const { isLoading } = useAppSelector((state) => state.shop);
 
   return (
-    <Card elevation={cardElevation} className={styles.card}>
+    <Card elevation={cardElevation}>
       <CardHeader title="New product added!" titleTypographyProps={{ variant: "subtitle1", color: "primary" }} />
       {isLoading ? (
         <Skeleton>
