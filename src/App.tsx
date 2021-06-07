@@ -13,7 +13,6 @@ import CallToAction from "./components/CallToAction";
 import Footer from "./components/Footer";
 import Disclaimer from "./components/Disclaimer";
 import Cart from "./components/Cart";
-import SellerProducts from "./components/SellerProducts";
 import Notify from "./components/Notify";
 import Auth from "./pages/Auth";
 import Home from "./pages/buyer/Home";
@@ -115,7 +114,7 @@ const ExcludeNavFromPages: React.FC<Props> = ({ excludedPages, children }) => {
         </div>
       )}
 
-      {userType === "buyer" || userType === null ? <Cart /> : <SellerProducts />}
+      <Cart />
 
       {/* for notifications / toast */}
       <Notify />

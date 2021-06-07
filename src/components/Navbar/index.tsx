@@ -41,6 +41,11 @@ const Navbar: React.FC<Props> = ({ buttonLabel, disabledPages }) => {
 
   const handleCartDrawerToggle = () => dispatch(toggleCartDrawer());
 
+  const handleCartButtonAction = () => {
+    if (userType === "seller") handleLogout();
+    else handleCartDrawerToggle();
+  };
+
   const getNavIcons = (name: string) => {
     switch (name.toLowerCase()) {
       case "profile":
@@ -123,12 +128,12 @@ const Navbar: React.FC<Props> = ({ buttonLabel, disabledPages }) => {
         </div>
 
         {matches ? (
-          <IconButton disabled={disabledPages?.includes(location.pathname)} onClick={handleCartDrawerToggle}>
+          <IconButton disabled={disabledPages?.includes(location.pathname) || userType === "seller"} onClick={handleCartDrawerToggle}>
             <ShoppingCartIcon />
           </IconButton>
         ) : (
-          <CartButton disabled={disabledPages?.includes(location.pathname)} startIcon={<ShoppingCartIcon />} variant="contained" color="primary" disableElevation={true} onClick={handleCartDrawerToggle}>
-            {!total ? buttonLabel : <CountUp start={total - total / 4} end={total} duration={0.5} formattingFn={(value) => `P ${numWithCommas(value)}`} />}
+          <CartButton disabled={disabledPages?.includes(location.pathname)} startIcon={userType === "seller" ? <InputIcon /> : <ShoppingCartIcon />} variant="contained" color="primary" disableElevation={true} onClick={handleCartButtonAction}>
+            {userType === "seller" ? "Logout" : !total ? buttonLabel : <CountUp start={total - total / 4} end={total} duration={0.5} formattingFn={(value) => `P ${numWithCommas(value)}`} />}
           </CartButton>
         )}
       </div>
