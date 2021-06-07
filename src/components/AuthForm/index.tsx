@@ -161,7 +161,7 @@ function AuthForm() {
               </Button>
             </div>
           </TabPanel>
-
+ 
           <TabPanel value={tabView} index={1}>
             <TextField onChange={handleRegInfoChange} name="name" fullWidth color="secondary" required type="text" id="form-name" label="Name" variant="outlined" margin="dense" />
             <TextField onChange={handleRegInfoChange} name="email" fullWidth color="secondary" required type="email" id="form-email" label="Email" variant="outlined" margin="dense" />

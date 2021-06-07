@@ -11,6 +11,8 @@ import Alert from "@material-ui/lab/Alert";
 import Button from "@material-ui/core/Button";
 import IconButton from "@material-ui/core/IconButton";
 import TextField from "@material-ui/core/TextField";
+import Backdrop from "@material-ui/core/Backdrop";
+import CircularProgress from "@material-ui/core/CircularProgress";
 import TextareaAutosize from "@material-ui/core/TextareaAutosize";
 import Input from "@material-ui/core/Input";
 import InputLabel from "@material-ui/core/InputLabel";
@@ -25,6 +27,7 @@ import PostAddIcon from "@material-ui/icons/PostAdd";
 import PublishIcon from "@material-ui/icons/Publish";
 import AddBoxIcon from "@material-ui/icons/AddBox";
 import { unwrapResult } from "@reduxjs/toolkit";
+import { Typography } from "@material-ui/core";
 
 export interface AddProductInfo {
   product_name: string;
@@ -37,7 +40,7 @@ export interface AddProductInfo {
 
 function AddProduct() {
   const { userDetails, userType } = useAppSelector((state) => state.auth);
-  const { availableCategories, error } = useAppSelector((state) => state.shop);
+  const { availableCategories, error, isLoading } = useAppSelector((state) => state.shop);
 
   const dispatch = useAppDispatch();
 
@@ -213,6 +216,11 @@ function AddProduct() {
       </form>
 
       <NewCategoryDialog isCategoryDialogOpen={isCategoryDialogOpen} closeNewCategoryDialog={closeNewCategoryDialog} />
+
+      <Backdrop open={isLoading} style={{ zIndex: 99 }}>
+        <CircularProgress color="primary" />
+        <Typography className={styles.loading} color="primary">Adding new product. Please wait...</Typography>
+      </Backdrop>
 
       <Dialog open={isNewProductDialogOpen} onClose={() => setIsNewProductDialogOpen(false)}>
         <div className={styles.product_card}>
