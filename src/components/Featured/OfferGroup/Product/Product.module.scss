@@ -23,14 +23,27 @@
 
   &_image {
     display: flex;
-    min-height: 7em;
-
+    height: 15em;
+    
     img {
       object-fit: contain;
     }
+    
+    @media (max-width: $sm) {
+      height: 5em;
+    }
+  }
 
-    @media (min-width: $sm) {
-      min-height: 15em;
+  .main_product_img {
+    display: flex;
+    height: 30em;
+    
+    img {
+      object-fit: contain;
+    }
+    
+    @media (max-width: $sm) {
+      height: 20em;
     }
   }
 }
@@ -39,4 +52,8 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+
+  .main_button {
+    margin-top: 0.5em;
+  }
 }

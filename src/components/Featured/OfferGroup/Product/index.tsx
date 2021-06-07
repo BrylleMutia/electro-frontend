@@ -19,11 +19,12 @@ import Skeleton from "@material-ui/lab/Skeleton";
 interface Props {
   productDetails: ProductInterface;
   index: number;
-  showcaseFirstItem?: boolean;
   isLoading: boolean;
+  showcaseFirstItem?: boolean;
+  mainProduct?: boolean;
 }
 
-const Product: React.FC<Props> = ({ productDetails, index, isLoading, showcaseFirstItem = false }) => {
+const Product: React.FC<Props> = ({ productDetails, index, isLoading, showcaseFirstItem = false, mainProduct = false }) => {
   const { id, product_name, product_image, price } = productDetails;
   const dispatch = useAppDispatch();
 
@@ -48,7 +49,7 @@ const Product: React.FC<Props> = ({ productDetails, index, isLoading, showcaseFi
         </div>
 
         <Overlay label="See details">
-          <div className={styles.product_image}>
+          <div className={mainProduct ? styles.main_product_img : styles.product_image}>
             {isLoading ? (
               <Skeleton>
                 <img key={index} src={product_image} alt={product_name} />
@@ -65,7 +66,7 @@ const Product: React.FC<Props> = ({ productDetails, index, isLoading, showcaseFi
           {isLoading ? <Skeleton width="100%" /> : `P ${numWithCommas(price)}`}
         </Typography>
         {index == 0 && showcaseFirstItem ? (
-          <Button onClick={handleAddItemToCart} color="primary" variant="contained" disableElevation size="small">
+          <Button onClick={handleAddItemToCart} className={styles.main_button} color="primary" variant="contained" disableElevation size="small">
             Add to Cart
           </Button>
         ) : (

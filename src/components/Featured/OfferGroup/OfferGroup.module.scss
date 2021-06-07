@@ -8,17 +8,11 @@
   grid-template-rows: repeat(3, 1fr);
   justify-content: center;
   gap: 1em;
-  // align-items: flex-end;
-  // grid-gap: 1em;
 
   .first {
     grid-column: 1 / 4;
     grid-row: 1 / 3;
     align-self: center;
-
-    img {
-      object-fit: cover;
-    }
   }
 
   .other {
