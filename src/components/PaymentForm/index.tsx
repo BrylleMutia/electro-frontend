@@ -8,7 +8,9 @@ import { useHistory } from "react-router-dom";
 
 import Button from "@material-ui/core/Button";
 import Alert from "@material-ui/lab/Alert";
-
+import Typography from "@material-ui/core/Typography";
+import Backdrop from "@material-ui/core/Backdrop";
+import CircularProgress from "@material-ui/core/CircularProgress";
 export interface PurchaseDetails extends UserDetails {
   payment_method_id: string;
   amount: number;
@@ -22,7 +24,7 @@ function PaymentForm() {
   const history = useHistory();
 
   const { userDetails } = useAppSelector((state) => state.auth);
-  const { total, cartItems, isLoading, orderDetails } = useAppSelector((state) => state.cart);
+  const { total, cartItems, isLoading } = useAppSelector((state) => state.cart);
 
   const [isPaymentLoading, setPaymentLoading] = useState(false);
 
@@ -115,6 +117,11 @@ function PaymentForm() {
           {isPaymentLoading || isLoading ? "Processing..." : "Pay"}
         </Button>
       </form>
+
+      <Backdrop open={isPaymentLoading || isLoading} style={{ zIndex: 99 }}>
+        <CircularProgress color="primary" />
+        <Typography variant="h6" className={styles.loading} color="primary">Processing payment...</Typography>
+      </Backdrop>
     </div>
   );
 }

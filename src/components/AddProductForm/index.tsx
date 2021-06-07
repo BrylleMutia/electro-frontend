@@ -219,7 +219,7 @@ function AddProduct() {
 
       <Backdrop open={isLoading} style={{ zIndex: 99 }}>
         <CircularProgress color="primary" />
-        <Typography className={styles.loading} color="primary">Adding new product. Please wait...</Typography>
+        <Typography variant="h6" className={styles.loading} color="primary">Adding new product. Please wait...</Typography>
       </Backdrop>
 
       <Dialog open={isNewProductDialogOpen} onClose={() => setIsNewProductDialogOpen(false)}>
