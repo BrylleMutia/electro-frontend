@@ -156,7 +156,7 @@ function AuthForm() {
               <Typography component="a" href="#" color="secondary">
                 Forgot password?
               </Typography>
-              <Button type="submit" variant="contained" color="secondary">
+              <Button type="submit" variant="contained" color="primary">
                 Login
               </Button>
             </div>
@@ -174,7 +174,7 @@ function AuthForm() {
             <TextField onChange={handleRegInfoChange} name="province" fullWidth color="secondary" required type="text" id="form-province" label="Province" variant="outlined" margin="dense" />
             <TextField onChange={handleRegInfoChange} name="zip_code" fullWidth color="secondary" required type="text" id="form-zip_code" label="Zip Code" variant="outlined" margin="dense" />
 
-            <Button type="submit" variant="contained" color="secondary" className={styles.button}>
+            <Button type="submit" variant="contained" color="primary" className={styles.button}>
               Register
             </Button>
           </TabPanel>
