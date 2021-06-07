@@ -5,6 +5,12 @@
 .product {
   &_image {
     width: 40%;
+    height: 20em;
+
+    img {
+      object-fit: contain;
+      height: 100%;
+    }
   }
 
   &_container {
