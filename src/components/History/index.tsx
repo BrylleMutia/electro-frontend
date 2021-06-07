@@ -12,7 +12,7 @@ const History: React.FC<Props> = ({ historyDetails }) => {
   return (
     <div>
       <h4 className={styles.mb_sm}>Recent purchases:</h4>
-      {!historyDetails ? <h5>No recent purchases.</h5> : historyDetails.map((order, index) => <OrderDetails key={index} details={order} />)}
+      {!historyDetails.length ? <h3>None</h3> : historyDetails.map((order, index) => <OrderDetails key={index} details={order} />)}
     </div>
   );
 };
