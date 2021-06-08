@@ -3,7 +3,7 @@ import axios from "axios";
 import type { RootState } from "../store";
 import type { RegisterDetails, LoginDetails } from "../../components/AuthForm";
 import { AuthState, AuthResponse, ErrorResponse, UserType, UserDetails, HeadersConfig } from "./types";
-import type { OrderInterface } from "../cart/types";
+import type { OrderWithProductsInterface } from "../cart/types";
 
 // Define the initial state using that type
 const initialState: AuthState = {
@@ -105,7 +105,7 @@ export const logout = createAsyncThunk<{ message: string }, UserType, { rejectVa
     );
 });
 
-export const getOrderHistory = createAsyncThunk<OrderInterface[], number, { rejectValue: ErrorResponse }>("auth/getOrderHistory", async (limit, thunkAPI) => {
+export const getOrderHistory = createAsyncThunk<OrderWithProductsInterface[], number, { rejectValue: ErrorResponse }>("auth/getOrderHistory", async (limit, thunkAPI) => {
   return axios
     .get(`/buyer/orders?limit=${limit}`, tokenConfig())
     .then((response) => response.data)
@@ -155,7 +155,7 @@ export const authSlice = createSlice({
       localStorage.removeItem("token");
     });
 
-    builder.addCase(getOrderHistory.fulfilled, (state, action: PayloadAction<OrderInterface[]>) => {
+    builder.addCase(getOrderHistory.fulfilled, (state, action: PayloadAction<OrderWithProductsInterface[]>) => {
       state.isLoading = false;
       state.orderHistory = action.payload;
     });

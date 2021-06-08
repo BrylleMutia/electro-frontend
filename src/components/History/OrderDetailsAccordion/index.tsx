@@ -1,6 +1,6 @@
 import React from "react";
 import styles from "./OrderDetails.module.scss";
-import type { OrderInterface } from "../../../redux/cart/types";
+import type { OrderWithProductsInterface } from "../../../redux/cart/types";
 
 import { Theme, createStyles, makeStyles } from "@material-ui/core/styles";
 import Accordion from "@material-ui/core/Accordion";
@@ -11,7 +11,7 @@ import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import SummaryTable from "../../SummaryTable";
 
 interface Props {
-  details: OrderInterface;
+  details: OrderWithProductsInterface;
 }
 
 const OrderDetails: React.FC<Props> = ({ details }) => {

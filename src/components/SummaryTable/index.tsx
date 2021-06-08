@@ -10,10 +10,10 @@ import TableContainer from "@material-ui/core/TableContainer";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Hidden from "@material-ui/core/Hidden";
-import { OrderInterface } from "../../redux/cart/types";
+import { OrderWithProductsInterface } from "../../redux/cart/types";
 
 interface Props {
-  orderDetails: OrderInterface | null;
+  orderDetails: OrderWithProductsInterface | null;
   hideHeading?: boolean;
 }
 

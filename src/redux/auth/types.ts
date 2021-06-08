@@ -1,4 +1,4 @@
-import { OrderInterface } from "../cart/types";
+import { OrderWithProductsInterface } from "../cart/types";
 
 export interface AuthState {
   token: string | null;
@@ -6,7 +6,7 @@ export interface AuthState {
   isLoading: boolean;
   userType: UserType | null;
   userDetails: UserDetails | null;
-  orderHistory: OrderInterface[];
+  orderHistory: OrderWithProductsInterface[];
   error: ErrorResponse;
 }
 

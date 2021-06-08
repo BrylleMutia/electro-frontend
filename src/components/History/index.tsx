@@ -1,11 +1,11 @@
 import React, { useEffect } from "react";
 import styles from "./History.module.scss";
-import type { OrderInterface } from "../../redux/cart/types";
+import type { OrderWithProductsInterface } from "../../redux/cart/types";
 
 import OrderDetails from "./OrderDetailsAccordion";
 
 interface Props {
-  historyDetails: OrderInterface[];
+  historyDetails: OrderWithProductsInterface[];
 }
 
 const History: React.FC<Props> = ({ historyDetails }) => {

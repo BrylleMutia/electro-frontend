@@ -2,12 +2,12 @@ import { createSlice, PayloadAction, createAsyncThunk, isAnyOf } from "@reduxjs/
 import axios from "axios";
 import { CartItemInterface } from "redux/cart/types";
 import type { RootState } from "../store";
-import type { CartState, OrderInterface } from "./types";
+import type { CartState, OrderWithProductsInterface } from "./types";
 import type { PurchaseDetails } from "../../components/PaymentForm";
 import { tokenConfig } from "../auth/authSlice";
 import type { ErrorResponse } from "../auth/types";
 
-export const confirmPurchase = createAsyncThunk<OrderInterface, PurchaseDetails, { rejectValue: ErrorResponse }>("shop/purchase", async (purchaseDetails, thunkAPI) => {
+export const confirmPurchase = createAsyncThunk<OrderWithProductsInterface, PurchaseDetails, { rejectValue: ErrorResponse }>("shop/purchase", async (purchaseDetails, thunkAPI) => {
   return axios
     .post("/purchase", JSON.stringify(purchaseDetails), tokenConfig())
     .then((response) => response.data)
@@ -101,7 +101,7 @@ export const cartSlice = createSlice({
       state.isLoading = true;
     });
 
-    builder.addCase(confirmPurchase.fulfilled, (state, action: PayloadAction<OrderInterface>) => {
+    builder.addCase(confirmPurchase.fulfilled, (state, action: PayloadAction<OrderWithProductsInterface>) => {
       state.orderDetails = action.payload;
       state.isLoading = false;
       state.error = {

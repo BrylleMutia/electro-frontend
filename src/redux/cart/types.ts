@@ -5,7 +5,7 @@ export interface CartState {
   isCartOpen: boolean;
   cartItems: CartItemInterface[];
   total: number;
-  orderDetails: OrderInterface | null;
+  orderDetails: OrderWithProductsInterface | null;
   isLoading: boolean;
   error: ErrorResponse;
 }
@@ -17,7 +17,9 @@ export interface OrderInterface {
   user_id: number;
   transaction_id: string;
   total: number;
-  products: OrderProductsInterface[];
+}
+export interface OrderWithProductsInterface extends OrderInterface {
+  products: OrderProductsPivotInterface[];
 }
 
 export interface MinDetailsProduct {
@@ -33,7 +35,7 @@ export interface MinDetailsProduct {
   offer_id: number;
 }
 
-export interface OrderProductsInterface extends MinDetailsProduct {
+export interface OrderProductsPivotInterface extends MinDetailsProduct {
   pivot: {
     order_id: number;
     product_id: number;
