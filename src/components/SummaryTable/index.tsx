@@ -1,6 +1,5 @@
 import React from "react";
 import styles from "./SummaryTable.module.scss";
-import { useAppSelector } from "../../redux/hooks";
 import { numWithCommas } from "../../utils/filters";
 
 import Table from "@material-ui/core/Table";

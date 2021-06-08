@@ -39,7 +39,7 @@ function ReviewsTab() {
       let ratingStats = { occurence: 0, percentage: 0 };
 
       reviews?.forEach((review) => {
-        if (review.rating == i) ratingStats.occurence++;
+        if (review.rating === i) ratingStats.occurence++;
       });
 
       ratingStats.percentage = getPercentage(ratingStats.occurence);
@@ -70,7 +70,7 @@ function ReviewsTab() {
 
   useEffect(() => {
     getRatingStats();
-  }, []);
+  }, [getRatingStats]);
 
   useEffect(() => {
     if (reviews?.length) {
@@ -87,7 +87,7 @@ function ReviewsTab() {
 
       setPaginatedReviews(groupedReviews);
     }
-  }, []);
+  }, [reviews]);
 
   if (!reviews?.length)
     return (

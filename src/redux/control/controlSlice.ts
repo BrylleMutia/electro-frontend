@@ -1,9 +1,6 @@
-import { createSlice, PayloadAction, createAsyncThunk, isAnyOf } from "@reduxjs/toolkit";
-import axios from "axios";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import type { RootState } from "../store";
 import type { ControlState, AlertInterface } from "./types";
-import type { ErrorResponse, UserDetails } from "../auth/types";
-import { login } from "../auth/authSlice";
 
 const initialState: ControlState = {
   alert: {

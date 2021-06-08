@@ -1,5 +1,4 @@
 import React from "react";
-import styles from "TabPanel.module.scss";
 import { Box } from "@material-ui/core";
 
 interface TabPanelProps {

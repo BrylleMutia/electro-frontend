@@ -1,7 +1,6 @@
 import React from "react";
 import styles from "./CallToAction.module.scss";
 import EmailIcon from "@material-ui/icons/Email";
-import cx from "classnames";
 
 function CallToAction() {
   return (

@@ -8,8 +8,6 @@ import { Link } from "react-router-dom";
 import { closeCartDrawer } from "../../../../redux/cart/cartSlice";
 
 import ListItem from "@material-ui/core/ListItem";
-import ListItemIcon from "@material-ui/core/ListItemIcon";
-import ListItemText from "@material-ui/core/ListItem";
 import QtyInput from "./QtyInput";
 import IconButton from "@material-ui/core/IconButton";
 import DeleteIcon from "@material-ui/icons/RemoveCircleOutline";

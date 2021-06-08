@@ -7,7 +7,6 @@ import { Link } from "react-router-dom";
 import { ItemsList } from "../Cart";
 import CheckoutDetails from "./CheckoutDetails";
 import Button from "@material-ui/core/Button";
-import CheckCircleOutlineIcon from '@material-ui/icons/CheckCircleOutline';
 import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 
 function CartPreview() {

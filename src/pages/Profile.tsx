@@ -21,7 +21,7 @@ export default function Profile() {
 
   useEffect(() => {
     dispatch(getOrderHistory(0));
-  }, []);
+  }, [dispatch]);
 
   if (!userDetails)
     return (

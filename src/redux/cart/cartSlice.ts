@@ -1,4 +1,4 @@
-import { createSlice, PayloadAction, createAsyncThunk, isAnyOf } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import { CartItemInterface } from "redux/cart/types";
 import type { RootState } from "../store";

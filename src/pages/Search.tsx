@@ -1,6 +1,5 @@
 import React from "react";
 import styles from "./Pages.module.scss";
-import { Link } from "react-router-dom";
 import { useAppSelector } from "../redux/hooks";
 
 import { Category } from "../components/Categories";
@@ -13,7 +12,6 @@ import HomeLink from "../components/HomeLink";
 
 function Search() {
   const { isLoading, searchResults } = useAppSelector((state) => state.shop);
-  const { userType } = useAppSelector((state) => state.auth);
 
   return (
     <div className={styles.container}>

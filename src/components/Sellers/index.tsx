@@ -32,7 +32,7 @@ export default function Sellers() {
         scrollButtons="auto"
         aria-label="scrollable auto tabs example">
         {sellers?.map((seller, index) => (
-          <Tab key={index} icon={<img src={seller.image} style={{ width: "80px" }} />} />
+          <Tab key={index} icon={<img src={seller.image} alt={seller.name} style={{ width: "80px" }} />} />
         ))}
       </Tabs>
     </section>

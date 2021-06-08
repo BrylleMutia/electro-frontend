@@ -4,7 +4,7 @@ import { searchProducts } from "../../../redux/shop/shopSlice";
 import { useAppDispatch } from "../../../redux/hooks";
 import { useHistory } from "react-router-dom";
 
-import { TextField, IconButton } from "@material-ui/core";
+import IconButton from "@material-ui/core/IconButton";
 import SearchIcon from "@material-ui/icons/Search";
 
 interface Props {

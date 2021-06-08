@@ -12,7 +12,7 @@ const HomeLink: React.FC<Props> = ({ props, children }) => {
   const { userType } = useAppSelector((state) => state.auth);
 
   return (
-    <Link to={userType == "seller" ? SellerHome : BuyerHome}>
+    <Link to={userType === "seller" ? SellerHome : BuyerHome}>
       {children}
     </Link>
   );

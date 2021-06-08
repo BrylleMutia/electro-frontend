@@ -1,8 +1,6 @@
 import React from "react";
-import styles from "./OrderDetails.module.scss";
 import type { OrderWithProductsInterface } from "../../../redux/cart/types";
 
-import { Theme, createStyles, makeStyles } from "@material-ui/core/styles";
 import Accordion from "@material-ui/core/Accordion";
 import AccordionSummary from "@material-ui/core/AccordionSummary";
 import AccordionDetails from "@material-ui/core/AccordionDetails";

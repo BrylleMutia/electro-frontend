@@ -5,7 +5,6 @@ import type { ShopState, ProductInterface, GroupedProductsInterface, ProductDeta
 import type { ErrorResponse, UserDetails } from "../auth/types";
 import type { ReviewInfo } from "../../components/ProductTabs";
 import { tokenConfig } from "../auth/authSlice";
-import type { AddProductInfo } from "../../components/AddProductForm";
 
 const MAX_PRODUCTS_PER_OFFER = 7;
 

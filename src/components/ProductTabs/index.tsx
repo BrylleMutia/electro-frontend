@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import styles from "./ProductTabs.module.scss";
-import { withStyles } from "@material-ui/core/styles";
 import { useAppSelector } from "../../redux/hooks";
 import type { ReviewInfo } from "./ReviewsTab/ReviewForm";
 

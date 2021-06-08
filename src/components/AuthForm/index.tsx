@@ -10,7 +10,6 @@ import { TextField, Tabs, Tab, Checkbox, FormControlLabel, Radio, RadioGroup, Bu
 import Alert from "@material-ui/lab/Alert";
 import { useAppSelector, useAppDispatch } from "../../redux/hooks";
 import { register, login, clearErrors } from "../../redux/auth/authSlice";
-import { Redirect } from "react-router";
 import { UserType } from "../../redux/auth/types";
 import { useHistory } from "react-router-dom";
 import { showNotif } from "redux/control/controlSlice";

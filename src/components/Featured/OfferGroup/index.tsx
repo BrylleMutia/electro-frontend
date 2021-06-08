@@ -13,7 +13,7 @@ const OfferGroup: React.FC<Props> = ({ offerProducts, isLoading }) => {
   return (
     <div className={styles.offer_grid}>
       {offerProducts.map((offerProduct, index) => (
-        <div className={cx(index == 0 ? styles.first : styles.other)} key={index}>
+        <div className={cx(index === 0 ? styles.first : styles.other)} key={index}>
           <Product mainProduct={index === 0 ? true : false} isLoading={isLoading} productDetails={offerProduct} showcaseFirstItem={true} index={index} />
         </div>
       ))}

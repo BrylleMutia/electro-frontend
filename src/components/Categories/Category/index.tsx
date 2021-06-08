@@ -4,7 +4,6 @@ import type { ProductInterface } from "../../../redux/shop/types";
 import { Product } from "../../Featured";
 import Pagination from "@material-ui/lab/Pagination";
 import paginate from "../../../utils/pagination";
-import cx from "classnames";
 
 interface Props {
   categoryProducts: ProductInterface[];
@@ -34,7 +33,7 @@ const Category: React.FC<Props> = ({ categoryProducts, isLoading }) => {
     }
 
     setPaginatedProducts(newProducts);
-  }, []);
+  }, [categoryProducts]);
 
   return (
     <div className={styles.category_container}>

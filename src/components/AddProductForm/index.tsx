@@ -135,7 +135,7 @@ function AddProduct() {
 
   useEffect(() => {
     dispatch(getAllCategories("_"));
-  }, []);
+  }, [dispatch]);
 
   return (
     <div className={styles.add_product}>

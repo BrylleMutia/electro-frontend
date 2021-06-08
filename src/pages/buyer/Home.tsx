@@ -13,7 +13,7 @@ export default function Home() {
 
   useEffect(() => {
     dispatch(getAllProducts(0));
-  }, []);
+  }, [dispatch]);
 
   return (
     <>

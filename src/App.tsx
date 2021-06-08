@@ -4,7 +4,7 @@ import { Switch, Route, useLocation, useHistory } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "./redux/hooks";
 import { updateCartFromLocalStorage } from "./redux/cart/cartSlice";
 import { loadDetails } from "./redux/auth/authSlice";
-import { SellerHome, BuyerHome } from "./components/HomeLink";
+import { SellerHome } from "./components/HomeLink";
 
 import ProtectedRoute from "./components/ProtectedRoute";
 import ScrollToTop from "./components/ScrollToTop";
@@ -44,14 +44,14 @@ function App(): JSX.Element {
       // if token is present in LS, fetch details
       dispatch(loadDetails(1));
     }
-  }, []);
+  }, [dispatch]);
 
   useEffect(() => {
     // restrict seller access to buyer homepage
     if (userType === "seller" && location.pathname === "/") {
       history.push(SellerHome);
     }
-  }, [location.pathname, userType]);
+  }, [location.pathname, userType, history]);
 
   useEffect(() => {
     if (!localStorage.getItem("seen_disclaimer")) {

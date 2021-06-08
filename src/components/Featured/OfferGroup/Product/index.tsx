@@ -2,7 +2,6 @@ import React from "react";
 import styles from "./Product.module.scss";
 import { AddShoppingCart } from "@material-ui/icons";
 import type { ProductInterface } from "../../../../redux/shop/types";
-import cx from "classnames";
 import { Link } from "react-router-dom";
 import { numWithCommas } from "../../../../utils/filters";
 import { useAppDispatch } from "../../../../redux/hooks";
@@ -65,7 +64,7 @@ const Product: React.FC<Props> = ({ productDetails, index, isLoading, showcaseFi
         <Typography variant="body2" style={{ opacity: 0.6 }}>
           {isLoading ? <Skeleton width="100%" /> : `P ${numWithCommas(price)}`}
         </Typography>
-        {index == 0 && showcaseFirstItem ? (
+        {index === 0 && showcaseFirstItem ? (
           <Button onClick={handleAddItemToCart} className={styles.main_button} color="primary" variant="contained" disableElevation size="small">
             Add to Cart
           </Button>

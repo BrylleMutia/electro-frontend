@@ -8,9 +8,9 @@ import { store } from "./redux/store";
 import { Provider } from "react-redux";
 import { BrowserRouter as Router } from "react-router-dom";
 
-
 // AXIOS GLOBAL DEFAULTS
-axios.defaults.baseURL = "https://electro-ecommerce.herokuapp.com/api";
+// axios.defaults.baseURL = "https://electro-ecommerce.herokuapp.com/api";
+axios.defaults.baseURL = "http://localhost:8000/api";
 axios.defaults.headers.post["Content-Type"] = "application/json";
 // axios.defaults.headers.post["Accept"] = "application/json";
 // axios.defaults.withCredentials = true;
@@ -41,7 +41,9 @@ ReactDOM.render(
   <ThemeProvider theme={theme}>
     <Provider store={store}>
       <Router>
-        <App />
+        <React.StrictMode>
+          <App />
+        </React.StrictMode>
       </Router>
     </Provider>
   </ThemeProvider>,

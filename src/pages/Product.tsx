@@ -22,7 +22,7 @@ function Product() {
 
   useEffect(() => {
     dispatch(getProductDetails(product_id));
-  }, []);
+  }, [dispatch, product_id]);
 
   if (isLoading) {
     return <CircularProgress />;

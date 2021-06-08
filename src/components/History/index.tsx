@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import styles from "./History.module.scss";
 import type { OrderWithProductsInterface } from "../../redux/cart/types";
 
