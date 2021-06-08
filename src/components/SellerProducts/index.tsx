@@ -15,7 +15,7 @@ function SellerProducts() {
   const [tabView, setTabView] = useState(0);
 
   const handleTabChange = (e: React.ChangeEvent<{}>, tabIndex: number) => {
-    setTabView(tabIndex);
+    setTabView(tabIndex); 
   };
 
   return (
