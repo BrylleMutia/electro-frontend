@@ -13,7 +13,7 @@ const initialState: DashboardState = {
 };
 
 // -------------- ASYNC ACTIONS
-export const getSellerProducts = createAsyncThunk<ProductsWithOrderInterface[], string, { rejectValue: ErrorResponse }>("dashboard/getSellerProducts", (limit, thunkAPI) => {
+export const getSellerProducts = createAsyncThunk<ProductsWithOrderInterface[], number, { rejectValue: ErrorResponse }>("dashboard/getSellerProducts", (limit, thunkAPI) => {
   return axios
     .get("/seller/products", tokenConfig())
     .then((response) => response.data)
@@ -30,22 +30,21 @@ export const dashboardSlice = createSlice({
   initialState,
   reducers: {},
   extraReducers: (builder) => {
+    builder.addCase(getSellerProducts.fulfilled, (state, action: PayloadAction<ProductsWithOrderInterface[]>) => {
+      state.sellerProducts = action.payload;
+      state.isLoading = false;
+    });
+
     builder.addMatcher(isAnyOf(getSellerProducts.pending), (state) => {
       state.isLoading = true;
-    })
+    });
 
     builder.addMatcher(isAnyOf(getSellerProducts.rejected), (state, action: PayloadAction<ErrorResponse>) => {
       state.isLoading = false;
       state.error = action.payload;
-    })
-
-    builder.addCase(getSellerProducts.fulfilled, (state, action: PayloadAction<ProductsWithOrderInterface[]>) => {
-      state.sellerProducts = action.payload;
-      state.isLoading = false;
-    })
+    });
   },
 });
-
 
 export const dashboardSelector = (state: RootState) => state.dashboard;
 export default dashboardSlice.reducer;

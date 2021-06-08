@@ -36,13 +36,14 @@ export interface MinDetailsProduct {
 }
 
 export interface OrderProductsPivotInterface extends MinDetailsProduct {
-  pivot: {
-    order_id: number;
-    product_id: number;
-    quantity: number;
-  };
+  pivot: ProductsOrderPivot;
 }
 
+export interface ProductsOrderPivot {
+  order_id: number;
+  product_id: number;
+  quantity: number;
+}
 
 export interface CartItemInterface {
   quantity: number;
