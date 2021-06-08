@@ -46,7 +46,7 @@ export default function Profile() {
           <InfoTab details={userDetails} isLoading={isLoading} hideEditButton={false} />
         </Paper>
 
-        <History historyDetails={orderHistory} />
+        {userType !== "seller" && <History historyDetails={orderHistory} />}
       </div>
     </div>
   );
