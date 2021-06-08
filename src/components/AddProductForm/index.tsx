@@ -224,7 +224,7 @@ function AddProduct() {
 
       <Dialog open={isNewProductDialogOpen} onClose={() => setIsNewProductDialogOpen(false)}>
         <div className={styles.product_card}>
-          <NewProductCard newProductDetails={newProductDetails} cardElevation={0} />
+          <NewProductCard newProductDetails={newProductDetails} cardElevation={0} newProduct={true} />
         </div>
         <DialogActions>
           <Button size="small" color="primary" onClick={() => setIsNewProductDialogOpen(false)}>
@@ -237,3 +237,4 @@ function AddProduct() {
 }
 
 export default AddProduct;
+export { NewCategoryDialog, NewProductCard };

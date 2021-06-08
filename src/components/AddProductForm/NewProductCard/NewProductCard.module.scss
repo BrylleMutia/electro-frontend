@@ -1,16 +1,23 @@
 @import "../../../styles/breakpoints";
 
+.product_card {
+  height: 35em;
+}
 
+.product_img {
+  height: 15em;
+}
 
-  .product_img {
-    height: 15em;
+.categories_container {
+  margin: 0.5em 0;
+
+  & > * {
+    margin-right: 0.5em;
+    margin-bottom: 0.3em;
   }
+}
 
-  .categories_container {
-    margin: 0.5em 0;
-
-    & > * {
-      margin-right: 0.5em;
-      margin-bottom: 0.3em;
-    }
-  }
+.description {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

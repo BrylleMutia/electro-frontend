@@ -1,6 +1,7 @@
 import React from "react";
 import styles from "./NewProductCard.module.scss";
 import type { ProductInterface } from "../../../redux/shop/types";
+import type { ProductsWithOrderInterface } from "../../../redux/dashboard/types";
 import { useAppSelector } from "../../../redux/hooks";
 import { numWithCommas } from "../../../utils/filters";
 
@@ -15,17 +16,18 @@ import Skeleton from "@material-ui/lab/Skeleton";
 import Chip from "@material-ui/core/Chip";
 
 interface Props {
-  newProductDetails: ProductInterface | null;
+  newProductDetails: ProductInterface | ProductsWithOrderInterface | null ;
   withActions?: boolean;
   cardElevation?: number;
+  newProduct?: boolean;
 }
 
-const NewProductCard: React.FC<Props> = ({ newProductDetails, withActions = false, cardElevation = 3 }) => {
+const NewProductCard: React.FC<Props> = ({ newProductDetails, withActions = false, cardElevation = 3, newProduct = false }) => {
   const { isLoading } = useAppSelector((state) => state.shop);
 
   return (
-    <Card elevation={cardElevation}>
-      <CardHeader title="New product added!" titleTypographyProps={{ variant: "subtitle1", color: "primary" }} />
+    <Card elevation={cardElevation} className={styles.product_card}>
+      <CardHeader hidden={!newProduct} title="New product added!" titleTypographyProps={{ variant: "subtitle1", color: "primary" }} />
       {isLoading ? (
         <Skeleton>
           <CardMedia className={styles.product_img} component="img" alt={newProductDetails?.product_name} src={newProductDetails?.product_image} title={newProductDetails?.product_name} />
@@ -77,7 +79,7 @@ const NewProductCard: React.FC<Props> = ({ newProductDetails, withActions = fals
             </Typography>
           </Skeleton>
         ) : (
-          <Typography variant="body2" color="textSecondary" component="p">
+          <Typography className={styles.description} variant="body2" color="textSecondary" component="p">
             {newProductDetails?.description}
           </Typography>
         )}

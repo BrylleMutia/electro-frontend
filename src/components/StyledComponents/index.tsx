@@ -4,6 +4,7 @@ import Chip from "@material-ui/core/Chip";
 import LinearProgress from "@material-ui/core/LinearProgress";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
+import Tab from "@material-ui/core/Tab";
 
 export const StyledTabs = withStyles((theme) => ({
   root: {
@@ -65,3 +66,10 @@ export const RoundedInput = withStyles((theme) => ({
     borderRadius: "100px",
   },
 }))(TextField);
+
+export const CardsTab = withStyles((theme) => ({
+  root: {
+    textAlign: "left",
+    textTransform: "none",
+  },
+}))(Tab);
