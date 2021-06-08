@@ -29,6 +29,9 @@ const initialState: ShopState = {
       {
         id: 1,
         name: "",
+        created_at: "",
+        updated_at: "",
+        slug: "",
         pivot: {
           product_id: 1,
           category_id: 1,

@@ -1,5 +1,6 @@
-import type { MinDetailsProduct, OrderInterface } from "../cart/types";
+import type { MinDetailsProduct, OrderInterface, ProductsOrderPivot } from "../cart/types";
 import type { UserDetails, ErrorResponse } from "../auth/types";
+import type { ProductCategoryInterface } from "../shop/types";
 
 export interface DashboardState {
   sellerProducts: ProductsWithOrderInterface[];
@@ -9,17 +10,12 @@ export interface DashboardState {
 
 export interface ProductsWithOrderInterface extends MinDetailsProduct {
   orders: ProductsWithOrderAndUserInterface[];
+  categories: ProductCategoryInterface[];
 }
 
 export interface ProductsWithOrderAndUserInterface extends OrderInterface {
   pivot: ProductsOrderPivot;
   user: UserWithStripeDetails;
-}
-
-export interface ProductsOrderPivot {
-  order_id: number;
-  product_id: number;
-  quantity: number;
 }
 
 export interface UserWithStripeDetails extends UserDetails {

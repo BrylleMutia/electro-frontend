@@ -46,6 +46,9 @@ export interface OfferInterface {
 export interface ProductCategoryInterface {
   id: number;
   name: string;
+  created_at: string;
+  updated_at: string;
+  slug: string;
   pivot: {
     product_id: number;
     category_id: number;
