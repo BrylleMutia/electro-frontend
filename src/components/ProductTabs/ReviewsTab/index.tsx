@@ -70,7 +70,7 @@ function ReviewsTab() {
 
   useEffect(() => {
     getRatingStats();
-  }, [getRatingStats]);
+  }, []);
 
   useEffect(() => {
     if (reviews?.length) {
