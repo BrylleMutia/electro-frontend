@@ -36,7 +36,7 @@ const Product: React.FC<Props> = ({ productDetails, index, isLoading, showcaseFi
     dispatch(addItemToCart(newItemDetails));
   };
 
-  const matches = useMediaQuery("(max-width: 768px)");
+  // const matches = useMediaQuery("(max-width: 768px)");
 
   return (
     <div className={styles.product}>
@@ -70,7 +70,7 @@ const Product: React.FC<Props> = ({ productDetails, index, isLoading, showcaseFi
           </Button>
         ) : (
           <Tooltip title="Add to cart">
-            <IconButton onClick={handleAddItemToCart} hidden={matches} size="small">
+            <IconButton onClick={handleAddItemToCart} size="small">
               <AddShoppingCart fontSize="small" />
             </IconButton>
           </Tooltip>
