@@ -24,27 +24,23 @@ function Product() {
     dispatch(getProductDetails(product_id));
   }, [dispatch, product_id]);
 
-  if (isLoading) {
-    return <CircularProgress />;
-  } else {
-    return (
-      <div>
-        <div className={styles.container}>
-          <div className={styles.product_nav}>
-            <ProductNav />
-          </div>
-          <div className={styles.mb_md}>
-            <ProductDetails />
-          </div>
+  return (
+    <div>
+      <div className={styles.container}>
+        <div className={styles.product_nav}>
+          <ProductNav />
         </div>
-        <div className={styles.product_tabs}>
-          <div className={styles.container}>
-            <ProductTabs />
-          </div>
+        <div className={styles.mb_md}>
+          <ProductDetails />
         </div>
       </div>
-    );
-  }
+      <div className={styles.product_tabs}>
+        <div className={styles.container}>
+          <ProductTabs />
+        </div>
+      </div>
+    </div>
+  );
 }
 
 export default Product;
