@@ -39,7 +39,7 @@ function SellerTopProducts() {
           <YAxis dataKey="name" type="category" />
           <Tooltip />
           <Legend />
-          <Bar dataKey="value" fill="#8884d8" />
+          <Bar dataKey="value" fill="#F9D709" />
         </BarChart>
       </ResponsiveContainer>
     </div>
