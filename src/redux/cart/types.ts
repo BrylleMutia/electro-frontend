@@ -17,6 +17,8 @@ export interface OrderInterface {
   user_id: number;
   transaction_id: string;
   total: number;
+  status_id: number;
+  status: StatusInterface;
 }
 export interface OrderWithProductsInterface extends OrderInterface {
   products: OrderProductsPivotInterface[];
@@ -49,3 +51,12 @@ export interface CartItemInterface {
   quantity: number;
   product: ProductInterface;
 }
+
+export interface StatusInterface {
+  id: number;
+  created_at: string;
+  updated_at: string;
+  name: StatusType;
+}
+
+export type StatusType = 'pending' | 'shipped' | 'delivered';

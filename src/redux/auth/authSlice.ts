@@ -20,6 +20,13 @@ const initialState: AuthState = {
       user_id: 1,
       transaction_id: "",
       total: 1,
+      status_id: 1,
+      status: {
+        name: "pending",
+        id: 1,
+        created_at: "",
+        updated_at: ""
+      },
       products: [
         {
           id: 1,
