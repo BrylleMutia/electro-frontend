@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import styles from "./Seller.module.scss";
 import { useAppDispatch } from "../../redux/hooks";
-import { getSellerProducts } from "../../redux/dashboard/dashboardSlice";
+import { getSellerProducts, getProductOrders } from "../../redux/dashboard/dashboardSlice";
 
 import SellerProducts from "../../components/SellerProducts";
 import SellerTopProducts from "../../components/SellerTopProducts";
@@ -13,6 +13,7 @@ function Dashboard() {
 
   useEffect(() => {
     dispatch(getSellerProducts(0));
+    dispatch(getProductOrders(0));
   });
 
   return (

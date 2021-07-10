@@ -2,8 +2,11 @@ import React from "react";
 import styles from "./OrdersTable.module.scss";
 import { useAppSelector, useAppDispatch } from "../../redux/hooks";
 import type { StatusType } from "../../redux/cart/types";
+import type { OrderWithUserProductsAndStatusInterface } from "../../redux/dashboard/types";
+import { updateOrderStatus } from "../../redux/dashboard/dashboardSlice";
 
 import { createStyles, lighten, makeStyles, Theme } from "@material-ui/core/styles";
+import Alert from "@material-ui/lab/Alert";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
@@ -32,50 +35,71 @@ interface Props {
 }
 
 const OrdersTable: React.FC<Props> = ({ contentStatus }) => {
-  const { sellerProducts } = useAppSelector((state) => state.dashboard);
+  const { productOrders } = useAppSelector((state) => state.dashboard);
+  const dispatch = useAppDispatch();
+
+  const handleUpdateOrderStatus = (orderDetails: OrderWithUserProductsAndStatusInterface) => {
+    dispatch(updateOrderStatus({ id: orderDetails.id, status_id: orderDetails.status_id === 1 ? 2 : 1 }));
+  };
+
+  // ?if no order exists for current content, display nothing
+  if (Array.isArray(contentStatus)) {
+    let foundOrders = [];
+    contentStatus.forEach((status) => {
+      productOrders.forEach((order) => {
+        if (order.status.name === status) foundOrders.push(order);
+      });
+    });
+    if (foundOrders.length === 0) return <Alert severity="info">No records to show.</Alert>;
+  } else {
+    let foundOrders = productOrders.filter((order) => order.status.name === contentStatus);
+    if (foundOrders.length === 0) return <Alert severity="info">No records to show.</Alert>;
+  }
 
   return (
     <TableContainer>
       <Table className={styles.table} aria-label="simple table">
-        <TableHead>
-          <TableRow>
-            <TableCell></TableCell>
-            <TableCell>Status</TableCell>
-            <TableCell>Product</TableCell>
-            <TableCell>Quantity</TableCell>
-            <TableCell>Amount</TableCell>
-            <TableCell>Buyer</TableCell>
-          </TableRow>
-        </TableHead>
-
         <TableBody>
-          {sellerProducts.map((productDetails, index) => {
-            if (!productDetails.orders.length) return;
+          {productOrders.map((productOrder, index) => {
+            // this component may have string or array as contentStatus prop
+            // return nothing if contentStatus doesnt match or is not in given array
+            if (Array.isArray(contentStatus)) {
+              if (!contentStatus.includes(productOrder.status.name)) return;
+            } else {
+              if (productOrder.status.name !== contentStatus) return;
+            }
 
-            return productDetails.orders.map((productOrders, index) => {
-              // this component may have string or array as contentStatus prop
-              // return nothing if contentStatus doesnt match or is not in given array
-              if (Array.isArray(contentStatus)) {
-                if (!contentStatus.includes(productOrders.status.name)) return;
-              } else {
-                if (productOrders.status.name !== contentStatus) return;
-              }
+            return (
+              <TableRow key={index}>
+                <TableCell>
+                  <Checkbox checked={productOrder.status_id !== 1} onChange={() => handleUpdateOrderStatus(productOrder)} />
+                </TableCell>
+                <TableCell>
+                  <Chip color={productOrder.status_id !== 1 ? "primary" : "secondary"} icon={productOrder.status_id !== 1 ? <DoneIcon /> : <HighlightOffIcon />} label={capitalize(productOrder.status.name)} />
+                </TableCell>
 
-              return (
-                <TableRow key={index}>
-                  <TableCell>
-                    <Checkbox checked={productOrders.status_id !== 1} />
-                  </TableCell>
-                  <TableCell>
-                    <Chip color={productOrders.status_id !== 1 ? "primary" : "secondary"} icon={productOrders.status_id !== 1 ? <DoneIcon /> : <HighlightOffIcon />} label={capitalize(productOrders.status.name)} />
-                  </TableCell>
-                  <TableCell>{productDetails.product_name}</TableCell>
-                  <TableCell>{productOrders.pivot.quantity}</TableCell>
-                  <TableCell>P {numWithCommas(Number(productDetails.price) * productOrders.pivot.quantity)}</TableCell>
-                  <TableCell>{productOrders.user.name}</TableCell>
-                </TableRow>
-              );
-            });
+                <Table>
+                  <TableHead>
+                    <TableRow>
+                      <TableCell>Product</TableCell>
+                      <TableCell>Quantity</TableCell>
+                      <TableCell>Amount</TableCell>
+                      <TableCell>Buyer</TableCell>
+                    </TableRow>
+                  </TableHead>
+                  <TableBody>
+                    {productOrder.products.map((product, index) => (
+                      <TableRow key={index}>
+                        <TableCell>{product.product_name}</TableCell>
+                        <TableCell>{product.pivot.quantity}</TableCell>
+                        <TableCell>P {numWithCommas(Number(product.price) * product.pivot.quantity)}</TableCell>
+                        <TableCell>{productOrder.user.name}</TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              </TableRow>
+            );
           })}
         </TableBody>
       </Table>
