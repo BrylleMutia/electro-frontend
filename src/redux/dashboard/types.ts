@@ -1,21 +1,31 @@
-import type { MinDetailsProduct, OrderInterface, ProductsOrderPivot } from "../cart/types";
+import type { MinDetailsProduct, OrderInterface, ProductsOrderPivot, StatusInterface, OrderWithProductsInterface } from "../cart/types";
 import type { UserDetails, ErrorResponse } from "../auth/types";
 import type { ProductCategoryInterface } from "../shop/types";
 
 export interface DashboardState {
   sellerProducts: ProductsWithOrderInterface[];
+  productOrders: OrderWithUserProductsAndStatusInterface[],
   isLoading: boolean;
   error: ErrorResponse;
 }
 
 export interface ProductsWithOrderInterface extends MinDetailsProduct {
-  orders: ProductsWithOrderAndUserInterface[];
+  orders: OrderWithUserAndStatusPivot[];
   categories: ProductCategoryInterface[];
 }
 
-export interface ProductsWithOrderAndUserInterface extends OrderInterface {
-  pivot: ProductsOrderPivot;
+export interface OrderWithUserAndStatusPivot extends OrderInterface {
   user: UserWithStripeDetails;
+  pivot: ProductsOrderPivot;
+}
+export interface OrderWithUserProductsAndStatusInterface extends OrderWithProductsInterface {
+  user: UserWithStripeDetails;
+  pivot: SellerOrdersPivot;
+}
+
+export interface SellerOrdersPivot {
+  seller_id: number;
+  order_id: number;
 }
 
 export interface UserWithStripeDetails extends UserDetails {
