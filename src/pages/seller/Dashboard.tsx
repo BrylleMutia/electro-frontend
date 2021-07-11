@@ -1,8 +1,9 @@
 import React, { useEffect } from "react";
 import styles from "./Seller.module.scss";
-import { useAppDispatch } from "../../redux/hooks";
+import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { getSellerProducts, getProductOrders } from "../../redux/dashboard/dashboardSlice";
 
+import LoadingBackdrop from "../../components/LoadingBackdrop";
 import SellerProducts from "../../components/SellerProducts";
 import SellerTopProducts from "../../components/SellerTopProducts";
 import OrdersTable from "../../components/OrdersTable";
@@ -10,6 +11,8 @@ import Typography from "@material-ui/core/Typography";
 
 function Dashboard() {
   const dispatch = useAppDispatch();
+  const { isLoading } = useAppSelector((state) => state.dashboard);
+
 
   useEffect(() => {
     dispatch(getSellerProducts(0));
@@ -39,6 +42,8 @@ function Dashboard() {
         </div>
         <OrdersTable contentStatus={["shipped", "delivered"]} />
       </div>
+
+      <LoadingBackdrop isLoading={isLoading} loadingText="Loading ..." />
     </main>
   );
 }
