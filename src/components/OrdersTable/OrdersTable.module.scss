@@ -1,0 +1,9 @@
+@import "../../styles/variables";
+@import "../../styles/breakpoints";
+
+
+.details_mobile {
+  @media (min-width: $md) {
+    display: none;
+  }
+}

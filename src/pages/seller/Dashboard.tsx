@@ -31,7 +31,7 @@ function Dashboard() {
         <div className={styles.my_sm}>
           <Typography>Pending Orders</Typography>
         </div>
-        <OrdersTable contentStatus="pending" />
+        <OrdersTable contentStatus="pending" color="secondary" />
       </div>
       <div className={styles.my_xl}>
         <div className={styles.my_sm}>

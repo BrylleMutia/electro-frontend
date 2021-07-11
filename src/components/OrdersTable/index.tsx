@@ -5,7 +5,7 @@ import type { StatusType } from "../../redux/cart/types";
 import type { OrderWithUserProductsAndStatusInterface } from "../../redux/dashboard/types";
 import { updateOrderStatus } from "../../redux/dashboard/dashboardSlice";
 
-import { createStyles, lighten, makeStyles, Theme } from "@material-ui/core/styles";
+import { withStyles } from "@material-ui/core/styles";
 import Alert from "@material-ui/lab/Alert";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
@@ -14,27 +14,25 @@ import TableContainer from "@material-ui/core/TableContainer";
 import TableHead from "@material-ui/core/TableHead";
 import TablePagination from "@material-ui/core/TablePagination";
 import TableRow from "@material-ui/core/TableRow";
-import TableSortLabel from "@material-ui/core/TableSortLabel";
-import Toolbar from "@material-ui/core/Toolbar";
-import Typography from "@material-ui/core/Typography";
-import Paper from "@material-ui/core/Paper";
 import Checkbox from "@material-ui/core/Checkbox";
-import IconButton from "@material-ui/core/IconButton";
-import Tooltip from "@material-ui/core/Tooltip";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Chip from "@material-ui/core/Chip";
-import Switch from "@material-ui/core/Switch";
-import DeleteIcon from "@material-ui/icons/Delete";
-import FilterListIcon from "@material-ui/icons/FilterList";
+import Hidden from "@material-ui/core/Hidden";
 import DoneIcon from "@material-ui/icons/Done";
 import HighlightOffIcon from "@material-ui/icons/HighlightOff";
 import { numWithCommas, capitalize } from "../../utils/filters";
 
 interface Props {
   contentStatus: StatusType | StatusType[];
+  color?: "primary" | "secondary";
 }
 
-const OrdersTable: React.FC<Props> = ({ contentStatus }) => {
+const OrdersTable: React.FC<Props> = ({ contentStatus, color = "primary" }) => {
+  const StyledOrderTable = withStyles((theme) => ({
+    root: {
+      borderLeft: `5px solid ${theme.palette[color].main}`,
+    },
+  }))(Table);
+
   const { productOrders } = useAppSelector((state) => state.dashboard);
   const dispatch = useAppDispatch();
 
@@ -42,7 +40,7 @@ const OrdersTable: React.FC<Props> = ({ contentStatus }) => {
     dispatch(updateOrderStatus({ id: orderDetails.id, status_id: orderDetails.status_id === 1 ? 2 : 1 }));
   };
 
-  // ?if no order exists for current content, display nothing
+  // *if no order exists for current content, display nothing
   if (Array.isArray(contentStatus)) {
     let foundOrders = [];
     contentStatus.forEach((status) => {
@@ -58,7 +56,7 @@ const OrdersTable: React.FC<Props> = ({ contentStatus }) => {
 
   return (
     <TableContainer>
-      <Table className={styles.table} aria-label="simple table">
+      <StyledOrderTable className={styles.table} aria-label="simple table">
         <TableBody>
           {productOrders.map((productOrder, index) => {
             // this component may have string or array as contentStatus prop
@@ -74,25 +72,31 @@ const OrdersTable: React.FC<Props> = ({ contentStatus }) => {
                 <TableCell>
                   <Checkbox checked={productOrder.status_id !== 1} onChange={() => handleUpdateOrderStatus(productOrder)} />
                 </TableCell>
-                <TableCell>
-                  <Chip color={productOrder.status_id !== 1 ? "primary" : "secondary"} icon={productOrder.status_id !== 1 ? <DoneIcon /> : <HighlightOffIcon />} label={capitalize(productOrder.status.name)} />
-                </TableCell>
+                <Hidden smDown>
+                  <TableCell className={styles.status}>
+                    <Chip color={productOrder.status_id !== 1 ? "primary" : "secondary"} icon={productOrder.status_id !== 1 ? <DoneIcon /> : <HighlightOffIcon />} label={capitalize(productOrder.status.name)} />
+                  </TableCell>
+                </Hidden>
 
                 <Table>
                   <TableHead>
                     <TableRow>
                       <TableCell>Product</TableCell>
-                      <TableCell>Quantity</TableCell>
-                      <TableCell>Amount</TableCell>
+                      <Hidden smDown>
+                        <TableCell>Quantity</TableCell>
+                        <TableCell>Amount</TableCell>
+                      </Hidden>
                       <TableCell>Buyer</TableCell>
                     </TableRow>
                   </TableHead>
                   <TableBody>
                     {productOrder.products.map((product, index) => (
                       <TableRow key={index}>
-                        <TableCell>{product.product_name}</TableCell>
-                        <TableCell>{product.pivot.quantity}</TableCell>
-                        <TableCell>P {numWithCommas(Number(product.price) * product.pivot.quantity)}</TableCell>
+                        <TableCell>{product.product_name} <span className={styles.details_mobile}> ({product.pivot.quantity} x P{numWithCommas(Number(product.price) * product.pivot.quantity)})</span></TableCell>
+                        <Hidden smDown>
+                          <TableCell>{product.pivot.quantity}</TableCell>
+                          <TableCell>P {numWithCommas(Number(product.price) * product.pivot.quantity)}</TableCell>
+                        </Hidden>
                         <TableCell>{productOrder.user.name}</TableCell>
                       </TableRow>
                     ))}
@@ -102,7 +106,7 @@ const OrdersTable: React.FC<Props> = ({ contentStatus }) => {
             );
           })}
         </TableBody>
-      </Table>
+      </StyledOrderTable>
     </TableContainer>
   );
 };
